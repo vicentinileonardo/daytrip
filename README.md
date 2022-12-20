@@ -4,7 +4,7 @@ Repository related to the project of the Service Design and Engineering graduate
 The goal of the project is to ideate, design, develop a service-oriented application
 
 
-## geniric ideas
+## generic ideas
 authentication: google and facebook
 
 external apis: 
@@ -13,7 +13,7 @@ external apis:
   
 
 tomtom apis for trafic
-for the maps: OpenStreetMap, Leaflet, Nominatim (maybe)
+for the maps: OpenStreetMap, Leaflet, Nominatim (maybe), or just use the tomtom api should be fine
 
 
 api paradigms: REST and GraphQL
