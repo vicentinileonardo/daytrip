@@ -5,6 +5,7 @@ The goal of the project is to ideate, design, develop a service-oriented applica
 
 
 ## generic ideas
+
 authentication: google and facebook
 
 external apis: 
@@ -16,9 +17,10 @@ tomtom apis for trafic
 for the maps: OpenStreetMap, Leaflet, Nominatim (maybe), or just use the tomtom api should be fine
 
 
-api paradigms: REST and GraphQL
+api paradigms: REST and GraphQL (we should try to use both)
 
 databases: MongoDB
+
 object storage: amazon S3
 
 
