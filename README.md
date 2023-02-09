@@ -6,23 +6,30 @@ The goal of the project is to ideate, design, develop a service-oriented applica
 
 ## generic ideas
 
-authentication: google and facebook
+combining weather and traffic data in order to propose daytrips to users.
+
+use current location (either automatically retrieved if authorized, or just a parameter inserted)
+other parameters:  drive distance, only public transportation 
+
+database of points of interests to choose from
+
+
+authentication: google
 
 external apis: 
 + weather apis
   - tomorrow
-  
-
-tomtom apis for trafic
-for the maps: OpenStreetMap, Leaflet, Nominatim (maybe), or just use the tomtom api should be fine
++ tomtom apis for trafic
++ for the maps: OpenStreetMap, Leaflet, Nominatim (maybe), or just use the tomtom api should be fine
 
 
-api paradigms: REST and GraphQL (we should try to use both)
+api paradigms: REST and GraphQL (probably we should try to use both for different tasks, due to our lab session)
 
-databases: MongoDB
+databases: MongoDB (on-premise)
 
-object storage: amazon S3
+object storage (if needed): amazon S3 (cloud-based)
 
 
+docker compose for the entire infrastructure
 
 
