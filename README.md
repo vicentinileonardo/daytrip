@@ -27,7 +27,7 @@ api paradigms: REST and GraphQL (probably we should try to use both for differen
 
 databases: MongoDB (on-premise)
 
-object storage (if needed): amazon S3 (cloud-based)
+object storage (if needed): amazon S3 (cloud-based). For instance: Image service which use S3 as data layer. Images could be retrieved for the various point of interests (or only for the most important)
 
 
 docker compose for the entire infrastructure
