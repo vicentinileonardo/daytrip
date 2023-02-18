@@ -6,6 +6,8 @@ The goal of the project is to ideate, design, develop a service-oriented applica
 
 ## generic ideas
 
+[Google Doc](https://docs.google.com/document/d/1lDv2JqqlVAuygN2xbacw2XYzxtcyGfdxOXr0agXboIM/edit)
+
 combining weather and traffic data in order to propose daytrips to users.
 
 use current location (either automatically retrieved if authorized, or just a parameter inserted)
