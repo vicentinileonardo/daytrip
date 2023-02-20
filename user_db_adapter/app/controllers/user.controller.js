@@ -1,37 +1,56 @@
 const db = require("../models");
-const Tutorial = db.tutorials;
+const User = db.users;
 
-// Create and Save a new Tutorial
+// Create and Save a new User
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
-    res.status(400).send({ message: "Content can not be empty!" });
+  if (!req.body.name) {
+    res.status(400).send({ message: "User must have a name!" });
     return;
   }
 
-  // Create a Tutorial
-  const tutorial = new Tutorial({
-    title: req.body.title,
-    description: req.body.description,
-    published: req.body.published ? req.body.published : false
+  if (!req.body.surname) {
+    res.status(400).send({ message: "User must have a surname!" });
+    return;
+  }
+
+  if (!req.body.email) {
+    res.status(400).send({ message: "User must have an email!" });
+    return;
+  }
+
+  if (!req.body.password) {
+    res.status(400).send({ message: "User must have a password!" });
+    return;
+  }
+ 
+  // Create a User
+  const tutorial = new User({
+    name: req.body.name,
+    surname: req.body.surname,
+    email: req.body.email,
+    password: req.body.password
   });
 
   // Save Tutorial in the database
-  tutorial
-    .save(tutorial)
+  user
+    .save(user)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Tutorial."
+          err.message || "Some error occurred while creating the User."
       });
     });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Users from the database.
 exports.findAll = (req, res) => {
+  
+  // TODO: Add pagination
+  // TODO: change condition
   const title = req.query.title;
   var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
 

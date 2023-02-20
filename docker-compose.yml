@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  users_db:
+  user_db:
     image: mongo:5.0.2
     restart: always
     env_file: ./.env
@@ -14,14 +14,14 @@ services:
       - db:/data/db
   app:
     depends_on:
-      - users_db
-    build: ./users_db_adapter
+      - user_db
+    build: ./user_db_adapter
     restart: always
     env_file: ./.env
     ports:
       - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
     environment:
-      - DB_HOST=users_db
+      - DB_HOST=user_db
       - DB_USER=$USERS_DB_USER
       - DB_PASSWORD=$USERS_DB_PASSWORD
       - DB_NAME=$USERS_DB_DATABASE
