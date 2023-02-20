@@ -35,7 +35,7 @@ db.mongoose
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "user_db_adapter" });
+  res.json({ message: "user_db_adapter is up and running!" });
 });
 
 require("./app/routes/user.routes.js")(app);

@@ -1,15 +1,30 @@
 const db = require("../models");
 const User = db.users;
 
-// Create and Save a new Tutorial
+// Create and Save a new User
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
-    res.status(400).send({ message: "Content can not be empty!" });
+  if (!req.body.name) {
+    res.status(400).send({ message: "User must have a name!" });
     return;
   }
 
-  // Create a Tutorial
+  if (!req.body.surname) {
+    res.status(400).send({ message: "User must have a surname!" });
+    return;
+  }
+
+  if (!req.body.email) {
+    res.status(400).send({ message: "User must have an email!" });
+    return;
+  }
+
+  if (!req.body.password) {
+    res.status(400).send({ message: "User must have a password!" });
+    return;
+  }
+
+  // Create a User
   const user = new User({
     name: req.body.name,
     surname: req.body.surname,
@@ -36,9 +51,9 @@ exports.create = (req, res) => {
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
-  var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
+  let condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
 
-  Tutorial.find(condition)
+  User.find(condition)
     .then(data => {
       res.send(data);
     })
@@ -56,16 +71,16 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Tutorial.findById(id)
+  User.findById(id)
     .then(data => {
       if (!data)
-        res.status(404).send({ message: "Not found Tutorial with id " + id });
+        res.status(404).send({ message: "Not found User with id " + id });
       else res.send(data);
     })
     .catch(err => {
       res
         .status(500)
-        .send({ message: "Error retrieving Tutorial with id=" + id });
+        .send({ message: "Error retrieving User with id=" + id });
     });
 };
 
@@ -79,7 +94,7 @@ exports.update = (req, res) => {
 
   const id = req.params.id;
 
-  Tutorial.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  User.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
@@ -98,7 +113,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  Tutorial.findByIdAndRemove(id, { useFindAndModify: false })
+  User.findByIdAndRemove(id, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
@@ -119,7 +134,7 @@ exports.delete = (req, res) => {
 
 // Delete all Tutorials from the database.
 exports.deleteAll = (req, res) => {
-  Tutorial.deleteMany({})
+  User.deleteMany({})
     .then(data => {
       res.send({
         message: `${data.deletedCount} Tutorials were deleted successfully!`
@@ -135,7 +150,7 @@ exports.deleteAll = (req, res) => {
 
 // Find all published Tutorials
 exports.findAllPublished = (req, res) => {
-  Tutorial.find({ published: true })
+  User.find({ published: true })
     .then(data => {
       res.send(data);
     })

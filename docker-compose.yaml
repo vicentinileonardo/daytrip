@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-
   user_db_adapter:
     depends_on:
       - user_db
@@ -16,19 +15,20 @@ services:
       - DB_PASSWORD=$USER_DB_PASSWORD
       - DB_NAME=$USER_DB_NAME
       - DB_PORT=$USER_DB_DOCKER_PORT
-    #stdin_open: true
-    #tty: true
+    stdin_open: true
+    tty: true
 
   user_db:
-    image: mongo:4.4
+    image: mongo:5.0.2
     restart: always
+    env_file: ./.env
     environment:
-      MONGO_INITDB_ROOT_USERNAME: user
-      MONGO_INITDB_ROOT_PASSWORD: password
+      - MONGO_INITDB_ROOT_USERNAME=$USER_DB_USER
+      - MONGO_INITDB_ROOT_PASSWORD=$USER_DB_PASSWORD
     ports:
       - $USER_DB_LOCAL_PORT:$USER_DB_DOCKER_PORT
     volumes:
-      - user_db_data:/data/db
+      - db:/data/db
 
 volumes:
-  user_db_data:
+  db:
