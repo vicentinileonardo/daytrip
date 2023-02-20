@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:18
 
 WORKDIR /user_db_adapter
 COPY package.json .
