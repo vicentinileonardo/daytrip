@@ -1,59 +1,41 @@
 const db = require("../models");
-const User = db.users;
+const Tutorial = db.tutorials;
 
-// Create and Save a new User
+// Create and Save a new Tutorial
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.name) {
-    res.status(400).send({ message: "User must have a name!" });
+  if (!req.body.title) {
+    res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
 
-  if (!req.body.surname) {
-    res.status(400).send({ message: "User must have a surname!" });
-    return;
-  }
-
-  if (!req.body.email) {
-    res.status(400).send({ message: "User must have an email!" });
-    return;
-  }
-
-  if (!req.body.password) {
-    res.status(400).send({ message: "User must have a password!" });
-    return;
-  }
-
-  // Create a User
-  const user = new User({
-    name: req.body.name,
-    surname: req.body.surname,
-    email: req.body.email,
-    password: req.body.password
+  // Create a Tutorial
+  const tutorial = new Tutorial({
+    title: req.body.title,
+    description: req.body.description,
+    published: req.body.published ? req.body.published : false
   });
 
   // Save Tutorial in the database
-  user
-    .save(user)
+  tutorial
+    .save(tutorial)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the User."
+          err.message || "Some error occurred while creating the Tutorial."
       });
     });
 };
 
-// modificare da qua in giu'
-
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
   const title = req.query.title;
-  let condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
+  var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
 
-  User.find(condition)
+  Tutorial.find(condition)
     .then(data => {
       res.send(data);
     })
@@ -65,22 +47,20 @@ exports.findAll = (req, res) => {
     });
 };
 
-
-
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  User.findById(id)
+  Tutorial.findById(id)
     .then(data => {
       if (!data)
-        res.status(404).send({ message: "Not found User with id " + id });
+        res.status(404).send({ message: "Not found Tutorial with id " + id });
       else res.send(data);
     })
     .catch(err => {
       res
         .status(500)
-        .send({ message: "Error retrieving User with id=" + id });
+        .send({ message: "Error retrieving Tutorial with id=" + id });
     });
 };
 
@@ -94,7 +74,7 @@ exports.update = (req, res) => {
 
   const id = req.params.id;
 
-  User.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  Tutorial.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
@@ -113,7 +93,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  User.findByIdAndRemove(id, { useFindAndModify: false })
+  Tutorial.findByIdAndRemove(id, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
@@ -134,7 +114,7 @@ exports.delete = (req, res) => {
 
 // Delete all Tutorials from the database.
 exports.deleteAll = (req, res) => {
-  User.deleteMany({})
+  Tutorial.deleteMany({})
     .then(data => {
       res.send({
         message: `${data.deletedCount} Tutorials were deleted successfully!`
@@ -150,7 +130,7 @@ exports.deleteAll = (req, res) => {
 
 // Find all published Tutorials
 exports.findAllPublished = (req, res) => {
-  User.find({ published: true })
+  Tutorial.find({ published: true })
     .then(data => {
       res.send(data);
     })

@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  users_db:
+    image: mongo:5.0.2
+    restart: always
+    env_file: ./.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$USERS_DB_USER
+      - MONGO_INITDB_ROOT_PASSWORD=$USERS_DB_PASSWORD
+    ports:
+      - $USERS_DB_LOCAL_PORT:$USERS_DB_DOCKER_PORT
+    volumes:
+      - db:/data/db
+  app:
+    depends_on:
+      - users_db
+    build: ./users_db_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+    environment:
+      - DB_HOST=users_db
+      - DB_USER=$USERS_DB_USER
+      - DB_PASSWORD=$USERS_DB_PASSWORD
+      - DB_NAME=$USERS_DB_DATABASE
+      - DB_PORT=$USERS_DB_DOCKER_PORT
+    stdin_open: true
+    tty: true
+
+volumes:
+  db:

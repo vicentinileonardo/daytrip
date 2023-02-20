@@ -34,4 +34,8 @@ object storage (if needed): amazon S3 (cloud-based). For instance: Image service
 
 docker compose for the entire infrastructure
 
+## Acknowledgements
+
+Node.js + Mongoose skeleton: https://github.com/bezkoder
+
 

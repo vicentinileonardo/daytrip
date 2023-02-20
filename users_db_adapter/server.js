@@ -35,13 +35,13 @@ db.mongoose
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "user_db_adapter is up and running!" });
+  res.json({ message: "Welcome to bezkoder application." });
 });
 
-require("./app/routes/user.routes.js")(app);
+require("./app/routes/turorial.routes")(app);
 
 // set port, listen for requests
-const PORT = process.env.USER_DB_ADAPTER_DOCKER_PORT || 8080;
+const PORT = process.env.NODE_DOCKER_PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
