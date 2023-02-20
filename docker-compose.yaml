@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+
+  user_db_adapter:
+    depends_on:
+      - user_db
+    build: ./user_db_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $USER_DB_ADAPTER_LOCAL_PORT:$USER_DB_ADAPTER_DOCKER_PORT
+    environment:
+      - DB_HOST=user_db
+      - DB_USER=$USER_DB_USER
+      - DB_PASSWORD=$USER_DB_PASSWORD
+      - DB_NAME=$USER_DB_NAME
+      - DB_PORT=$USER_DB_DOCKER_PORT
+    #stdin_open: true
+    #tty: true
+
+  user_db:
+    image: mongo:4.4
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - $USER_DB_LOCAL_PORT:$USER_DB_DOCKER_PORT
+    volumes:
+      - user_db_data:/data/db
+
+volumes:
+  user_db_data:
