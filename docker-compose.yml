@@ -11,8 +11,8 @@ services:
     ports:
       - $USERS_DB_LOCAL_PORT:$USERS_DB_DOCKER_PORT
     volumes:
-      - db:/data/db
-  app:
+      - user_db:/data/db
+  user_db_adapter:
     depends_on:
       - user_db
     build: ./user_db_adapter
@@ -30,4 +30,4 @@ services:
     tty: true
 
 volumes:
-  db:
+  user_db:
