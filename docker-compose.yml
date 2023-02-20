@@ -12,6 +12,7 @@ services:
       - $USERS_DB_LOCAL_PORT:$USERS_DB_DOCKER_PORT
     volumes:
       - user_db:/data/db
+      
   user_db_adapter:
     depends_on:
       - user_db
