@@ -85,11 +85,68 @@ exports.findOne = (req, res) => {
 
 // Update a User by the id in the request
 exports.update = (req, res) => {
-  if (!req.body) {
+  
+  // Validate request
+  // check id
+  if (!req.params.id) {
     return res.status(400).send({
-      message: "Data to update can not be empty!"
+      message: "User id can not be empty!"
     });
   }
+
+  console.log("req.params: ", req.params);
+  console.log("req.body: ", req.body);
+
+  // check each field
+  if (!req.body.name) {
+    res.status(400).send({ message: "User to be updated must have a name!" });
+    return;
+  }
+
+  if (!req.body.surname) {
+    res.status(400).send({ message: "User to be updated must have a surname!" });
+    return;
+  }
+
+  if (!req.body.email) {
+    res.status(400).send({ message: "User to be updated must have an email!" });
+    return;
+  }
+
+  if (!req.body.password) {
+    res.status(400).send({ message: "User to be updated must have a password!" });
+    return;
+  }
+
+  if (!req.body.status) {
+    res.status(400).send({ message: "User to be updated must have a status!" });
+    return;
+  }
+
+  if (!req.body.origin_name) {
+    res.status(400).send({ message: "User to be updated must have an origin name!" });
+    return;
+  }
+
+  if (!req.body.origin_coordinates) {
+    res.status(400).send({ message: "User to be updated must have origin coordinates!" });
+    return;
+  }
+
+  if (!req.body.origin_coordinates["lat"] || !req.body.origin_coordinates["lon"]) {
+    res.status(400).send({ message: "User to be updated must have both origin coordinates (lat and lon) !" });
+    return;
+  }
+
+  if (req.body.origin_coordinates["lon"] < -180 || req.body.origin_coordinates["lon"] > 180) {
+    res.status(400).send({ message: "User to be updated must have a correct lon for origin coordinates!" });
+    return;
+  }
+
+  if (req.body.origin_coordinates["lat"] < -90 || req.body.origin_coordinates["lat"] > 90) {
+    res.status(400).send({ message: "User to be updated must have a correct lat for origin coordinates!" });
+    return;
+  } 
 
   const id = req.params.id;
 
@@ -131,9 +188,14 @@ exports.delete = (req, res) => {
     });
 };
 
-// Delete all Tutorials from the database.
+// Delete all Users from the database.
 exports.deleteAll = (req, res) => {
-  User.deleteMany({})
+
+  // condition to delete only STANDARD or ADMIN users if provided in the request query
+  const role = req.query.role;
+  let condition = role ? { role: role } : {};
+
+  User.deleteMany(condition)
     .then(data => {
       res.send({
         message: `${data.deletedCount} Users were deleted successfully!`
