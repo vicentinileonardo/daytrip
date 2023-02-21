@@ -6,10 +6,10 @@ services:
     restart: always
     env_file: ./.env
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=$USERS_DB_USER
-      - MONGO_INITDB_ROOT_PASSWORD=$USERS_DB_PASSWORD
+      - MONGO_INITDB_ROOT_USERNAME=$USER_DB_USER
+      - MONGO_INITDB_ROOT_PASSWORD=$USER_DB_PASSWORD
     ports:
-      - $USERS_DB_LOCAL_PORT:$USERS_DB_DOCKER_PORT
+      - $USER_DB_LOCAL_PORT:$USER_DB_DOCKER_PORT
     volumes:
       - user_db:/data/db
       
@@ -23,10 +23,10 @@ services:
       - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
     environment:
       - DB_HOST=user_db
-      - DB_USER=$USERS_DB_USER
-      - DB_PASSWORD=$USERS_DB_PASSWORD
-      - DB_NAME=$USERS_DB_DATABASE
-      - DB_PORT=$USERS_DB_DOCKER_PORT
+      - DB_USER=$USER_DB_USER
+      - DB_PASSWORD=$USER_DB_PASSWORD
+      - DB_NAME=$USER_DB_DATABASE
+      - DB_PORT=$USER_DB_DOCKER_PORT
     stdin_open: true
     tty: true
 

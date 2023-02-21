@@ -13,7 +13,7 @@
     "api",
     "mongodb"
   ],
-  "author": "bezkoder",
+  "author": "Leonardo Vicentini, Luca Vian",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",

@@ -25,7 +25,7 @@ exports.create = (req, res) => {
   }
  
   // Create a User
-  const tutorial = new User({
+  const user = new User({
     name: req.body.name,
     surname: req.body.surname,
     email: req.body.email,
