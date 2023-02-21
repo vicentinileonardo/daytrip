@@ -3,10 +3,13 @@ module.exports = app => {
 
   var router = require("express").Router();
 
-  // Create a new Tutorial
+  //bulk import (ONLY FOR DEVELOPMENT)
+  router.post("/bulk", users.import);
+
+  // Create a new User
   router.post("/", users.create);
 
-  // Retrieve all Tutorials
+  // Retrieve all User
   router.get("/", users.findAll);
 
   // Retrieve a single User with id

@@ -57,7 +57,6 @@ exports.create = (req, res) => {
   } 
  
   const saltRounds = 10;
-
   bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
     // Create a User
     const user = new User({
@@ -260,20 +259,20 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-// specific query
-/*
-// Find all published Tutorials
-exports.findAllPublished = (req, res) => {
-  Tutorial.find({ published: true })
+//import from a json file
+exports.import = (req, res) => {
+  const users = require("../../dummy_data/dummy_users.json");
+  console.log("users: ", users);
+
+  User.insertMany(users)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving tutorials."
+          err.message || "Some error occurred while importing users."
       });
     });
-};
-*/
+}
 

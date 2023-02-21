@@ -31,12 +31,12 @@ exports.create = (req, res) => {
   }
 
   if (req.body.coordinates["lon"] < -180 || req.body.coordinates["lon"] > 180) {
-    res.status(400).send({ message: "Destination must have a correct lon for coordinates!" });
+    res.status(400).send({ message: "Destination must have a correct lon for coordinates (between -180 and 180)!" });
     return;
   }
 
-  if (req.body.origin_coordinates["lat"] < -90 || req.body.origin_coordinates["lat"] > 90) {
-    res.status(400).send({ message: "Destination must have a correct lat for coordinates!" });
+  if (req.body.coordinates["lat"] < -90 || req.body.coordinates["lat"] > 90) {
+    res.status(400).send({ message: "Destination must have a correct lat for coordinates (between -90 and 90)!" });
     return;
   } 
 
@@ -55,7 +55,7 @@ exports.create = (req, res) => {
   destination
     .save(destination)
     .then(data => {
-      res.status(200).send(data);
+      res.send(data);
     })
     .catch(err => {
       res.status(500).send({

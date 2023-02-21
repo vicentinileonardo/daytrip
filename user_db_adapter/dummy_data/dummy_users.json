@@ -1,0 +1,136 @@
+[
+    {
+        "name": "John",
+        "surname": "Doe",
+        "email": "johndoe@example.com",
+        "password": "password",
+        "status": "STANDARD",
+        "origin_name": "Verona",
+        "origin_coordinates": {
+            "lat": 5,
+            "lon": 5
+        }
+    },
+    {
+        "name": "Jane",
+        "surname": "Smith",
+        "email": "janesmith@example.com",
+        "password": "password",
+        "status": "STANDARD",
+        "origin_name": "Trento",
+        "origin_coordinates": {
+            "lat": 6,
+            "lon": 6
+        }
+    },
+    {
+        "name": "Michael",
+        "surname": "Johnson",
+        "email": "michaeljohnson@example.com",
+        "password": "password",
+        "status": "STANDARD",
+        "origin_name": "Bolzano",
+        "origin_coordinates": {
+            "lat": 7,
+            "lon": 7
+        }
+    },
+    {
+        "name": "Emily",
+        "surname": "Davis",
+        "email": "emilydavis@example.com",
+        "password": "password",
+        "status": "STANDARD",
+        "origin_name": "Bologna",
+        "origin_coordinates": {
+            "lat": 8,
+            "lon": 8
+        }
+    },
+    {
+        "name": "William",
+        "surname": "Martinez",
+        "email": "williammartinez@example.com",
+        "password": "password",
+        "status": "STANDARD",
+        "origin_name": "Milano",
+        "origin_coordinates": {
+            "lat": 9,
+            "lon": 9
+        }
+    },
+    {
+        "name": "Olivia",
+        "surname": "Brown",
+        "email": "oliviabrown@example.com",
+        "password": "password",
+        "status": "STANDARD",
+        "origin_name": "Mantova",
+        "origin_coordinates": {
+            "lat": 10,
+            "lon": 10
+        }
+    },
+    {
+        "name": "Ethan",
+        "surname": "Wilson",
+        "email": "ethanwilson@example.com",
+        "password": "password",
+        "status": "STANDARD",
+        "origin_name": "Piacenza",
+        "origin_coordinates": {
+            "lat": 11,
+            "lon": 11
+        }
+    },
+    {
+        "name": "Sophia",
+        "surname": "Anderson",
+        "email": "sophiaanderson@example.com",
+        "password": "password",
+        "status": "STANDARD",
+        "origin_name": "Parma",
+        "origin_coordinates": {
+            "lat": 12,
+            "lon": 12
+        }
+    },
+    {
+        "name": "Alexander",
+        "surname": "Thomas",
+        "email": "alexanderthomas@example.com",
+        "password": "password",
+        "status": "STANDARD",
+        "origin_name": "Udine",
+        "origin_coordinates": {
+            "lat": 13,
+            "lon": 13
+        }
+    },
+    {
+        "name": "Isabella",
+        "surname": "Jackson",
+        "email": "isabellajackson@example.com",
+        "password": "password",
+        "status": "STANDARD",
+        "origin_name": "Brescia",
+        "origin_coordinates": {
+            "lat": 14,
+            "lon": 14
+        }
+    },
+    {
+        "name": "Aiden",
+        "surname": "White",
+        "email": "aidenwhite@example.com",
+        "password": "password",
+        "status": "STANDARD",
+        "origin_name": "Venezia",
+        "origin_coordinates": {
+            "lat": 15,
+            "lon": 15
+        }
+    }
+]
+
+
