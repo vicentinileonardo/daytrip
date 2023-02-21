@@ -3,6 +3,7 @@ const User = db.users;
 
 // Create and Save a new User
 exports.create = (req, res) => {
+  const bcrypt = require('bcrypt');
 
   // Validate request
   if (!req.body.name) {
@@ -31,46 +32,62 @@ exports.create = (req, res) => {
   }
 
   if (!req.body.origin_name) {
-    res.status(400).send({ message: "User must have an origin_name!" });
+    res.status(400).send({ message: "User must have an origin name!" });
     return;
   }
 
-  if (!req.body.lat) {
-    res.status(400).send({ message: "User must have a lat!" });
+  if (!req.body.origin_coordinates) {
+    res.status(400).send({ message: "User must have origin coordinates!" });
     return;
   }
 
-  if (!req.body.lon) {
-    res.status(400).send({ message: "User must have a lon!" });
+  if (!req.body.origin_coordinates["lat"] || !req.body.origin_coordinates["lon"]) {
+    res.status(400).send({ message: "User must have both origin coordinates (lat and lon) !" });
     return;
   }
+
+  if (req.body.origin_coordinates["lon"] < -180 || req.body.origin_coordinates["lon"] > 180) {
+    res.status(400).send({ message: "User must have a correct lon for origin coordinates!" });
+    return;
+  }
+
+  if (req.body.origin_coordinates["lat"] < -90 || req.body.origin_coordinates["lat"] > 90) {
+    res.status(400).send({ message: "User must have a correct lat for origin coordinates!" });
+    return;
+  } 
  
-  // Create a User
-  const user = new User({
-    name: req.body.name,
-    surname: req.body.surname,
-    email: req.body.email,
-    password: req.body.password,
-    status: req.body.status,
-    origin_name: req.body.origin_name,
-    origin_coordinates: {
-      lat:req.body.lat,
-      lon:req.body.lon
-    }
+  const saltRounds = 10;
+
+  bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+    // Create a User
+    const user = new User({
+      name: req.body.name,
+      surname: req.body.surname,
+      email: req.body.email,
+      password: hash,
+      status: req.body.status,
+      origin_name: req.body.origin_name,
+      origin_coordinates: {
+        lat:req.body.origin_coordinates["lat"],
+        lon:req.body.origin_coordinates["lon"]
+      }
+    });
+
+    // Save User in the database
+    user
+      .save(user)
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while creating the User."
+        });
+      });
+
   });
 
-  // Save User in the database
-  user
-    .save(user)
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the User."
-      });
-    });
 };
 
 // Retrieve all Users from the database.
@@ -83,8 +100,8 @@ exports.findAll = (req, res) => {
   }
 
   //condition
-  const email = req.query.email;
-  var condition = email ? { email: { $regex: new RegExp(email), $options: "i" } } : {};
+  const status = req.query.status;
+  var condition = status ? { status: { $regex: new RegExp(status), $options: "i" } } : {};
 
   User.find(condition)
     .skip(paginationOptions.page * paginationOptions.limit)
