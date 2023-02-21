@@ -12,6 +12,18 @@ services:
       - $USER_DB_LOCAL_PORT:$USER_DB_DOCKER_PORT
     volumes:
       - user_db:/data/db
+
+  destination_db:
+    image: mongo:5.0.2
+    restart: always
+    env_file: ./.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$DESTINATION_DB_USER
+      - MONGO_INITDB_ROOT_PASSWORD=$DESTINATION_DB_PASSWORD
+    ports:
+      - $DESTINATION_DB_LOCAL_PORT:$DESTINATION_DB_DOCKER_PORT
+    volumes:
+      - destination_db:/data/db
       
   user_db_adapter:
     depends_on:
@@ -20,7 +32,7 @@ services:
     restart: always
     env_file: ./.env
     ports:
-      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+      - $USER_DB_ADAPTER_LOCAL_PORT:$USER_DB_ADAPTER_DOCKER_PORT
     environment:
       - DB_HOST=user_db
       - DB_USER=$USER_DB_USER
@@ -30,5 +42,23 @@ services:
     stdin_open: true
     tty: true
 
+  destination_db_adapter:
+    depends_on:
+      - destination_db
+    build: ./destination_db_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $DESTINATION_DB_ADAPTER_LOCAL_PORT:$DESTINATION_DB_ADAPTER_DOCKER_PORT
+    environment:
+      - DB_HOST=destination_db
+      - DB_USER=$DESTINATION_DB_USER
+      - DB_PASSWORD=$DESTINATION_DB_PASSWORD
+      - DB_NAME=$DESTINATION_DB_DATABASE
+      - DB_PORT=$DESTINATION_DB_DOCKER_PORT
+    stdin_open: true
+    tty: true
+
 volumes:
   user_db:
+  destination_db:
