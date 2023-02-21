@@ -1,79 +1,71 @@
 const db = require("../models");
 const Destination = db.destinations;
 
-// Create and Save a new User
+// Create and Save a new Destination
 exports.create = (req, res) => {
 
   // Validate request
   if (!req.body.name) {
-    res.status(400).send({ message: "User must have a name!" });
+    res.status(400).send({ message: "Destination must have a name!" });
     return;
   }
 
-  if (!req.body.surname) {
-    res.status(400).send({ message: "User must have a surname!" });
+  if (!req.body.description) {
+    res.status(400).send({ message: "Destination must have a description!" });
     return;
   }
 
-  if (!req.body.email) {
-    res.status(400).send({ message: "User must have an email!" });
+  if (!req.body.image_url) {
+    res.status(400).send({ message: "Destination must have a image URL!" });
     return;
   }
 
-  if (!req.body.password) {
-    res.status(400).send({ message: "User must have a password!" });
+  if (!req.body.coordinates) {
+    res.status(400).send({ message: "Destination must have coordinates!" });
     return;
   }
 
-  if (!req.body.status) {
-    res.status(400).send({ message: "User must have a status!" });
+  if (!req.body.coordinates["lat"] || !req.body.coordinates["lon"]) {
+    res.status(400).send({ message: "Destination must have both coordinates (lat and lon) !" });
     return;
   }
 
-  if (!req.body.origin_name) {
-    res.status(400).send({ message: "User must have an origin_name!" });
+  if (req.body.coordinates["lon"] < -180 || req.body.coordinates["lon"] > 180) {
+    res.status(400).send({ message: "Destination must have a correct lon for coordinates!" });
     return;
   }
 
-  if (!req.body.lat) {
-    res.status(400).send({ message: "User must have a lat!" });
+  if (req.body.origin_coordinates["lat"] < -90 || req.body.origin_coordinates["lat"] > 90) {
+    res.status(400).send({ message: "Destination must have a correct lat for coordinates!" });
     return;
-  }
+  } 
 
-  if (!req.body.lon) {
-    res.status(400).send({ message: "User must have a lon!" });
-    return;
-  }
- 
-  // Create a User
-  const user = new User({
+  // Create a Destination
+  const destination = new Destination({
     name: req.body.name,
-    surname: req.body.surname,
-    email: req.body.email,
-    password: req.body.password,
-    status: req.body.status,
+    description: req.body.description,
     origin_name: req.body.origin_name,
-    origin_coordinates: {
-      lat:req.body.lat,
-      lon:req.body.lon
+    coordinates: {
+      lat:req.body.coordinates["lat"],
+      lon:req.body.coordinates["lon"]
     }
   });
 
-  // Save User in the database
-  user
-    .save(user)
+  // Save Destination in the database
+  destination
+    .save(destination)
     .then(data => {
-      res.send(data);
+      res.status(200).send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the User."
+          err.message || "Some error occurred while creating the Destination."
       });
     });
 };
 
-// Retrieve all Users from the database.
+// Retrieve all Destinations from the database.
 exports.findAll = (req, res) => {
   
   //Add pagination
@@ -82,11 +74,7 @@ exports.findAll = (req, res) => {
     limit: parseInt(req.query.limit, 10) || 10
   }
 
-  //condition
-  const email = req.query.email;
-  var condition = email ? { email: { $regex: new RegExp(email), $options: "i" } } : {};
-
-  User.find(condition)
+  Destination.find({})
     .skip(paginationOptions.page * paginationOptions.limit)
     .limit(paginationOptions.limit)
     .then(data => {
@@ -95,7 +83,7 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving users."
+          err.message || "Some error occurred while retrieving destinations."
       });
     });
 };
@@ -104,16 +92,16 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  User.findById(id)
+  Destination.findById(id)
     .then(data => {
       if (!data)
-        res.status(404).send({ message: "Not found User with id " + id });
+        res.status(404).send({ message: "Not found Destination with id " + id });
       else res.send(data);
     })
     .catch(err => {
       res
         .status(500)
-        .send({ message: "Error retrieving User with id=" + id });
+        .send({ message: "Error retrieving Destination with id=" + id });
     });
 };
 
