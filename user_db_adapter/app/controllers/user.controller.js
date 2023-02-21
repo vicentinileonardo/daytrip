@@ -3,6 +3,7 @@ const User = db.users;
 
 // Create and Save a new User
 exports.create = (req, res) => {
+
   // Validate request
   if (!req.body.name) {
     res.status(400).send({ message: "User must have a name!" });
@@ -23,16 +24,42 @@ exports.create = (req, res) => {
     res.status(400).send({ message: "User must have a password!" });
     return;
   }
+
+  if (!req.body.status) {
+    res.status(400).send({ message: "User must have a status!" });
+    return;
+  }
+
+  if (!req.body.origin_name) {
+    res.status(400).send({ message: "User must have an origin_name!" });
+    return;
+  }
+
+  if (!req.body.lat) {
+    res.status(400).send({ message: "User must have a lat!" });
+    return;
+  }
+
+  if (!req.body.lon) {
+    res.status(400).send({ message: "User must have a lon!" });
+    return;
+  }
  
   // Create a User
   const user = new User({
     name: req.body.name,
     surname: req.body.surname,
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
+    status: req.body.status,
+    origin_name: req.body.origin_name,
+    origin_coordinates: {
+      lat:req.body.lat,
+      lon:req.body.lon
+    }
   });
 
-  // Save Tutorial in the database
+  // Save User in the database
   user
     .save(user)
     .then(data => {
@@ -49,12 +76,19 @@ exports.create = (req, res) => {
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
   
-  // TODO: Add pagination
-  // TODO: change condition
-  const title = req.query.title;
-  var condition = title ? { title: { $regex: new RegExp(title), $options: "i" } } : {};
+  //Add pagination
+  const paginationOptions = {
+    page: parseInt(req.query.page, 10) || 0,
+    limit: parseInt(req.query.limit, 10) || 10
+  }
+
+  //condition
+  const email = req.query.email;
+  var condition = email ? { email: { $regex: new RegExp(email), $options: "i" } } : {};
 
   User.find(condition)
+    .skip(paginationOptions.page * paginationOptions.limit)
+    .limit(paginationOptions.limit)
     .then(data => {
       res.send(data);
     })
