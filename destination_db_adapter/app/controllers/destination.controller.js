@@ -44,7 +44,7 @@ exports.create = (req, res) => {
   const destination = new Destination({
     name: req.body.name,
     description: req.body.description,
-    origin_name: req.body.origin_name,
+    image_url: req.body.image_url,
     coordinates: {
       lat:req.body.coordinates["lat"],
       lon:req.body.coordinates["lon"]
@@ -105,14 +105,14 @@ exports.findOne = (req, res) => {
     });
 };
 
-// Update a User by the id in the request
+// Update a Destination by the id in the request
 exports.update = (req, res) => {
   
   // Validate request
   // check id
   if (!req.params.id) {
     return res.status(400).send({
-      message: "User id can not be empty!"
+      message: "Destination id can not be empty!"
     });
   }
 
@@ -121,113 +121,96 @@ exports.update = (req, res) => {
 
   // check each field
   if (!req.body.name) {
-    res.status(400).send({ message: "User to be updated must have a name!" });
+    res.status(400).send({ message: "Destination to be updated must have a name!" });
     return;
   }
 
-  if (!req.body.surname) {
-    res.status(400).send({ message: "User to be updated must have a surname!" });
+  if (!req.body.description) {
+    res.status(400).send({ message: "Destination to be updated must have a description!" });
     return;
   }
 
-  if (!req.body.email) {
-    res.status(400).send({ message: "User to be updated must have an email!" });
+  if (!req.body.image_url) {
+    res.status(400).send({ message: "Destination to be updated must have an image_url!" });
     return;
   }
 
-  if (!req.body.password) {
-    res.status(400).send({ message: "User to be updated must have a password!" });
+  if (!req.body.coordinates) {
+    res.status(400).send({ message: "Destination to be updated must have coordinates!" });
     return;
   }
 
-  if (!req.body.status) {
-    res.status(400).send({ message: "User to be updated must have a status!" });
+  if (!req.body.coordinates["lat"] || !req.body.coordinates["lon"]) {
+    res.status(400).send({ message: "Destination to be updated must have both coordinates (lat and lon) !" });
     return;
   }
 
-  if (!req.body.origin_name) {
-    res.status(400).send({ message: "User to be updated must have an origin name!" });
+  if (req.body.coordinates["lon"] < -180 || req.body.coordinates["lon"] > 180) {
+    res.status(400).send({ message: "Destination to be updated must have a correct lon for coordinates!" });
     return;
   }
 
-  if (!req.body.origin_coordinates) {
-    res.status(400).send({ message: "User to be updated must have origin coordinates!" });
-    return;
-  }
-
-  if (!req.body.origin_coordinates["lat"] || !req.body.origin_coordinates["lon"]) {
-    res.status(400).send({ message: "User to be updated must have both origin coordinates (lat and lon) !" });
-    return;
-  }
-
-  if (req.body.origin_coordinates["lon"] < -180 || req.body.origin_coordinates["lon"] > 180) {
-    res.status(400).send({ message: "User to be updated must have a correct lon for origin coordinates!" });
-    return;
-  }
-
-  if (req.body.origin_coordinates["lat"] < -90 || req.body.origin_coordinates["lat"] > 90) {
-    res.status(400).send({ message: "User to be updated must have a correct lat for origin coordinates!" });
+  if (req.body.coordinates["lat"] < -90 || req.body.coordinates["lat"] > 90) {
+    res.status(400).send({ message: "Destination to be updated must have a correct lat for coordinates!" });
     return;
   } 
 
   const id = req.params.id;
 
-  User.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+  Destination.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot update User with id=${id}. Maybe User was not found!`
+          message: `Cannot update Destination with id=${id}. Maybe Destination was not found!`
         });
-      } else res.send({ message: "User was updated successfully." });
+      } else res.send({ message: "Destination was updated successfully." });
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating User with id=" + id
+        message: "Error updating Destination with id=" + id
       });
     });
 };
 
-// Delete a User with the specified id in the request
+// Delete a Destination with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  User.findByIdAndRemove(id, { useFindAndModify: false })
+  Destination.findByIdAndRemove(id, { useFindAndModify: false })
     .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot delete User with id=${id}. Maybe User was not found!`
+          message: `Cannot delete Destination with id=${id}. Maybe Destination was not found!`
         });
       } else {
         res.send({
-          message: "User was deleted successfully!"
+          message: "Destination was deleted successfully!"
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete User with id=" + id
+        message: "Could not delete Destination with id=" + id
       });
     });
 };
 
-// Delete all Users from the database.
+// Delete all Destinations from the database.
 exports.deleteAll = (req, res) => {
 
-  // condition to delete only STANDARD or ADMIN users if provided in the request query
-  const role = req.query.role;
-  let condition = role ? { role: role } : {};
-
-  User.deleteMany(condition)
+  Destination.deleteMany()
     .then(data => {
       res.send({
-        message: `${data.deletedCount} Users were deleted successfully!`
+        message: `${data.deletedCount} Destinations were deleted successfully!`
       });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all users."
+          err.message || "Some error occurred while removing all the destinations."
       });
     });
 };
+
+
 
