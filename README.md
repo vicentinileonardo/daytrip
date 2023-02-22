@@ -34,6 +34,18 @@ object storage (if needed): amazon S3 (cloud-based). For instance: Image service
 
 docker compose for the entire infrastructure
 
+
+## TODO
+
+controllare versione mongoose
+integrazione con graphql nel destination_db_adapter
+
+
+
+
+
+
+
 ## Acknowledgements
 
 Node.js + Mongoose skeleton: https://github.com/bezkoder
