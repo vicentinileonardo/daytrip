@@ -37,18 +37,20 @@ docker compose for the entire infrastructure
 
 ## TODO
 
-controllare versione mongoose
-integrazione con graphql nel destination_db_adapter
-DOCUMENTAZIONE API
-ERRORI 404
-
-
-
++ controllare versione mongoose
++ integrazione con graphql nel destination_db_adapter
++ DOCUMENTAZIONE API
++ ERRORI 404
++ geocoding adapter di solito restituisce una bounding box, per ottenere le origin coordinate un servizio di livello business deve fare la media delle coordinate dei punti della bounding box
 
 
 ## Acknowledgements
 
-Node.js + Mongoose skeleton: https://github.com/bezkoder
++ Node.js + Mongoose skeleton: https://github.com/bezkoder
 
-Nominatim self-hosted as a docker container: https://github.com/mediagis/nominatim-docker
++ GeoCoding (Nominatim): © OpenStreetMap
+
++ Nominatim self-hosted as a docker container (Not used, too slow startup for the demo test): https://github.com/mediagis/nominatim-docker
+
+
 
