@@ -50,5 +50,5 @@ ERRORI 404
 
 Node.js + Mongoose skeleton: https://github.com/bezkoder
 
-https://github.com/mediagis/nominatim-docker
+Nominatim self-hosted as a docker container: https://github.com/mediagis/nominatim-docker
 
