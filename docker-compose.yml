@@ -24,21 +24,7 @@ services:
       - $DESTINATION_DB_LOCAL_PORT:$DESTINATION_DB_DOCKER_PORT
     volumes:
       - destination_db:/data/db
-  
-  nominatim:
-    container_name: nominatim
-    image: mediagis/nominatim:4.2
-    restart: always
-    ports:
-        - $NOMINATIM_LOCAL_PORT:$NOMINATIM_DOCKER_PORT
-    environment:
-        # see https://github.com/mediagis/nominatim-docker/tree/master/4.2#configuration for more options
-        PBF_URL: https://download.geofabrik.de/europe/italy-latest.osm.pbf
-        REPLICATION_URL: https://download.geofabrik.de/europe/italy-updates/
-    volumes:
-        - nominatim-data:/var/lib/postgresql/14/main
-    shm_size: 1gb
-      
+        
   user_db_adapter:
     depends_on:
       - user_db
@@ -96,4 +82,3 @@ services:
 volumes:
   user_db:
   destination_db:
-  nominatim-data:
