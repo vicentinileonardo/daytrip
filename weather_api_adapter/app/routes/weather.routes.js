@@ -8,5 +8,3 @@ module.exports = app => {
 
   app.use("/api/weathers", router);
 };
-
-

@@ -211,6 +211,3 @@ exports.deleteAll = (req, res) => {
       });
     });
 };
-
-
-

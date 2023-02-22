@@ -36,6 +36,3 @@ def geocode():
 @app.errorhandler(404)
 def not_found(error):
     return "Not found", 404
-
-
-    

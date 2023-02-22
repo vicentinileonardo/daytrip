@@ -51,6 +51,3 @@ docker compose for the entire infrastructure
 + GeoCoding (Nominatim): © OpenStreetMap
 
 + Nominatim self-hosted as a docker container (Not used, too slow startup for the demo test): https://github.com/mediagis/nominatim-docker
-
-
-

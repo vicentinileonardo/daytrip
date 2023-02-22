@@ -69,7 +69,3 @@ exports.findOne = async (req, res) => {
   res.send(forecast_filtered);
 
 };
-
-
-
-
