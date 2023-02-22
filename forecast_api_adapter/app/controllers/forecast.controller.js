@@ -6,13 +6,13 @@ exports.findOne = async (req, res) => {
   // Validate request
   if (!req.query.lat) {
     return res.status(400).send({
-      message: "Weather Forecast lat can not be empty!"
+      message: "Forecast lat can not be empty!"
     });
   }
 
   if (!req.query.lon) {
     return res.status(400).send({
-      message: "Weather Forecast lon can not be empty!"
+      message: "Forecast lon can not be empty!"
     });
   }
 

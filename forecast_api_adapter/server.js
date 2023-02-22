@@ -19,10 +19,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "weather_api_adapter is up and running!" });
+  res.json({ message: "forecast_api_adapter is up and running!" });
 });
 
-require("./app/routes/weather.routes")(app);
+require("./app/routes/forecast.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.NODE_DOCKER_PORT || 8080;

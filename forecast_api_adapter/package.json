@@ -1,5 +1,5 @@
 {
-  "name": "weather_db_adapter",
+  "name": "forecast_db_adapter",
   "version": "1.0.0",
   "description": "Node.js Restful CRUD API with Node.js, Express",
   "main": "server.js",
@@ -10,8 +10,7 @@
     "nodejs",
     "express",
     "rest",
-    "api",
-    "mongodb"
+    "api"
   ],
   "author": "Leonardo Vicentini, Luca Vian",
   "license": "ISC",

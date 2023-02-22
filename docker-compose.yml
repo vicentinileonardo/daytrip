@@ -59,14 +59,14 @@ services:
     stdin_open: true
     tty: true
 
-  weather_api_adapter:
-    build: ./weather_api_adapter
+  forecast_api_adapter:
+    build: ./forecast_api_adapter
     restart: always
     env_file: ./.env
     ports:
-      - $WEATHER_API_ADAPTER_LOCAL_PORT:$WEATHER_API_ADAPTER_DOCKER_PORT
+      - $FORECAST_API_ADAPTER_LOCAL_PORT:$FORECAST_API_ADAPTER_DOCKER_PORT
     environment:
-      - API_KEY=$WEATHER_API_KEY
+      - API_KEY=$FORECAST_API_KEY
     stdin_open: true
     tty: true
   
