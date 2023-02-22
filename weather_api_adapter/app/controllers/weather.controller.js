@@ -1,4 +1,3 @@
-
 const fetch = require("node-fetch");
 
 // Find a single Weather Forecast 

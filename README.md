@@ -40,7 +40,7 @@ docker compose for the entire infrastructure
 controllare versione mongoose
 integrazione con graphql nel destination_db_adapter
 DOCUMENTAZIONE API
-
+ERRORI 404
 
 
 
@@ -50,4 +50,5 @@ DOCUMENTAZIONE API
 
 Node.js + Mongoose skeleton: https://github.com/bezkoder
 
+https://github.com/mediagis/nominatim-docker
 
