@@ -10,7 +10,7 @@ nominatim_base_url = "https://nominatim.openstreetmap.org/search?";
 def check():
     return "GeoCoding API Adapter is up and running!", 200
 
-@app.route("/geocode", methods=["GET"])
+@app.route("/api/geocode", methods=["GET"])
 def geocode():
 
     # extract the address from the query string
