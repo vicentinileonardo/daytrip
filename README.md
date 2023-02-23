@@ -101,6 +101,7 @@ When an API call fails due to an error on the server. For example:
 + integrazione con graphql nel destination_db_adapter
 + DOCUMENTAZIONE API
 + vari ERRORI 404
++ vari ERRORI 405 (method not allowed), valutare come gestire
 + controllo status code errori, per adesso sono tutti 400 (bad request)
 + pagination and limit in all GET requests (find all)
 + registrazione utente, login, logout
@@ -128,7 +129,7 @@ When an API call fails due to an error on the server. For example:
 ## Report notes
 
 Adapter layer: used for standardizing the data coming from the external APIs. It is used to map the data coming from the external APIs to the data model used in the application. It is also used to map the data coming from the application to the data model used by the external APIs.
-
+mascherare alcune cose come le api key
 
 ## Acknowledgements
 
@@ -136,4 +137,4 @@ Adapter layer: used for standardizing the data coming from the external APIs. It
 
 + GeoCoding (Nominatim): © OpenStreetMap
 
-+ Nominatim self-hosted as a docker container (Not used, too slow startup for the demo test): https://github.com/mediagis/nominatim-docker
++ Nominatim self-hosted as a docker container (Not used, too slow startup for the demo test of the project): https://github.com/mediagis/nominatim-docker

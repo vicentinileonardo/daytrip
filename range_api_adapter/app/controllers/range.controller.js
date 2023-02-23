@@ -1,28 +1,48 @@
 const fetch = require("node-fetch");
 
-// Find a single crowd Forecast 
+// Find a single Range
 exports.findOne = async (req, res) => {
 
+  // Validate request
   if (!req.query.lat) {
-    res.status(400).send({ message: "Range request must have lat!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat is required" }
+    });
   }
 
   if (!req.query.lon) {
-    res.status(400).send({ message: "Range request must have lon!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon is required" }
+    });
   }
 
   if (req.query.lon < -180 || req.query.lon > 180) {
-    res.status(400).send({ message: "Range request must have a correct lon for origin coordinates!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must have a valid value (between -180 and 180)" }
+    });
   }
 
   if (req.query.lat < -90 || req.query.lat > 90) {
-    res.status(400).send({ message: "Range request must have a correct lat for origin coordinates!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must have a valid value (between -90 and 90)" }
+    });
   } 
-  
+
+  // Validate timeBudgetInSec format that must be a number
+  if (req.query.timeBudgetInSec) {
+    let timeBudgetInSec_regex = /^\d+$/
+    if (!timeBudgetInSec_regex.test(req.query.timeBudgetInSec)) {
+      return res.status(400).send({
+        "status": "fail",
+        "data": { "timeBudgetInSec" : "timeBudgetInSec must have a valid format (a positive integer)" }
+      });
+    }
+  }
+
   //recupero parametri
   let lat = req.query.lat
   let lon = req.query.lon
@@ -38,31 +58,34 @@ exports.findOne = async (req, res) => {
   
   let url = base_url + "/" + origin + "/json?" + "traffic=" + traffic + "&timeBudgetInSec=" + timeBudgetInSec + "&key=" + api_key 
 
-  const response = await fetch(url);
-  const data = await response.json();
+  const external_response = await fetch(url);
+  const data = await external_response.json();
 
   if (data["error"]) {
-    res.status(400).send({ message: data["error"]["description"] });
+    let response = {
+      "status": "error",
+      "code": 500,
+      "message": data["error"]["description"]
+    }
+    res.send(response);
     return;
   }
   
   //filtered_response
-  filtered_response = {
-    range: {
-      origin: {
-        lat: lat,
-        lon: lon
-      },
-      boundary: data["reachableRange"]["boundary"]
-    } 
+  let response = {
+    "status": "success",
+    "message": "Range retrieved successfully",
+    "data": {
+      "range": {
+        "origin": {
+            "lat": lat,
+            "lon": lon
+          },
+        "boundary": data["reachableRange"]["boundary"]
+      } 
+    }
   }
 
-  filtered_response = JSON.stringify(filtered_response);
-  
-  //response with check for errors
-  res.send(filtered_response);
+  res.send(response);
+  return;
 };
-
-
-
-

@@ -16,10 +16,24 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "range_api_adapter is up and running!" });
+  let response = {
+    "status": "success",
+    "message": "Range API Adapter is up and running",
+    "data": null
+  }
+  return res.send(response);
+});
+
+// handle error 405 - method not allowed
+app.all("/", function(req, res, next) {
+  let response = {
+    "status": "error",
+    "code": 405,
+    "message": "The requested method is not allowed for the URL."
+  }
+  res.status(405).send(response);
 });
 
 require("./app/routes/range.routes")(app);
