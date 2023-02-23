@@ -86,7 +86,18 @@ services:
     ports:
       - $CROWD_API_ADAPTER_LOCAL_PORT:$CROWD_API_ADAPTER_DOCKER_PORT
     environment:
-      - API_KEY=$CROWD_API_KEY
+      - API_KEY=$TOMTOM_API_KEY
+    stdin_open: true
+    tty: true
+  
+  range_api_adapter:
+    build: ./range_api_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $RANGE_API_ADAPTER_LOCAL_PORT:$RANGE_API_ADAPTER_DOCKER_PORT
+    environment:
+      - API_KEY=$TOMTOM_API_KEY
     stdin_open: true
     tty: true
 
