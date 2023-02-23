@@ -79,6 +79,17 @@ services:
     stdin_open: true
     tty: true
 
+  crowd_api_adapter:
+    build: ./crowd_api_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $CROWD_API_ADAPTER_LOCAL_PORT:$CROWD_API_ADAPTER_DOCKER_PORT
+    environment:
+      - API_KEY=$CROWD_API_KEY
+    stdin_open: true
+    tty: true
+
 volumes:
   user_db:
   destination_db:
