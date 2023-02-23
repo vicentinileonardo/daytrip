@@ -35,13 +35,99 @@ object storage (if needed): amazon S3 (cloud-based). For instance: Image service
 docker compose for the entire infrastructure
 
 
+## Response structure
+JSend specification: https://github.com/omniti-labs/jsend
+
+```json
+{
+  "status": "success",
+  "message": "User found",
+  "data": 
+  {
+    "user": {
+      "id": "60f9b9b0e3c6b8a2b4b1f1f1",
+      "name": "John Doe",
+      "email": "" 
+    }
+  }
+}
+```
+  
+```json
+{
+  "status": "success",
+  "message": "Users found",
+  "data": {
+    "users": [
+      {
+        "id": "60f9b9b0b9b9b9b9b9b9b9b9",
+        "name": "John Doe",
+        "email": ""
+      },
+      {
+        "id": "456w232323",
+        "name": "Jane Smith",
+        "email": ""
+      }
+    ]
+  }
+}
+
+```
+Fail
+When an API call is rejected due to invalid data or call conditions, the JSend object's data key contains an object explaining what went wrong, typically a hash of validation errors. For example:
+
+```json
+{
+  "status": "fail",
+  "data": { "lon" : "lon is required" }
+}
+```
+
+Error
+When an API call fails due to an error on the server. For example:
+
+```json
+{
+  "status": "error",
+  "code": 500,
+  "message": "Unable to communicate with database"
+}
+```
+
 ## TODO
 
 + controllare versione mongoose
 + integrazione con graphql nel destination_db_adapter
 + DOCUMENTAZIONE API
-+ ERRORI 404
-+ geocoding adapter di solito restituisce una bounding box, per ottenere le origin coordinate un servizio di livello business deve fare la media delle coordinate dei punti della bounding box
++ vari ERRORI 404
++ controllo status code errori, per adesso sono tutti 400 (bad request)
++ pagination and limit in all GET requests (find all)
++ registrazione utente, login, logout
++ Some API endpoints should require a basic form of authentication: creazione, modifica, eliminazione destinations
+  - accesso non consentito se non autenticato, errore 401 (unauthorized)
+  - accesso non consentito se autenticato ma non autorizzato, errore 403 (forbidden) (utente ma non admin) 
+
+<br>
+
++ business level service: geocoding adapter di solito restituisce una bounding box, per ottenere le origin coordinate un servizio di livello business deve fare la media delle coordinate dei punti della bounding box
++ business level service: restituisce lista delle destinazioni le cui coordinate sono contenute nella poligono ottenuto dal range api adapter
+
+<br>
+
++ api chaching: https://www.npmjs.com/package/apicache middleware (da solo o con redis)
+
++ eventualmente, image service per le immagini delle destinazioni 
+
++ eventualmente (all fine di tutto il resto), per sfruttare registrazione utenti, registrare le destinazione che un utente ha gia' visitato e rimuoverle dalla lista delle destinazioni proposte
+  - in questo caso, ci sarebbe anche il **nesting di risorse** (destinazioni visitate di un utente), una caratteristica di REST che non abbiamo ancora visto
+
++ valutare l'utilizzo di NGINX come reverse proxy
+
+
+## Report notes
+
+Adapter layer: used for standardizing the data coming from the external APIs. It is used to map the data coming from the external APIs to the data model used in the application. It is also used to map the data coming from the application to the data model used by the external APIs.
 
 
 ## Acknowledgements
