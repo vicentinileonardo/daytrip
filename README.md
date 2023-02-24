@@ -126,6 +126,25 @@ When an API call fails due to an error on the server. For example:
 + valutare l'utilizzo di NGINX come reverse proxy
 
 
+Business logic service:
+
++ coordinates: talk to geocoding_api_adapter
+  - input: location string 
+  - response: coordinates
+
++ bounding box (range): talk to range_api_adapter
+  - input: origin_coordinates, entire set of destinations
+  - response: filtered set of destinations
+
++ rating destinations: talk to forecast_api_adapter, crowd_api_adapter
+  - response: for each destination, a rating
+
++ bounding box + rating destinations
+  - loop through the list of destinations and calculate the rating for each destination
+
+
+
+
 ## Report notes
 
 Adapter layer: used for standardizing the data coming from the external APIs. It is used to map the data coming from the external APIs to the data model used in the application. It is also used to map the data coming from the application to the data model used by the external APIs.

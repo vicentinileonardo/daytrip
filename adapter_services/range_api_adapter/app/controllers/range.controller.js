@@ -43,14 +43,14 @@ exports.findOne = async (req, res) => {
     }
   }
 
-  //recupero parametri
+  //parameters
   let lat = req.query.lat
   let lon = req.query.lon
 
-  //ternary operator, time
+  //default value for timeBudgetInSec
   let timeBudgetInSec = req.query.timeBudgetInSec ? req.query.timeBudgetInSec : (12 * 60 * 60);
   
-  //chiamata API esterna
+  //external API call
   let base_url = "https://api.tomtom.com/routing/1/calculateReachableRange/"
   let api_key = process.env.API_KEY
   let origin = lat + "," + lon
@@ -67,7 +67,7 @@ exports.findOne = async (req, res) => {
       "code": 500,
       "message": data["error"]["description"]
     }
-    res.send(response);
+    res.status(500).send(response);
     return;
   }
   

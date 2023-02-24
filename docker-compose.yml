@@ -28,7 +28,7 @@ services:
   user_db_adapter:
     depends_on:
       - user_db
-    build: ./user_db_adapter
+    build: ./adapter_services/user_db_adapter
     restart: always
     env_file: ./.env
     ports:
@@ -45,7 +45,7 @@ services:
   destination_db_adapter:
     depends_on:
       - destination_db
-    build: ./destination_db_adapter
+    build: ./adapter_services/destination_db_adapter
     restart: always
     env_file: ./.env
     ports:
@@ -60,7 +60,7 @@ services:
     tty: true
 
   forecast_api_adapter:
-    build: ./forecast_api_adapter
+    build: ./adapter_services/forecast_api_adapter
     restart: always
     env_file: ./.env
     ports:
@@ -71,7 +71,7 @@ services:
     tty: true
   
   geocoding_api_adapter:
-    build: ./geocoding_api_adapter
+    build: ./adapter_services/geocoding_api_adapter
     restart: always
     env_file: ./.env
     ports:
@@ -80,7 +80,7 @@ services:
     tty: true
 
   crowd_api_adapter:
-    build: ./crowd_api_adapter
+    build: ./adapter_services/crowd_api_adapter
     restart: always
     env_file: ./.env
     ports:
@@ -91,13 +91,22 @@ services:
     tty: true
   
   range_api_adapter:
-    build: ./range_api_adapter
+    build: ./adapter_services/range_api_adapter
     restart: always
     env_file: ./.env
     ports:
       - $RANGE_API_ADAPTER_LOCAL_PORT:$RANGE_API_ADAPTER_DOCKER_PORT
     environment:
       - API_KEY=$TOMTOM_API_KEY
+    stdin_open: true
+    tty: true
+
+  coordinates_bl:
+    build: ./business_logic_services/coordinates_bl
+    restart: always
+    env_file: ./.env
+    ports:
+      - $COORDINATES_BL_LOCAL_PORT:$COORDINATES_BL_DOCKER_PORT
     stdin_open: true
     tty: true
 
