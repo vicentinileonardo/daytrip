@@ -101,12 +101,14 @@ services:
     stdin_open: true
     tty: true
 
-  coordinates_bl:
-    build: ./business_logic_services/coordinates_bl
+  coordinates_service:
+    build: ./business_logic_services/coordinates_service
     restart: always
     env_file: ./.env
     ports:
-      - $COORDINATES_BL_LOCAL_PORT:$COORDINATES_BL_DOCKER_PORT
+      - $COORDINATES_SERVICE_LOCAL_PORT:$COORDINATES_SERVICE_DOCKER_PORT
+    environment:
+      - COORDINATES_SERVICE_DOCKER_PORT=$COORDINATES_SERVICE_DOCKER_PORT
     stdin_open: true
     tty: true
 

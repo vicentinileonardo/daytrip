@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
 import requests
+import os
 
 app = Flask(__name__)
 
@@ -26,21 +27,44 @@ def geocode():
         }
         return response, 400
     
-    base_url = "http://geocoding_api_adapter:8080/api/geocodes?";
+    # get environment variable
+    SERVICE_PORT = os.environ.get("COORDINATES_SERVICE_DOCKER_PORT")
 
+    base_url = "http://geocoding_api_adapter:"
+    port = f"{SERVICE_PORT}"
+    endpoint = "/api/geocodes?"
     query_string = f"address={location_name}"
     
-    external_response = requests.get(base_url + query_string)
+    external_response = requests.get(base_url + port + endpoint + query_string)
 
     status_code = external_response.status_code
 
     if status_code == 200:
-        print(external_response.json())
-        #data = external_response.json()[0]
+        
+        data = external_response.json().get("data")
+
+        #bounding_box = data.get("geocode").get("boundingbox")
+        # calculating mean_lat and mean_lon, keeping only 7 decimal places, like openstreetmap does
+        #lat = round((float(bounding_box[0]) + float(bounding_box[1])) / 2, 7)
+        #lon = round((float(bounding_box[2]) + float(bounding_box[3])) / 2, 7)
+
+        lat = data.get("geocode").get("lat")
+        lon = data.get("geocode").get("lon")
+
+        # round to 7 decimal places, like openstreetmap does
+        lat = round(float(lat), 7)
+        lon = round(float(lon), 7)
+        
+        coordinates = {
+            "lat": lat,
+            "lon": lon
+        }
+
         response = {
             "status": "success",
+            "message": "Coordinates retrieved successfully",
             "data": {
-                "geocode": external_response.json()
+                "coordinates": coordinates
                 }
         }
         return response, status_code
@@ -48,11 +72,10 @@ def geocode():
         response = {
             "status": "error",
             "code": status_code,
-            "message": "Error calling Nominatim API"    
+            "message": "Error retrieving coordinates"    
         }
         return response, status_code
     
-
 # error 404
 @app.errorhandler(404)
 def not_found(error):
@@ -68,10 +91,9 @@ def not_found(error):
 @app.errorhandler(405)
 def method_not_allowed(error):
         
-        response = {
-            "status": "error",
-            "code": 405,
-            "message": "The method is not allowed for the requested URL."
-        }
-        return response, 405
-
+    response = {
+        "status": "error",
+        "code": 405,
+        "message": "The method is not allowed for the requested URL."
+    }
+    return response, 405

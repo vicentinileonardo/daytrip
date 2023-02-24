@@ -35,12 +35,22 @@ def geocode():
     # call the Nominatim API
     external_response = requests.get(nominatim_base_url + query_string)
 
-    status_code = external_response.status_code
+    # check if the response is empty
+    data = external_response.json()
+    if data == []:
+        response = {
+            "status": "fail",
+            "data": {"address": "address not found"}  
+        }
+        return response, 400
 
+    status_code = external_response.status_code
+    data = data[0] # get the first element of the list, the first address found
+    
     if status_code == 200:
-        data = external_response.json()[0]
         response = {
             "status": "success",
+            "message" : "Geocodes retrieved successfully",
             "data": {
                 "geocode": data
                 }
@@ -69,10 +79,10 @@ def not_found(error):
 @app.errorhandler(405)
 def method_not_allowed(error):
         
-        response = {
-            "status": "error",
-            "code": 405,
-            "message": "The method is not allowed for the requested URL."
-        }
-        return response, 405
+    response = {
+        "status": "error",
+        "code": 405,
+        "message": "The method is not allowed for the requested URL."
+    }
+    return response, 405
 
