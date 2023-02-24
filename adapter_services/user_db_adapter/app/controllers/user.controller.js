@@ -7,53 +7,73 @@ exports.create = (req, res) => {
 
   // Validate request
   if (!req.body.name) {
-    res.status(400).send({ message: "User must have a name!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "name" : "name is required" }
+    });
   }
 
   if (!req.body.surname) {
-    res.status(400).send({ message: "User must have a surname!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "surname" : "surname is required" }
+    });
   }
 
   if (!req.body.email) {
-    res.status(400).send({ message: "User must have an email!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "email" : "email is required" }
+    });
   }
 
   if (!req.body.password) {
-    res.status(400).send({ message: "User must have a password!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "password" : "password is required" }
+    });
   }
 
   if (!req.body.status) {
-    res.status(400).send({ message: "User must have a status!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "status" : "status is required" }
+    });
   }
 
   if (!req.body.origin_name) {
-    res.status(400).send({ message: "User must have an origin name!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "origin_name" : "origin_name is required" }
+    });
   }
 
   if (!req.body.origin_coordinates) {
-    res.status(400).send({ message: "User must have origin coordinates!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "origin_coordinates" : "origin_coordinates is required" }
+    });
   }
 
   if (!req.body.origin_coordinates["lat"] || !req.body.origin_coordinates["lon"]) {
-    res.status(400).send({ message: "User must have both origin coordinates (lat and lon) !" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "origin_coordinates" : "origin_coordinates must have both lat and lon fields" }
+    });
   }
 
   if (req.body.origin_coordinates["lon"] < -180 || req.body.origin_coordinates["lon"] > 180) {
-    res.status(400).send({ message: "User must have a correct lon for origin coordinates!" });
-    return;
-  }
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must have a valid value (between -180 and 180)" }
+    });
+  } 
 
   if (req.body.origin_coordinates["lat"] < -90 || req.body.origin_coordinates["lat"] > 90) {
-    res.status(400).send({ message: "User must have a correct lat for origin coordinates!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must have a valid value (between -90 and 90)" }
+    });
   } 
  
   const saltRounds = 10;
@@ -76,13 +96,18 @@ exports.create = (req, res) => {
     user
       .save(user)
       .then(data => {
-        res.send(data);
+        res.status(200).send({
+            "status": "success",
+            "message": "User added successfully",
+            "data" : { "user" : data }
+          });
       })
       .catch(err => {
         res.status(500).send({
-          message:
-            err.message || "Some error occurred while creating the User."
-        });
+            "status" : "error",
+            "code": 500,
+            "message" : err.message || "Some error occurred while creating the User."
+          });
       });
 
   });
@@ -106,13 +131,18 @@ exports.findAll = (req, res) => {
     .skip(paginationOptions.page * paginationOptions.limit)
     .limit(paginationOptions.limit)
     .then(data => {
-      res.send(data);
+      res.status(200).send({
+          "status" : "success",
+          "message": "Users retrieved successfully",
+          "data" : {"users":data}
+        });
     })
     .catch(err => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving users."
-      });
+          "status" : "error",
+          "code": 500,
+          "message" : err.message || "Some error occurred while retrieving the Users"
+        });
     });
 };
 
@@ -122,25 +152,36 @@ exports.findOne = (req, res) => {
 
   User.findById(id)
     .then(data => {
-      if (!data)
-        res.status(404).send({ message: "Not found User with id " + id });
-      else res.send(data);
+      if (!data) res.status(404).send({
+          "status" : "error",
+          "code": 404,
+          "message" : "Not found User with id="+id
+        });
+      else res.status(200).send({
+          "status" : "success",
+          "message": "User retrieved successfully",
+          "data" : {"user":data}
+        });
     })
     .catch(err => {
-      res
-        .status(500)
-        .send({ message: "Error retrieving User with id=" + id });
+      res.status(500).send({
+        "status" : "error",
+        "code": 500,
+        "message" : "Error retrieving User with id=" + id
+      });
     });
 };
 
 // Update a User by the id in the request
 exports.update = (req, res) => {
-  
+  const bcrypt = require('bcrypt');
+
   // Validate request
   // check id
   if (!req.params.id) {
     return res.status(400).send({
-      message: "User id can not be empty!"
+      "status": "fail",
+      "data": { "id" : "id is required" }
     });
   }
 
@@ -149,70 +190,106 @@ exports.update = (req, res) => {
 
   // check each field
   if (!req.body.name) {
-    res.status(400).send({ message: "User to be updated must have a name!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "name" : "name is required" }
+    });
   }
 
   if (!req.body.surname) {
-    res.status(400).send({ message: "User to be updated must have a surname!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "surname" : "surname is required" }
+    });
   }
 
   if (!req.body.email) {
-    res.status(400).send({ message: "User to be updated must have an email!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "email" : "email is required" }
+    });
   }
 
   if (!req.body.password) {
-    res.status(400).send({ message: "User to be updated must have a password!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "password" : "password is required" }
+    });
   }
 
   if (!req.body.status) {
-    res.status(400).send({ message: "User to be updated must have a status!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "status" : "status is required" }
+    });
   }
 
   if (!req.body.origin_name) {
-    res.status(400).send({ message: "User to be updated must have an origin name!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "origin_name" : "origin_name is required" }
+    });
   }
 
   if (!req.body.origin_coordinates) {
-    res.status(400).send({ message: "User to be updated must have origin coordinates!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "origin_coordinates" : "origin_coordinates is required" }
+    });
   }
 
   if (!req.body.origin_coordinates["lat"] || !req.body.origin_coordinates["lon"]) {
-    res.status(400).send({ message: "User to be updated must have both origin coordinates (lat and lon) !" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "origin_coordinates" : "origin_coordinates must have both lat and lon fields" }
+    });
   }
 
   if (req.body.origin_coordinates["lon"] < -180 || req.body.origin_coordinates["lon"] > 180) {
-    res.status(400).send({ message: "User to be updated must have a correct lon for origin coordinates!" });
-    return;
-  }
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must have a valid value (between -180 and 180)" }
+    });
+  } 
 
   if (req.body.origin_coordinates["lat"] < -90 || req.body.origin_coordinates["lat"] > 90) {
-    res.status(400).send({ message: "User to be updated must have a correct lat for origin coordinates!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must have a valid value (between -90 and 90)" }
+    });
   } 
 
   const id = req.params.id;
 
-  User.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
-    .then(data => {
+  const saltRounds = 10;
+  bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+
+    req.body.password = hash
+
+    User.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+      .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot update User with id=${id}. Maybe User was not found!`
-        });
-      } else res.send({ message: "User was updated successfully." });
+            "status" : "error",
+            "code": 404,
+            "message" : "Cannot update User with id="+id+". Maybe User was not found"
+          });
+        } else 
+          res.status(200).send({
+            status : "success",
+            message : "User updated successfully",
+            data : null
+          });
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating User with id=" + id
-      });
+          "status" : "error",
+          "code": 500,
+          "message" : "Error updating the User with id="+id
+        });
     });
+  });
+
 };
 
 // Delete a User with the specified id in the request
@@ -223,18 +300,24 @@ exports.delete = (req, res) => {
     .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot delete User with id=${id}. Maybe User was not found!`
-        });
+            "status" : "error",
+            "code": 404,
+            "message" : "Cannot delete User with id="+id+". Maybe User was not found"
+          });
       } else {
-        res.send({
-          message: "User was deleted successfully!"
+        res.status(200).send({
+          status : "success",
+          message : "User deleted successfully",
+          data : null
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete User with id=" + id
-      });
+          "status" : "error",
+          "code": 500,
+          "message" : "Could not delete the User with id="+id
+        });
     });
 };
 
@@ -247,15 +330,18 @@ exports.deleteAll = (req, res) => {
 
   User.deleteMany(condition)
     .then(data => {
-      res.send({
-        message: `${data.deletedCount} Users were deleted successfully!`
+      res.status(200).send({
+        status : "success",
+        message : "Users deleted successfully",
+        data : null
       });
     })
     .catch(err => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all users."
-      });
+          "status" : "error",
+          "code": 500,
+          "message" : "Some error occurred while removing all the users"
+        });
     });
 };
 
@@ -266,12 +352,17 @@ exports.import = (req, res) => {
 
   User.insertMany(users)
     .then(data => {
-      res.send(data);
+      res.status(200).send({
+          "status" : "success",
+          "message" : "Dummy Users added successfully",
+          "data" : {"users":data}
+        });
     })
     .catch(err => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while importing users."
-      });
+          "status" : "error",
+          "code": 500,
+          "message" : "Some error occurred while importing users"
+        });
     });
 }

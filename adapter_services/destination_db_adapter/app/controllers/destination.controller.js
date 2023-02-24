@@ -6,38 +6,52 @@ exports.create = (req, res) => {
 
   // Validate request
   if (!req.body.name) {
-    res.status(400).send({ message: "Destination must have a name!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "name" : "name is required" }
+    });
   }
 
   if (!req.body.description) {
-    res.status(400).send({ message: "Destination must have a description!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "description" : "description is required" }
+    });
   }
 
   if (!req.body.image_url) {
-    res.status(400).send({ message: "Destination must have a image URL!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "image_url" : "image_url is required" }
+    });
   }
 
   if (!req.body.coordinates) {
-    res.status(400).send({ message: "Destination must have coordinates!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "coordinates" : "coordinates is required" }
+    });
   }
 
   if (!req.body.coordinates["lat"] || !req.body.coordinates["lon"]) {
-    res.status(400).send({ message: "Destination must have both coordinates (lat and lon) !" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "coordinates" : "coordinates must have both lat and lon fields" }
+    });
   }
 
   if (req.body.coordinates["lon"] < -180 || req.body.coordinates["lon"] > 180) {
-    res.status(400).send({ message: "Destination must have a correct lon for coordinates (between -180 and 180)!" });
-    return;
-  }
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must have a valid value (between -180 and 180)" }
+    });
+  } 
 
   if (req.body.coordinates["lat"] < -90 || req.body.coordinates["lat"] > 90) {
-    res.status(400).send({ message: "Destination must have a correct lat for coordinates (between -90 and 90)!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must have a valid value (between -90 and 90)" }
+    });
   } 
 
   // Create a Destination
@@ -55,20 +69,24 @@ exports.create = (req, res) => {
   destination
     .save(destination)
     .then(data => {
-      res.send(data);
+      res.status(200).send({
+        "status": "success",
+        "message": "Destination added successfully",
+        "data" : { "destination" : data }
+      });
     })
     .catch(err => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Destination."
+        "status" : "error",
+        "code": 500,
+        "message" : err.message || "Some error occurred while creating the Destination."
       });
     });
 };
 
 // Retrieve all Destinations from the database.
 exports.findAll = (req, res) => {
-  
-  //Add pagination
+
   const paginationOptions = {
     page: parseInt(req.query.page, 10) || 0,
     limit: parseInt(req.query.limit, 10) || 10
@@ -78,12 +96,17 @@ exports.findAll = (req, res) => {
     .skip(paginationOptions.page * paginationOptions.limit)
     .limit(paginationOptions.limit)
     .then(data => {
-      res.send(data);
-    })
+      res.status(200).send({
+        "status" : "success",
+        "message": "Destinations retrieved successfully",
+        "data" : {"destinations":data}
+      });
+     })
     .catch(err => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving destinations."
+        "status" : "error",
+        "code": 500,
+        "message" : err.message || "Some error occurred while retrieving the Destinations"
       });
     });
 };
@@ -95,13 +118,23 @@ exports.findOne = (req, res) => {
   Destination.findById(id)
     .then(data => {
       if (!data)
-        res.status(404).send({ message: "Not found Destination with id " + id });
-      else res.send(data);
+        res.status(404).send({
+          "status" : "error",
+          "code": 404,
+          "message" : "Not found Destination with id="+id
+        });
+      else res.status(200).send({
+          "status" : "success",
+          "message": "Destination retrieved successfully",
+          "data" : {"destination":data}
+        });
     })
     .catch(err => {
-      res
-        .status(500)
-        .send({ message: "Error retrieving Destination with id=" + id });
+      res.status(500).send({
+        "status" : "error",
+        "code": 500,
+        "message" : "Error retrieving Destination with id=" + id
+      });
     });
 };
 
@@ -112,7 +145,8 @@ exports.update = (req, res) => {
   // check id
   if (!req.params.id) {
     return res.status(400).send({
-      message: "Destination id can not be empty!"
+      "status": "fail",
+      "data": { "id" : "id is required" }
     });
   }
 
@@ -121,38 +155,52 @@ exports.update = (req, res) => {
 
   // check each field
   if (!req.body.name) {
-    res.status(400).send({ message: "Destination to be updated must have a name!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "name" : "name is required" }
+    });
   }
 
   if (!req.body.description) {
-    res.status(400).send({ message: "Destination to be updated must have a description!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "description" : "description is required" }
+    });
   }
 
   if (!req.body.image_url) {
-    res.status(400).send({ message: "Destination to be updated must have an image_url!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "image_url" : "image_url is required" }
+    });
   }
 
   if (!req.body.coordinates) {
-    res.status(400).send({ message: "Destination to be updated must have coordinates!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "coordinates" : "coordinates is required" }
+    });
   }
 
   if (!req.body.coordinates["lat"] || !req.body.coordinates["lon"]) {
-    res.status(400).send({ message: "Destination to be updated must have both coordinates (lat and lon) !" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "coordinates" : "coordinates must have both lat and lon fields" }
+    });
   }
 
   if (req.body.coordinates["lon"] < -180 || req.body.coordinates["lon"] > 180) {
-    res.status(400).send({ message: "Destination to be updated must have a correct lon for coordinates!" });
-    return;
-  }
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must have a valid value (between -180 and 180)" }
+    });
+  } 
 
   if (req.body.coordinates["lat"] < -90 || req.body.coordinates["lat"] > 90) {
-    res.status(400).send({ message: "Destination to be updated must have a correct lat for coordinates!" });
-    return;
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must have a valid value (between -90 and 90)" }
+    });
   } 
 
   const id = req.params.id;
@@ -161,13 +209,22 @@ exports.update = (req, res) => {
     .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot update Destination with id=${id}. Maybe Destination was not found!`
+          "status" : "error",
+          "code": 404,
+          "message" : "Cannot update Destination with id="+id+". Maybe Destination was not found"
         });
-      } else res.send({ message: "Destination was updated successfully." });
+      } else 
+        res.status(200).send({
+          status : "success",
+          message : "Destination updated successfully",
+          data : null
+        });
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Destination with id=" + id
+        "status" : "error",
+        "code": 500,
+        "message" : "Error updating the Destination with id="+id
       });
     });
 };
@@ -180,17 +237,23 @@ exports.delete = (req, res) => {
     .then(data => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot delete Destination with id=${id}. Maybe Destination was not found!`
+          "status" : "error",
+          "code": 404,
+          "message" : "Cannot delete Destination with id="+id+". Maybe Destination was not found"
         });
       } else {
-        res.send({
-          message: "Destination was deleted successfully!"
+        res.status(200).send({
+          status : "success",
+          message : "Destination deleted successfully",
+          data : null
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Destination with id=" + id
+        "status" : "error",
+        "code": 500,
+        "message" : "Could not delete the Destination with id="+id
       });
     });
 };
@@ -200,14 +263,17 @@ exports.deleteAll = (req, res) => {
 
   Destination.deleteMany()
     .then(data => {
-      res.send({
-        message: `${data.deletedCount} Destinations were deleted successfully!`
+      res.status(200).send({
+        status : "success",
+        message : "Destinations deleted successfully",
+        data : null
       });
     })
     .catch(err => {
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all the destinations."
+        "status" : "error",
+        "code": 500,
+        "message" : "Some error occurred while removing all the destinations"
       });
     });
 };
