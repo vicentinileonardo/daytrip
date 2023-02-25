@@ -39,7 +39,19 @@ app.all("/", function(req, res, next) {
 require("./app/routes/forecast.routes")(app);
 
 // set port, listen for requests
-const PORT = process.env.NODE_DOCKER_PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
-});
+if (process.env.NODE_ENV === 'production') {
+  console.log("PRODUCTION MODE");
+  const PORT = process.env.NODE_DOCKER_PORT || 8080;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}.`);
+  });
+} 
+if (process.env.NODE_ENV === 'test') {
+  console.log("TEST MODE");
+  const PORT = process.env.TEST_DOCKER_PORT || 8081;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}.`);
+  });
+}
+
+module.exports = app;

@@ -67,6 +67,7 @@ services:
       - $FORECAST_API_ADAPTER_LOCAL_PORT:$FORECAST_API_ADAPTER_DOCKER_PORT
     environment:
       - API_KEY=$FORECAST_API_KEY
+      - NODE_ENV=production
     stdin_open: true
     tty: true
   

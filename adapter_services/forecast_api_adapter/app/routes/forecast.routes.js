@@ -27,6 +27,5 @@ module.exports = app => {
     }
     res.status(404).send(response);
   });
-
   
 };

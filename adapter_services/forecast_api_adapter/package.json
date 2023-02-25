@@ -4,7 +4,7 @@
   "description": "Node.js Restful CRUD API with Node.js, Express",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "nodejs",
@@ -19,5 +19,9 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "jest": "^29.4.3",
+    "supertest": "^6.1.6"
   }
 }
