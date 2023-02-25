@@ -98,8 +98,10 @@ When an API call fails due to an error on the server. For example:
 ## TODO
 
 + controllare versione mongoose
++ controllare versione node
 + integrazione con graphql nel destination_db_adapter
 + DOCUMENTAZIONE API
++ valutare se aggiungere versioning (v1) all'endpoint delle api
 + vari ERRORI 404
 + vari ERRORI 405 (method not allowed), valutare come gestire
 + controllo status code errori, per adesso sono tutti 400 (bad request)
@@ -108,6 +110,7 @@ When an API call fails due to an error on the server. For example:
 + Some API endpoints should require a basic form of authentication: creazione, modifica, eliminazione destinations
   - accesso non consentito se non autenticato, errore 401 (unauthorized)
   - accesso non consentito se autenticato ma non autorizzato, errore 403 (forbidden) (utente ma non admin) 
++ working testing environment
 
 <br>
 
@@ -126,7 +129,7 @@ When an API call fails due to an error on the server. For example:
 + valutare l'utilizzo di NGINX come reverse proxy
 
 
-Business logic service:
+## Business logic services:
 
 + coordinates: talk to geocoding_api_adapter
   - input: location string 
@@ -135,6 +138,15 @@ Business logic service:
 + bounding box (range): talk to range_api_adapter
   - input: origin_coordinates, entire set of destinations
   - response: filtered set of destinations
+
+  - TO BE CITED IN THE REPORT: Both "/reachable_destinations" and "/destinations/reachable" can be considered RESTful resource names. However, "/destinations/reachable" is more RESTful compliant as it follows the RESTful principle of using hierarchical URIs to represent relationships between resources.
+
+  In REST, resources can be organized into a hierarchy based on their relationships with other resources. By using a hierarchical URI like "/destinations/reachable", it becomes clear that the reachable destinations resource is a subset of the destinations resource, and it helps to maintain a consistent and logical structure for the API.
+
+  On the other hand, "/reachable_destinations" does not indicate any relationship between the reachable destinations resource and the destinations resource, which could make the API less intuitive to use and harder to understand.
+
+  So, "/destinations/reachable" is the more RESTful compliant option.
+
 
 + rating destinations: talk to forecast_api_adapter, crowd_api_adapter
   - response: for each destination, a rating
