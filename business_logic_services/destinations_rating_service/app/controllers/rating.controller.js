@@ -59,6 +59,13 @@ exports.findOne = async (req, res) => {
     });
   }
 
+  if (isNaN(req.query.lon)) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must be a number" }
+    });
+  } 
+
   if (req.query.lat < -90 || req.query.lat > 90) {
     return res.status(400).send({
       "status": "fail",
@@ -66,10 +73,24 @@ exports.findOne = async (req, res) => {
     });
   } 
 
+  if (isNaN(req.query.lat)) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must be a number" }
+    });
+  } 
+
   if (req.query.hour < 0 || req.query.hour > 23) {
     return res.status(400).send({
       "status": "fail",
-      "data": { "lat" : "hour must have a valid value (between 0 and 23)" }
+      "data": { "hour" : "hour must have a valid value (between 0 and 23)" }
+    });
+  } 
+
+  if (isNaN(req.query.hour)) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "hour" : "hour must be a number" }
     });
   } 
 
@@ -88,9 +109,25 @@ exports.findOne = async (req, res) => {
 
   external_response = await fetch(url);
   data = await external_response.json()
-  data = data["data"]["forecast"]["hour"][hour]
+
+  //error management
+  if (data["status"]=="error") {
+    return res.status(400).send({
+      "status": "error",
+      "code": data["code"],
+      "message": data["message"]
+    });
+  }
+  if (data["status"]=="fail") {
+    return res.status(400).send({
+      "status": "fail",
+      "data": data["data"]
+    });
+  }
+
 
   //computation forecast rating, each subrating is between 0 and 1, higher is better
+  data = data["data"]["forecast"]["hour"][hour]
 
   temp_c_rating = 1-(Math.abs(data["temp_c"]-20)/30)  //20°C assumed as optimal temp
 
@@ -116,10 +153,26 @@ exports.findOne = async (req, res) => {
 
   external_response = await fetch(url);
   data = await external_response.json()
-  data = data["data"]["crowd"]
+
+  //error management
+  if (data["status"]=="error") {
+    return res.status(400).send({
+      "status": "error",
+      "code": data["code"],
+      "message": data["message"]
+    });
+  }
+  if (data["status"]=="fail") {
+    return res.status(400).send({
+      "status": "fail",
+      "data": data["data"]
+    });
+  }
 
 
   //computation crowd rating
+  data = data["data"]["crowd"]
+
   currentSpeed = data["currentSpeed"]
   freeFlowSpeed = data["freeFlowSpeed"]
 
@@ -139,11 +192,13 @@ exports.findOne = async (req, res) => {
     "status": "success",
     "message": "Rating retrieved successfully",
     "data" : {
-      "forecast_rating" : forecast_rating,
-      "forecast_description" : forecast_description,
-      "crowd_rating" : crowd_rating,
-      "crowd_description" : crowd_description,
-      "final_rating" : final_rating
+      "rating" :{
+        "forecast_rating" : forecast_rating,
+        "forecast_description" : forecast_description,
+        "crowd_rating" : crowd_rating,
+        "crowd_description" : crowd_description,
+        "final_rating" : final_rating
+      }
     }
   });
 };
