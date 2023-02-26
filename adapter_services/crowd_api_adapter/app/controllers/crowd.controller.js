@@ -25,10 +25,24 @@ exports.findOne = async (req, res) => {
     });
   }
 
+  if (isNaN(req.query.lon)) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must be a number" }
+    });
+  } 
+
   if (req.query.lat < -90 || req.query.lat > 90) {
     return res.status(400).send({
       "status": "fail",
       "data": { "lat" : "lat must have a valid value (between -90 and 90)" }
+    });
+  } 
+
+  if (isNaN(req.query.lat)) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must be a number" }
     });
   } 
 
@@ -57,9 +71,6 @@ exports.findOne = async (req, res) => {
 
   const currentSpeed=Number(data.flowSegmentData.currentSpeed)
   const freeFlowSpeed=Number(data.flowSegmentData.freeFlowSpeed)
-
-  //crowdedRate, value between 0 and 1, higher is better
-  const crowdedRate=1-((freeFlowSpeed-currentSpeed)/freeFlowSpeed)
 
   //response with check for errors
   res.status(200).send({

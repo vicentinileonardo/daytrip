@@ -62,10 +62,27 @@ exports.create = (req, res) => {
     });
   }
 
+  // Validate email format
+  let email_regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+  if (!email_regex.test(req.body.email)) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "email" : "email must have a valid format (string@string.string)" }
+    });
+  }
+
   if (req.body.origin_coordinates["lon"] < -180 || req.body.origin_coordinates["lon"] > 180) {
     return res.status(400).send({
       "status": "fail",
       "data": { "lon" : "lon must have a valid value (between -180 and 180)" }
+    });
+  } 
+
+
+  if (isNaN(req.body.origin_coordinates["lon"])) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must be a number" }
     });
   } 
 
@@ -76,6 +93,13 @@ exports.create = (req, res) => {
     });
   } 
  
+  if (isNaN(req.body.origin_coordinates["lat"])) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must be a number" }
+    });
+  } 
+
   const saltRounds = 10;
   bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
     // Create a User
@@ -245,6 +269,15 @@ exports.update = (req, res) => {
     });
   }
 
+  // Validate email format
+  let email_regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+  if (!email_regex.test(req.body.email)) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "email" : "email must have a valid format (string@string.string)" }
+    });
+  }
+
   if (req.body.origin_coordinates["lon"] < -180 || req.body.origin_coordinates["lon"] > 180) {
     return res.status(400).send({
       "status": "fail",
@@ -252,10 +285,24 @@ exports.update = (req, res) => {
     });
   } 
 
+  if (isNaN(req.body.origin_coordinates["lon"])) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must be a number" }
+    });
+  } 
+
   if (req.body.origin_coordinates["lat"] < -90 || req.body.origin_coordinates["lat"] > 90) {
     return res.status(400).send({
       "status": "fail",
       "data": { "lat" : "lat must have a valid value (between -90 and 90)" }
+    });
+  } 
+
+  if (isNaN(req.body.origin_coordinates["lat"])) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must be a number" }
     });
   } 
 

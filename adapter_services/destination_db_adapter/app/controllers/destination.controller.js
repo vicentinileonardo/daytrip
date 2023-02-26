@@ -47,10 +47,24 @@ exports.create = (req, res) => {
     });
   } 
 
+  if (isNaN(req.body.coordinates["lon"])) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must be a number" }
+    });
+  } 
+
   if (req.body.coordinates["lat"] < -90 || req.body.coordinates["lat"] > 90) {
     return res.status(400).send({
       "status": "fail",
       "data": { "lat" : "lat must have a valid value (between -90 and 90)" }
+    });
+  } 
+
+  if (isNaN(req.body.coordinates["lat"])) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must be a number" }
     });
   } 
 
@@ -196,10 +210,24 @@ exports.update = (req, res) => {
     });
   } 
 
+  if (isNaN(req.body.coordinates["lon"])) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must be a number" }
+    });
+  } 
+
   if (req.body.coordinates["lat"] < -90 || req.body.coordinates["lat"] > 90) {
     return res.status(400).send({
       "status": "fail",
       "data": { "lat" : "lat must have a valid value (between -90 and 90)" }
+    });
+  } 
+
+  if (isNaN(req.body.coordinates["lat"])) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must be a number" }
     });
   } 
 

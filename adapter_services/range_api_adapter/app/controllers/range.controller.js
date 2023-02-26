@@ -25,6 +25,13 @@ exports.findOne = async (req, res) => {
     });
   }
 
+  if (isNaN(req.query.lon)) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must be a number" }
+    });
+  } 
+
   if (req.query.lat < -90 || req.query.lat > 90) {
     return res.status(400).send({
       "status": "fail",
@@ -32,6 +39,13 @@ exports.findOne = async (req, res) => {
     });
   } 
 
+  if (isNaN(req.query.lat)) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must be a number" }
+    });
+  } 
+  
   // Validate timeBudgetInSec format that must be a number
   if (req.query.timeBudgetInSec) {
     let timeBudgetInSec_regex = /^\d+$/

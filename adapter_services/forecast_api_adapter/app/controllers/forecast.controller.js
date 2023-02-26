@@ -25,12 +25,27 @@ exports.findOne = async (req, res) => {
     });
   } 
 
+  if (isNaN(req.query.lat)) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must be a number" }
+    });
+  } 
+
   if (req.query.lon < -180 || req.query.lon > 180) {
     return res.status(400).send({
       "status": "fail",
       "data": { "lon" : "lon must have a valid value (between -180 and 180)" }
     });
   }
+
+
+  if (isNaN(req.query.lon)) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must be a number" }
+    });
+  } 
 
   if (!req.query.date) {
     return res.status(400).send({
