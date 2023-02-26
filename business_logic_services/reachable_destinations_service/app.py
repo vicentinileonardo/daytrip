@@ -102,6 +102,24 @@ def reachable_destinations():
     external_response = requests.get(base_url + port + endpoint)
     status_code = external_response.status_code
 
+    '''
+    fare qualcosa del genere per gestire gli errori, qui e sotto
+    //error management
+    if (data["status"]=="error") {
+    return res.status(400).send({
+      "status": "error",
+      "code": data["code"],
+      "message": data["message"]
+    });
+    }
+    if (data["status"]=="fail") {
+    return res.status(400).send({
+      "status": "fail",
+      "data": data["data"]
+    });
+    }
+    '''
+
     if status_code != 200:
         response = {
             "status": "error",
