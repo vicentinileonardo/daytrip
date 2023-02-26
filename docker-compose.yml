@@ -124,6 +124,14 @@ services:
     stdin_open: true
     tty: true
 
+  destinations_rating_service:
+    build: ./business_logic_services/destinations_rating_service
+    restart: always
+    env_file: ./.env
+    ports:
+      - $DESTINATIONS_RATING_SERVICE_LOCAL_PORT:$DESTINATIONS_RATING_SERVICE_DOCKER_PORT
+    stdin_open: true
+    tty: true
 volumes:
   user_db:
   destination_db:
