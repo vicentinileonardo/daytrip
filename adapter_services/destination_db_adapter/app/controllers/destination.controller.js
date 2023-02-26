@@ -29,7 +29,7 @@ exports.create = (req, res) => {
   if (!req.body.coordinates) {
     return res.status(400).send({
       "status": "fail",
-      "data": { "coordinates" : "coordinates is required" }
+      "data": { "coordinates" : "coordinates are required" }
     });
   }
 

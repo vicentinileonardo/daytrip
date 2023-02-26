@@ -113,6 +113,17 @@ services:
     stdin_open: true
     tty: true
 
+  reachable_destinations_service:
+    build: ./business_logic_services/reachable_destinations_service
+    restart: always
+    env_file: ./.env
+    ports:
+      - $REACHABLE_DESTINATIONS_SERVICE_LOCAL_PORT:$REACHABLE_DESTINATIONS_SERVICE_DOCKER_PORT
+    environment:
+      - REACHABLE_DESTINATIONS_SERVICE_DOCKER_PORT=$REACHABLE_DESTINATIONS_SERVICE_DOCKER_PORT
+    stdin_open: true
+    tty: true
+
 volumes:
   user_db:
   destination_db:

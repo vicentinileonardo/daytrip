@@ -102,6 +102,7 @@ When an API call fails due to an error on the server. For example:
 + integrazione con graphql nel destination_db_adapter
 + DOCUMENTAZIONE API
 + valutare se aggiungere versioning (v1) all'endpoint delle api
++ conrollare che le post diano 201 (created) e non 200 (ok) 
 + vari ERRORI 404
 + vari ERRORI 405 (method not allowed), valutare come gestire
 + controllo status code errori, per adesso sono tutti 400 (bad request)

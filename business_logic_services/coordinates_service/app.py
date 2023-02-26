@@ -28,7 +28,7 @@ def geocode():
         return response, 400
     
     # get environment variable
-    SERVICE_PORT = os.environ.get("COORDINATES_SERVICE_DOCKER_PORT")
+    SERVICE_PORT = os.environ.get("GEOCODING_API_ADAPTER_DOCKER_PORT")
 
     base_url = "http://geocoding_api_adapter:"
     port = f"{SERVICE_PORT}"
