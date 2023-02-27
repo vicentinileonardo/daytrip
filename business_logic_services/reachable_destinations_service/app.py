@@ -99,39 +99,36 @@ def reachable_destinations():
     port = f"{DESTINATION_DB_ADAPTER_PORT}"
     endpoint = "/api/destinations"
     
-    external_response = requests.get(base_url + port + endpoint)
-    status_code = external_response.status_code
+    try:
+        external_response = requests.get(base_url + port + endpoint)
+        status_code = external_response.status_code
+        external_response = external_response.json()
+    except requests.exceptions.ConnectionError:
+        response = {
+            "status": "error",
+            "code": 500,
+            "message": "Error connecting to Destination DB Adapter Service"
+        }
+        return response, 500
 
-    '''
-    fare qualcosa del genere per gestire gli errori, qui e sotto
-    //error management
-    if (data["status"]=="error") {
-    return res.status(400).send({
-      "status": "error",
-      "code": data["code"],
-      "message": data["message"]
-    });
-    }
-    if (data["status"]=="fail") {
-    return res.status(400).send({
-      "status": "fail",
-      "data": data["data"]
-    });
-    }
-    '''
-
-    if status_code != 200:
+    if external_response.get("status") == "error":
         response = {
             "status": "error",
             "code": status_code,
-            "message": "Error retrieving destinations from Destination DB Adapter Service"    
+            "message": "Error retrieving destinations from Destination DB Adapter Service: " + external_response.get("message")
         }
         return response, status_code
 
-    
-    data = external_response.json().get("data")
-    destinations = data.get("destinations")
+    if external_response.get("status") == "fail":
+        response = {
+            "status": "fail",
+            "data": external_response.get("data")
+        }
+        return response, status_code
 
+    destinations = external_response.get("data").get("destinations")
+
+    # if there are no destinations in the database
     if destinations == []:
         response = {
             "status": "fail",
@@ -147,19 +144,42 @@ def reachable_destinations():
     endpoint = "/api/ranges"
     query_string = f"?lat={lat_origin}&lon={lon_origin}&timeBudgetInSec={timeBudgetInSec}"
     
-    external_response = requests.get(base_url + port + endpoint + query_string)
-    status_code = external_response.status_code
+    try:
+        external_response = requests.get(base_url + port + endpoint + query_string)
+        status_code = external_response.status_code
+        external_response = external_response.json()
+    except requests.exceptions.ConnectionError:
+        response = {
+            "status": "error",
+            "code": 500,
+            "message": "Error connecting to Range API Adapter Service"
+        }
+        return response, 500
 
-    if status_code != 200:
+    if external_response.get("status") == "error":
         response = {
             "status": "error",
             "code": status_code,
-            "message": "Error retrieving ranges from Range API Adapter Service, coordinates could be in the middle of the ocean or in a place where there is no data"    
+            "message": "Error retrieving data from Range API Adapter Service: " + external_response.get("message")
         }
         return response, status_code
+
+    if external_response.get("status") == "fail":
+        response = {
+            "status": "fail",
+            "data": external_response.get("data")
+        }
+        return response, status_code
+
+    boundary = external_response.get("data").get("range").get("boundary")
     
-    data = external_response.json().get("data")
-    boundary = data.get("range").get("boundary")
+    # if there is no boundary
+    if boundary == [] or boundary == None:
+        response = {
+            "status": "fail",
+            "data": {"reachable_destinations": "There is no boundary"}
+        }
+        return response, 500
 
     boundary_points = []
     for boundary_point in boundary:
@@ -179,15 +199,10 @@ def reachable_destinations():
         return response, 500
 
     # check every destination if it is inside the range
-    print("destinations", destinations)
     reachable_destinations = []
     for destination in destinations:
-        print("destination", destination)
-        destination_point = (destination.get("coordinates").get("lat"), destination.get("coordinates").get("lon"))
-        print("destination_point", destination_point)
-
+        destination_point = (destination.get("coordinates").get("lat"), destination.get("coordinates").get("lon"))        
         destination_in_polygon = path.contains_points([destination_point])
-        print("destination_in_polygon", destination_in_polygon)
         if destination_in_polygon:
             reachable_destinations.append(destination)
     
@@ -205,7 +220,6 @@ def reachable_destinations():
     }
     
     return response, 200
-    
     
 # error 404
 @app.errorhandler(404)

@@ -16,7 +16,7 @@ def check():
     return response, 200
 
 @app.route("/api/coordinates", methods=["GET"])
-def geocode():
+def coordinates():
 
     location_name = request.args.get("location_name")
 
@@ -35,47 +35,54 @@ def geocode():
     endpoint = "/api/geocodes?"
     query_string = f"address={location_name}"
     
-    external_response = requests.get(base_url + port + endpoint + query_string)
-
-    status_code = external_response.status_code
-
-    if status_code == 200:
-        
-        data = external_response.json().get("data")
-
-        #bounding_box = data.get("geocode").get("boundingbox")
-        # calculating mean_lat and mean_lon, keeping only 7 decimal places, like openstreetmap does
-        #lat = round((float(bounding_box[0]) + float(bounding_box[1])) / 2, 7)
-        #lon = round((float(bounding_box[2]) + float(bounding_box[3])) / 2, 7)
-
-        lat = data.get("geocode").get("lat")
-        lon = data.get("geocode").get("lon")
-
-        # round to 7 decimal places, like openstreetmap does
-        lat = round(float(lat), 7)
-        lon = round(float(lon), 7)
-        
-        coordinates = {
-            "lat": lat,
-            "lon": lon
-        }
-
+    try:
+        external_response = requests.get(base_url + port + endpoint + query_string)
+        status_code = external_response.status_code
+        external_response = external_response.json()
+    except requests.exceptions.ConnectionError:
         response = {
-            "status": "success",
-            "message": "Coordinates retrieved successfully",
-            "data": {
-                "coordinates": coordinates
-                }
+            "status": "error",
+            "code": 500,
+            "message": "Error connecting to Geocoding API Adapter Service"
         }
-        return response, status_code
-    else:
+        return response, 500
+
+    if external_response.get("status") == "error":
         response = {
             "status": "error",
             "code": status_code,
-            "message": "Error retrieving coordinates"    
+            "message": "Error retrieving destinations from Geocoding API Adapter Service: " + external_response.get("message")
+        }
+        return response, status_code
+
+    if external_response.get("status") == "fail":
+        response = {
+            "status": "fail",
+            "data": external_response.get("data")
         }
         return response, status_code
     
+    lat = external_response.get("data").get("geocode").get("lat")
+    lon = external_response.get("data").get("geocode").get("lon")
+
+    # round to 7 decimal places, like openstreetmap does
+    lat = round(float(lat), 7)
+    lon = round(float(lon), 7)
+    
+    coordinates = {
+        "lat": lat,
+        "lon": lon
+    }
+
+    response = {
+        "status": "success",
+        "message": "Coordinates retrieved successfully",
+        "data": {
+            "coordinates": coordinates
+            }
+    }
+    return response, 200
+
 # error 404
 @app.errorhandler(404)
 def not_found(error):
