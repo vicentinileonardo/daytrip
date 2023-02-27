@@ -3,6 +3,9 @@ module.exports = app => {
 
   var router = require("express").Router();
 
+  //bulk import (ONLY FOR DEVELOPMENT)
+  router.post("/bulk", destinations.import);
+
   // Create a new Destination
   router.post("/", destinations.create);
 
