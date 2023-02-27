@@ -103,7 +103,7 @@ exports.findAll = (req, res) => {
 
   const paginationOptions = {
     page: parseInt(req.query.page, 10) || 0,
-    limit: parseInt(req.query.limit, 10) || 10
+    limit: parseInt(req.query.limit, 10) || 0
   }
 
   Destination.find({})
