@@ -83,7 +83,7 @@ exports.create = (req, res) => {
   destination
     .save(destination)
     .then(data => {
-      res.status(200).send({
+      res.status(201).send({
         "status": "success",
         "message": "Destination added successfully",
         "data" : { "destination" : data }
@@ -164,8 +164,8 @@ exports.update = (req, res) => {
     });
   }
 
-  console.log("req.params: ", req.params);
-  console.log("req.body: ", req.body);
+  //console.log("req.params: ", req.params);
+  //console.log("req.body: ", req.body);
 
   // check each field
   if (!req.body.name) {

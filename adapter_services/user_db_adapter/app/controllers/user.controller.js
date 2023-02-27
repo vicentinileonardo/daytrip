@@ -120,7 +120,7 @@ exports.create = (req, res) => {
     user
       .save(user)
       .then(data => {
-        res.status(200).send({
+        res.status(201).send({
             "status": "success",
             "message": "User added successfully",
             "data" : { "user" : data }

@@ -4,8 +4,6 @@ import requests
 
 app = Flask(__name__)
 
-nominatim_base_url = "https://nominatim.openstreetmap.org/search?";
-
 @app.route("/", methods=["GET"])
 def check():
     
@@ -33,26 +31,36 @@ def geocode():
     query_string = f"q={address}&format=json&limit=1"
 
     # call the Nominatim API
-    external_response = requests.get(nominatim_base_url + query_string)
+    nominatim_base_url = "https://nominatim.openstreetmap.org/search?";
+
+    try:
+        external_response = requests.get(nominatim_base_url + query_string)
+        status_code = external_response.status_code
+        external_response = external_response.json()
+    except requests.exceptions.RequestException:
+        response = {
+            "status": "error",
+            "code": 500,
+            "message": "Error calling Nominatim API"    
+        }
+        return response, 500
 
     # check if the response is empty
-    data = external_response.json()
-    if data == []:
+    if external_response == []:
         response = {
             "status": "fail",
             "data": {"address": "address not found"}  
         }
         return response, 400
 
-    status_code = external_response.status_code
-    data = data[0] # get the first element of the list, the first address found
+    external_response = external_response[0] # get the first element of the list, the first address found
     
     if status_code == 200:
         response = {
             "status": "success",
-            "message" : "Geocodes retrieved successfully",
+            "message" : "Geocode retrieved successfully",
             "data": {
-                "geocode": data
+                "geocode": external_response
                 }
         }
         return response, status_code
