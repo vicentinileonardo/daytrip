@@ -112,7 +112,6 @@ When an API call fails due to an error on the server. For example:
   - accesso non consentito se non autenticato, errore 401 (unauthorized)
   - accesso non consentito se autenticato ma non autorizzato, errore 403 (forbidden) (utente ma non admin) 
 + working testing environment
-+ DESTINTIONS_RATING_SERVICE: quando capita: Point too far from nearest existing segment, magari semplicemente omettere il crowd rating
 + sia nei file python che nei file di node (controllers in particolare), aggiungere try catch per le richieste sia esterne che interne (agli adapter) e poi testare che vengano gestiti correttamente, stoppando manualmente il container dell'adapter
 
 <br>
