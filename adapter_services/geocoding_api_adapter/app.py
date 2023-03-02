@@ -9,7 +9,7 @@ def check():
     
     response = {
         "status": "success",
-        "message": "Geocoding API Adapter is running",
+        "message": "Geocoding API Adapter is up and running!",
         "data": None
     }
     return response, 200

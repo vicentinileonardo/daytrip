@@ -35,7 +35,12 @@ db.mongoose
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "user_db_adapter is up and running!" });
+  let response = {
+    "status": "success",
+    "message": "user_db_adapter is up and running!",
+    "data": null
+  }
+  res.status(200).send(response);
 });
 
 require("./app/routes/user.routes")(app);

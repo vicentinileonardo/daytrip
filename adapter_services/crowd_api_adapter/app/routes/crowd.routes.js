@@ -3,7 +3,7 @@ module.exports = app => {
 
   var router = require("express").Router();
 
-  // Retrieve a Crowds informations related to a (lat,lon) couple
+  // Retrieve a Crowds information related to a (lat,lon) couple
   router.get("/", crowds.findOne);
 
   // handle error 405 - method not allowed
@@ -28,5 +28,3 @@ module.exports = app => {
     res.status(404).send(response);
   });
 };
-
-

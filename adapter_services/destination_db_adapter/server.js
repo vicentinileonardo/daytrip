@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const db = require("./app/models");
 
-console.log(db.url);
+//console.log(db.url);
 
 db.mongoose
   .connect(db.url, {
@@ -35,7 +35,12 @@ db.mongoose
 
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "destination_db_adapter is up and running!" });
+  let response = {
+    "status": "success",
+    "message": "destination_db_adapter is up and running!",
+    "data": null
+  }
+  res.status(200).send(response);
 });
 
 require("./app/routes/destination.routes")(app);

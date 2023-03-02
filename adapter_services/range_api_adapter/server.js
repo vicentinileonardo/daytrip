@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   let response = {
     "status": "success",
-    "message": "Range API Adapter is up and running",
+    "message": "Range API Adapter is up and running!",
     "data": null
   }
   return res.send(response);

@@ -11,7 +11,7 @@ def check():
     
     response = {
         "status": "success",
-        "message": "Reachable Destinations Business Logic Service is up and running",
+        "message": "Reachable Destinations Business Logic Service is up and running!",
         "data": None
     }
     return response, 200

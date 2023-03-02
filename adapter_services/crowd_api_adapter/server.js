@@ -16,10 +16,14 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "crowd_api_adapter is up and running!" });
+  let response = {
+    "status": "success",
+    "message": "crowd_api_adapter is up and running!",
+    "data": null
+  }
+  res.status(200).send(response);
 });
 
 require("./app/routes/crowd.routes")(app);

@@ -10,7 +10,7 @@ def check():
     
     response = {
         "status": "success",
-        "message": "Coordinates Business Logic Service is up and running",
+        "message": "Coordinates Business Logic Service is up and running!",
         "data": None
     }
     return response, 200

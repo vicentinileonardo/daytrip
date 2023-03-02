@@ -2,6 +2,8 @@ FROM nginx:stable
 
 # Copy the static HTML files to the appropriate directory
 COPY ./templates /usr/share/nginx/html
+COPY ./css /usr/share/nginx/html
+COPY ./js /usr/share/nginx/html
 
 # Copy the Nginx configuration file to the appropriate directory
 COPY ./nginx.conf /etc/nginx/nginx.conf

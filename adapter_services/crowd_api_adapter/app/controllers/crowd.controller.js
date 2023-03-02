@@ -1,4 +1,3 @@
-
 const fetch = require("node-fetch");
 
 // Find a single crowd Forecast 
@@ -83,7 +82,3 @@ exports.findOne = async (req, res) => {
     }
   });
 };
-
-
-
-
