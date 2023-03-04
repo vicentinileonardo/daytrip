@@ -196,6 +196,31 @@ exports.findOne = (req, res) => {
     });
 };
 
+
+// Retrieve all Users from the database.
+exports.findByEmail = (req, res) => {
+  const email = req.params.email;
+
+  //condition
+  var condition = { "email": email };
+
+  User.find(condition)
+    .then(data => {
+        res.status(200).send({
+          "status" : "success",
+          "message": "User retrieved successfully",
+          "data" : {"user":data[0]}
+        });
+    })
+    .catch(err => {
+      res.status(500).send({
+          "status" : "error",
+          "code": 500,
+          "message" : err.message || "Some error occurred while retrieving the User"
+        });
+    });
+};
+
 // Update a User by the id in the request
 exports.update = (req, res) => {
   const bcrypt = require('bcrypt');
