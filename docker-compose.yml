@@ -151,6 +151,15 @@ services:
     stdin_open: true
     tty: true
   
+  user_login_service:
+    build: ./process_centric_services/user_login_service
+    restart: always
+    env_file: ./.env
+    ports:
+      - $USER_LOGIN_LOCAL_PORT:$USER_LOGIN_DOCKER_PORT
+    stdin_open: true
+    tty: true
+    
   frontend:
     build: ./frontend
     restart: always
