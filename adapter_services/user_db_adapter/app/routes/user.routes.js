@@ -25,6 +25,10 @@ module.exports = app => {
   // Delete all Users
   router.delete("/", users.deleteAll);
 
+  // Retrieve a single User with id
+  router.get("/email/:email", users.findByEmail);
+
+
   // handle error 405 - method not allowed
   router.all("/", function(req, res, next) {
     let response = {
