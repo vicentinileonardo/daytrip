@@ -177,7 +177,7 @@ def reachable_destinations():
     if boundary == [] or boundary == None:
         response = {
             "status": "fail",
-            "data": {"reachable_destinations": "There is no boundary"}
+            "data": {"destinations": "There is no boundary"}
         }
         return response, 500
 
@@ -194,7 +194,7 @@ def reachable_destinations():
     if not origin_in_polygon:
         response = {
             "status": "fail",
-            "data": {"reachable_destinations": "The origin is not inside the range, weird because the range was calculated using the origin"}
+            "data": {"destinations": "The origin is not inside the range, weird because the range was calculated using the origin"}
         }
         return response, 500
 
@@ -209,14 +209,14 @@ def reachable_destinations():
     if reachable_destinations == []:
         response = {
             "status": "fail",
-            "data": {"reachable_destinations": "There are no destinations reachable from the origin"}
+            "data": {"destinations": "There are no destinations reachable from the origin"}
         }
         return response, 400
 
     response = {
         "status": "success",
         "message": "Destinations reachable from the origin",
-        "data": {"reachable_destinations": reachable_destinations}
+        "data": {"destinations": reachable_destinations}
     }
     
     return response, 200

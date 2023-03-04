@@ -138,7 +138,16 @@ services:
     restart: always
     env_file: ./.env
     ports:
-      - $DESTINATIONS_RATING_SERVICE_LOCAL_PORT:$DESTINATIONS_RATING_SERVICE_DOCKER_PORT
+      - $COORDINATES_RATING_SERVICE_LOCAL_PORT:$COORDINATES_RATING_SERVICE_DOCKER_PORT
+    stdin_open: true
+    tty: true
+
+  best_destinations_service:
+    build: ./process_centric_services/best_destinations_service
+    restart: always
+    env_file: ./.env
+    ports:
+      - $BEST_DESTINATIONS_SERVICE_LOCAL_PORT:$BEST_DESTINATIONS_SERVICE_DOCKER_PORT
     stdin_open: true
     tty: true
   

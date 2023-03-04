@@ -4,7 +4,7 @@ Repository related to the project of the Service Design and Engineering graduate
 The goal of the project is to ideate, design, develop a service-oriented application
 
 
-## generic ideas
+## generic ideas - notes (TO BE DELETED AND MOVED TO THE REPORT)
 
 [Google Doc](https://docs.google.com/document/d/1lDv2JqqlVAuygN2xbacw2XYzxtcyGfdxOXr0agXboIM/edit)
 
@@ -148,6 +148,8 @@ When an API call fails due to an error on the server. For example:
   On the other hand, "/reachable_destinations" does not indicate any relationship between the reachable destinations resource and the destinations resource, which could make the API less intuitive to use and harder to understand.
 
   So, "/destinations/reachable" is the more RESTful compliant option.
+
+  The same reasoning applies to the "/destinations/best" endpoint.
 
 
 + rating destinations: talk to forecast_api_adapter, crowd_api_adapter

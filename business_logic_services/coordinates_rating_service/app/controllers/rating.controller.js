@@ -166,15 +166,22 @@ exports.findOne = async (req, res) => {
   data = await external_response.json()
 
   //error management
+  let crowd_rating = 0
+  let crowd_description = "No data available"
   if (data["status"]=="success") {
 
+    console.log(data)
     //computation crowd rating
     data = data["data"]["crowd"]
-
+    
+    
     currentSpeed = data["currentSpeed"]
     freeFlowSpeed = data["freeFlowSpeed"]
 
-    const crowd_rating=1-((freeFlowSpeed-currentSpeed)/freeFlowSpeed)
+    console.log(currentSpeed)
+    console.log(freeFlowSpeed)
+
+    crowd_rating = 1-((freeFlowSpeed-currentSpeed)/freeFlowSpeed)
 
     //CROWD_DESCRIPTION
     if(crowd_rating>=0.9) crowd_description="Not crowded"
