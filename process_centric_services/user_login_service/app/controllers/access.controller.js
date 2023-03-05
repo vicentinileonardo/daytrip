@@ -27,24 +27,37 @@ exports.findByEmail = async (req, res) => {
   external_response = await fetch(url);
   data = await external_response.json()
 
-  bcrypt.compare(req.query.password,data["data"]["user"]["password"],(err,result)=>{
-    if(err){
-      return res.status(400).send({
-        "status": "error",
-        "data": { "password" : "passwords doesnt match and err" }
+  if(data["data"]["user"]){
+    bcrypt.compare(req.query.password,data["data"]["user"]["password"],(err,result)=>{
+      if(err){
+        return res.status(500).send({
+          "status": "error",
+          "code": 500,
+          "message" : err.message || "Some error occurred while retrieving the User."
       });
-    }
-    if(result){
-      return res.status(200).send({
-        "status": "success",
-        "data": { "password" : "passwords match" }
-      });
-    }else{
-      return res.status(400).send({
-        "status": "error",
-        "data": { "password" : "passwords doesnt match" }
-      });
-    }
-  })
+      }
+      if(result){
+        return res.status(200).send({
+          "status": "success",
+          "data": { "user" : data["data"]["user"]}
+        });
+      }else{
+        return res.status(400).send({
+          "status": "fail",
+          "data": { "password" : "The password inserted does not match the stored one."}
+        });
+      }
+    })
+
+  }else{
+    
+    return res.status(404).send({
+      "status": "error",
+      "code": 404,
+      "message" : "No user with email = "+email_argument+" was found"
+    });
+  }
+
+  
 
 };
