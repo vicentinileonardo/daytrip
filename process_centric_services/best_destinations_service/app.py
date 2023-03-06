@@ -30,57 +30,17 @@ def check():
 @app.route("/api/destinations/best", methods=["GET"])
 def best_destinations():
 
-    lat_origin = request.args.get("lat_origin")
-    lon_origin = request.args.get("lon_origin")
+    address = request.args.get("address")
     date = request.args.get("date")
     timeBudgetInHour = request.args.get("timeBudgetInHour")
 
-    if lat_origin is None:
+    if address is None:
         response = {
             "status": "fail",
-            "data": {"lat_origin": "lat_origin is required"}
+            "data": {"address": "address is required"}
         }
         return response, 400
 
-    # lat_origin must be a integer or float number between -90 and 90
-    try:
-        lat_origin = float(lat_origin)
-        if lat_origin < -90 or lat_origin > 90:
-            response = {
-                "status": "fail",
-                "data": {"lat_origin": "lat_origin must be a number between -90 and 90"}
-            }
-            return response, 400
-    except ValueError:
-        response = {
-            "status": "fail",
-            "data": {"lat_origin": "lat_origin must be a number"}
-        }
-        return response, 400
-
-    if lon_origin is None:
-        response = {
-            "status": "fail",
-            "data": {"lon_origin": "lon_origin is required"}
-        }
-        return response, 400
-
-    # lon_origin must be a integer or float number between -180 and 180
-    try:
-        lon_origin = float(lon_origin)
-        if lon_origin < -180 or lon_origin > 180:
-            response = {
-                "status": "fail",
-                "data": {"lon_origin": "lon_origin must be a number between -180 and 180"}
-            }
-            return response, 400
-    except ValueError:
-        response = {
-            "status": "fail",
-            "data": {"lon_origin": "lon_origin must be a number"}
-        }
-        return response, 400
-    
     if date is None:
         response = {
             "status": "fail",
@@ -139,7 +99,45 @@ def best_destinations():
     
     # convert timeBudgetInHour to seconds, can be also 4,5 hours
     timeBudgetInSec = int(timeBudgetInHour * 3600)
+
+    COORDINATES_SERVICE_PORT = os.environ.get("COORDINATES_SERVICE_DOCKER_PORT")
+
+    base_url = "http://coordinates_service:"
+    port = f"{COORDINATES_SERVICE_PORT}"
+    endpoint = "/api/coordinates"
+    query_string = f"?location_name={address}"
+
+    try:
+        external_response = requests.get(base_url + port + endpoint + query_string)
+        status_code = external_response.status_code
+        external_response = external_response.json()
+    except requests.exceptions.ConnectionError:
+        response = {
+            "status": "error",
+            "code": 500,
+            "message": "Error connecting to Coordinates Service"
+        }
+        return response, 500
     
+    if external_response.get("status") == "error":
+        response = {
+            "status": "error",
+            "code": status_code,
+            "message": "Error retrieving coordinates from Coordinates Service: " + external_response.get("message")
+        }
+        return response, status_code
+    
+    if external_response.get("status") == "fail":
+        response = {
+            "status": "fail",
+            "data": external_response.get("data")
+        }
+        
+        return response, 400
+    
+    lat_origin = external_response.get("data").get("coordinates").get("lat")
+    lon_origin = external_response.get("data").get("coordinates").get("lon")
+
     # get environment variable
     REACHABLE_DESTINATIONS_SERVICE_PORT = os.environ.get("REACHABLE_DESTINATIONS_SERVICE_DOCKER_PORT")
 
