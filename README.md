@@ -98,7 +98,8 @@ When an API call fails due to an error on the server. For example:
 ## TODO
 
 + controllare versione mongoose
-+ controllare versione node
++ controllare versione mongodb, MAYBE USE :lts in the various dockerfiles
++ controllare versione node, MAYBE USE :lts in the various dockerfiles
 + integrazione con graphql nel destination_db_adapter
 + DOCUMENTAZIONE API
 + valutare se aggiungere versioning (v1) all'endpoint delle api
