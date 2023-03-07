@@ -4,7 +4,7 @@ module.exports = app => {
   var router = require("express").Router();
 
   // Retrieve a single User with email
-  router.get("/", accesses.findByEmail);
+  router.post("/", accesses.findByEmail);
 
   // handle error 405 - method not allowed
   router.all("/", function(req, res, next) {

@@ -1,10 +1,10 @@
 const db = require("../models");
 const User = db.users;
+const bcrypt = require('bcrypt');
 
 // Create and Save a new User
 exports.create = (req, res) => {
-  const bcrypt = require('bcrypt');
-
+  
   // Validate request
   if (!req.body.name) {
     return res.status(400).send({
@@ -100,8 +100,12 @@ exports.create = (req, res) => {
     });
   } 
 
+  //hash password
   const saltRounds = 10;
-  bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+  let password = String(req.body.password);
+
+  bcrypt.hash(password, saltRounds, function(err, hash) {
+    
     // Create a User
     const user = new User({
       name: req.body.name,
@@ -115,7 +119,7 @@ exports.create = (req, res) => {
         lon:req.body.origin_coordinates["lon"]
       }
     });
-
+  
     // Save User in the database
     user
       .save(user)
@@ -144,12 +148,12 @@ exports.findAll = (req, res) => {
   //Add pagination
   const paginationOptions = {
     page: parseInt(req.query.page, 10) || 0,
-    limit: parseInt(req.query.limit, 10) || 10
+    limit: parseInt(req.query.limit, 10) || 0
   }
 
   //condition
-  const status = req.query.status;
-  var condition = status ? { status: { $regex: new RegExp(status), $options: "i" } } : {};
+  const email = req.query.email;
+  var condition = email ? { email: { $regex: new RegExp(email), $options: "i" } } : {};
 
   User.find(condition)
     .skip(paginationOptions.page * paginationOptions.limit)

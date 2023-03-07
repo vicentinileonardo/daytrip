@@ -3,14 +3,14 @@ const fetch = require("node-fetch");
 exports.findByEmail = async (req, res) => {
   const bcrypt = require('bcrypt');
 
-  if (!req.query.email) {
+  if (!req.body.email) {
     return res.status(400).send({
       "status": "fail",
       "data": { "email" : "email is required" }
     });
   }
 
-  if (!req.query.password) {
+  if (!req.body.password) {
     return res.status(400).send({
       "status": "fail",
       "data": { "password" : "password is required" }
@@ -19,16 +19,19 @@ exports.findByEmail = async (req, res) => {
 
   base_url="http://user_db_adapter:"
   port = process.env.USER_DB_ADAPTER_DOCKER_PORT || 8080;
-  endpoint = "/api/users/email/"
-  email_argument = req.query.email
+  endpoint = "/api/users?email="
+  email_argument = req.body.email
 
   url= base_url + port + endpoint + email_argument
 
   external_response = await fetch(url);
   data = await external_response.json()
 
-  if(data["data"]["user"]){
-    bcrypt.compare(req.query.password,data["data"]["user"]["password"],(err,result)=>{
+  console.log(data)
+  console.log(data["data"]["users"][0])
+
+  if(data["data"]["users"][0]){
+    bcrypt.compare(req.body.password,data["data"]["users"][0]["password"],(err,result)=>{
       if(err){
         return res.status(500).send({
           "status": "error",
@@ -39,7 +42,7 @@ exports.findByEmail = async (req, res) => {
       if(result){
         return res.status(200).send({
           "status": "success",
-          "data": { "user" : data["data"]["user"]}
+          "data": { "user" : data["data"]["users"][0]}
         });
       }else{
         return res.status(400).send({
