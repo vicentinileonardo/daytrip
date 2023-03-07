@@ -91,11 +91,13 @@
               destinations = data.data.destinations;
               destinations.forEach(destination => {
 
+                console.log(destination);
+
                 const card = document.createElement('div');
                 card.classList.add('card');
                 card.classList.add('mb-3');
 
-                card.style.width = "18rem";
+                card.style.width = "30rem";
                 card.style.height = "30rem";
 
                 //center the card
@@ -120,14 +122,39 @@
                 cardImage.src = destination.image_url;
                 cardImage.alt = destination.name;
                 
-                //resize the image to fit the card
-                cardImage.style.objectFit = "cover";
+                //resize the image that must be a landscape and fit the card
+                cardImage.style.width = "25rem";
+                cardImage.style.height = "auto";
+                 
+                //add rank to the card
+                const cardRank = document.createElement('p');
+                cardRank.classList.add('card-text');
+                cardRank.innerText = "Rank: " + destination.rank;
+                cardRank.style.fontWeight = "bold";
 
+                //add rating to the card
+                const cardRating = document.createElement('p');
+                cardRating.classList.add('card-text');
+                cardRating.innerText = "Rating: " + destination.rating;
+                cardRating.style.fontWeight = "bold";
 
+                //add a google maps link to the card
+                const cardDirections = document.createElement('a');
+                cardDirections.classList.add('card-text');
+                cardDirections.innerText = "Directions (Google Maps)";
+                
+                cardDirections.href = "https://www.google.com/maps/dir/?api=1&origin=" + address + "&destination=" + destination.name;
 
+                cardDirections.target = "_blank";
+                cardDirections.style.fontWeight = "bold";
+
+                cardBody.appendChild(cardRank);
+                cardBody.appendChild(cardRating);
                 cardBody.appendChild(cardImage);
                 cardBody.appendChild(cardTitle);
                 cardBody.appendChild(cardText);
+                cardBody.appendChild(cardDirections);
+
                 card.appendChild(cardBody);
                 destinationCards.appendChild(card);
               });
