@@ -200,7 +200,6 @@ exports.findOne = (req, res) => {
     });
 };
 
-
 // Retrieve all Users from the database.
 exports.findByEmail = (req, res) => {
   const email = req.params.email;
@@ -227,8 +226,7 @@ exports.findByEmail = (req, res) => {
 
 // Update a User by the id in the request
 exports.update = (req, res) => {
-  const bcrypt = require('bcrypt');
-
+  
   // Validate request
   // check id
   if (!req.params.id) {
@@ -237,9 +235,6 @@ exports.update = (req, res) => {
       "data": { "id" : "id is required" }
     });
   }
-
-  console.log("req.params: ", req.params);
-  console.log("req.body: ", req.body);
 
   // check each field
   if (!req.body.name) {
@@ -336,13 +331,15 @@ exports.update = (req, res) => {
   } 
 
   const id = req.params.id;
+  let user_to_update = req.body;
+  let password = String(req.body.password);
 
   const saltRounds = 10;
-  bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+  bcrypt.hash(password, saltRounds, function(err, hash) {
 
-    req.body.password = hash
+    user_to_update.password = hash;
 
-    User.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
+    User.findByIdAndUpdate(id, user_to_update, { useFindAndModify: false })
       .then(data => {
       if (!data) {
         res.status(404).send({
@@ -365,7 +362,6 @@ exports.update = (req, res) => {
         });
     });
   });
-
 };
 
 // Delete a User with the specified id in the request
