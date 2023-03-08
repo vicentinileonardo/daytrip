@@ -1,0 +1,17 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: #f5f5f5;
+}
+
+.form-control{
+  width: 100%;
+}
+
+.bad-field {
+  border-style: solid;
+  border-color: red;
+}
