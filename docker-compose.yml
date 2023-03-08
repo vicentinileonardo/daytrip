@@ -110,6 +110,15 @@ services:
       - $EMAILREP_API_ADAPTER_LOCAL_PORT:$EMAILREP_API_ADAPTER_DOCKER_PORT
     stdin_open: true
     tty: true
+  
+  ip_api_adapter:
+    build: ./adapter_services/ip_api_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $IP_API_ADAPTER_LOCAL_PORT:$IP_API_ADAPTER_DOCKER_PORT
+    stdin_open: true
+    tty: true
 
   coordinates_service:
     build: ./business_logic_services/coordinates_service
