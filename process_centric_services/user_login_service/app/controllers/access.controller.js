@@ -27,9 +27,6 @@ exports.findByEmail = async (req, res) => {
   external_response = await fetch(url);
   data = await external_response.json()
 
-  console.log(data)
-  console.log(data["data"]["users"][0])
-
   if(data["data"]["users"][0]){
     bcrypt.compare(req.body.password,data["data"]["users"][0]["password"],(err,result)=>{
       if(err){
@@ -40,14 +37,24 @@ exports.findByEmail = async (req, res) => {
       });
       }
       if(result){
+        const jwt = require('jsonwebtoken');
+        let jwtSecretKey = "MYKEY";
+        let dataToken = {
+            time: Date(),
+            userId: data["data"]["users"][0]["id"],
+        }
+      
+        const token = jwt.sign(dataToken, jwtSecretKey);
+      
         return res.status(200).send({
           "status": "success",
-          "data": { "user" : data["data"]["users"][0]}
+          "data": { "user" : data["data"]["users"][0],
+                    "token" : token}
         });
       }else{
         return res.status(400).send({
           "status": "fail",
-          "data": { "password" : "The password inserted does not match the stored one."}
+          "data": { "password" : "Wrong Password."}
         });
       }
     })
