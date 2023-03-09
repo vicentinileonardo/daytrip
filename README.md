@@ -20,9 +20,9 @@ authentication: google
 
 external apis: 
 + weather apis
-  - tomorrow
-+ tomtom apis for trafic
-+ for the maps: OpenStreetMap, Leaflet, Nominatim (maybe), or just use the tomtom api should be fine
+  - Weather API
++ tomtom APIs for trafic
+
 
 
 api paradigms: REST and GraphQL (probably we should try to use both for different tasks, due to our lab session)
@@ -103,7 +103,7 @@ When an API call fails due to an error on the server. For example:
 + integrazione con graphql nel destination_db_adapter
 + DOCUMENTAZIONE API
 + valutare se aggiungere versioning (v1) all'endpoint delle api
-+ conrollare che le post diano 201 (created) e non 200 (ok) 
++ controllare che le post diano 201 (created) e non 200 (ok) 
 + vari ERRORI 404
 + vari ERRORI 405 (method not allowed), valutare come gestire
 + controllo status code errori, per adesso sono tutti 400 (bad request)
@@ -170,6 +170,8 @@ mascherare alcune cose come le api key
 ## Acknowledgements
 
 + Node.js + Mongoose skeleton: https://github.com/bezkoder
+
++ JSend specification: https://github.com/omniti-labs/jsend
 
 + GeoCoding (Nominatim): © OpenStreetMap
 
