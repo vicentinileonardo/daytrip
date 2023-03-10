@@ -100,7 +100,7 @@ When an API call fails due to an error on the server. For example:
 + controllare versione mongoose
 + controllare versione mongodb, MAYBE USE :lts in the various dockerfiles
 + controllare versione node, MAYBE USE :lts in the various dockerfiles
-+ integrazione con graphql nel destination_db_adapter
++ integrazione con graphql nel destination_db_adapter (anche evitabile)
 + DOCUMENTAZIONE API
 + valutare se aggiungere versioning (v1) all'endpoint delle api
 + controllare che le post diano 201 (created) e non 200 (ok) 
@@ -117,19 +117,12 @@ When an API call fails due to an error on the server. For example:
 
 <br>
 
-+ business level service: geocoding adapter di solito restituisce una bounding box, per ottenere le origin coordinate un servizio di livello business deve fare la media delle coordinate dei punti della bounding box
-+ business level service: restituisce lista delle destinazioni le cui coordinate sono contenute nella poligono ottenuto dal range api adapter
-
-<br>
-
 + api chaching: https://www.npmjs.com/package/apicache middleware (da solo o con redis)
 
 + eventualmente, image service per le immagini delle destinazioni 
 
 + eventualmente (all fine di tutto il resto), per sfruttare registrazione utenti, registrare le destinazione che un utente ha gia' visitato e rimuoverle dalla lista delle destinazioni proposte
   - in questo caso, ci sarebbe anche il **nesting di risorse** (destinazioni visitate di un utente), una caratteristica di REST che non abbiamo ancora visto
-
-+ valutare l'utilizzo di NGINX come reverse proxy
 
 
 ## Business logic services:
