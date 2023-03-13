@@ -38,19 +38,23 @@ exports.findByEmail = async (req, res) => {
       }
       if(result){
         const jwt = require('jsonwebtoken');
-        let jwtSecretKey = "MYKEY";
-        let dataToken = {
-            time: Date(),
-            userId: data["data"]["users"][0]["id"],
-        }
+
+        const SECRET_KEY = "MYKEY"
+        
+        const user = {
+          time: Date(),
+          status: data["data"]["users"][0]["status"],
+          userId: data["data"]["users"][0]["id"]
+        };
       
-        const token = jwt.sign(dataToken, jwtSecretKey);
+        const token = jwt.sign({ user }, SECRET_KEY, { expiresIn: '600s' });
       
         return res.status(200).send({
           "status": "success",
           "data": { "user" : data["data"]["users"][0],
                     "token" : token}
         });
+
       }else{
         return res.status(400).send({
           "status": "fail",

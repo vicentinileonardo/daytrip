@@ -4,10 +4,10 @@ module.exports = app => {
   var router = require("express").Router();
 
   //bulk import (ONLY FOR DEVELOPMENT)
-  router.post("/bulk", destinations.import);
+  router.post("/bulk", verifyTokenAdmin, destinations.import);
 
   // Create a new Destination
-  router.post("/", destinations.create);
+  router.post("/", verifyTokenAdmin, destinations.create);
 
   // Retrieve all Destinations
   router.get("/", destinations.findAll);
@@ -16,14 +16,14 @@ module.exports = app => {
   router.get("/:id", destinations.findOne);
 
   // Update a Destination with id
-  router.put("/:id", destinations.update);
+  router.put("/:id", verifyTokenAdmin, destinations.update);
   router.put("/", destinations.update);
 
   // Delete a Destination with id
-  router.delete("/:id", destinations.delete);
+  router.delete("/:id", verifyTokenAdmin, destinations.delete);
 
   // Delete all destinations
-  router.delete("/", destinations.deleteAll);
+  router.delete("/", verifyTokenAdmin, destinations.deleteAll);
 
   // handle error 405 - method not allowed
   router.all("/", function(req, res, next) {
@@ -47,3 +47,36 @@ module.exports = app => {
     res.status(404).send(response);
   });
 };
+
+function verifyTokenAdmin(req, res, next) {
+  const jwt = require('jsonwebtoken');
+
+  // Get auth header value
+  const token = req.headers['authorization'];
+
+  const SECRET_KEY = "MYKEY"
+
+  if (!token) return res.status(401).send({
+    "status": "fail",
+    "code": 401,
+    "data": {"authorization": "You need to be authenticated in order to access this method"}
+  });
+  try {
+    const verified = jwt.verify(token, SECRET_KEY);
+    if(JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())["user"]["status"] == "ADMIN"){
+      next();
+    }else{
+      return res.status(401).send({
+        "status": "fail",
+        "code": 401,
+        "data": {"authorization": "You need to be an ADMIN in order to access this method"}
+      })
+    }
+  } catch (err) {
+    res.status(400).send({
+      "status": "error",
+      "code": 400,
+      "message": "JWT error, "+err["message"]
+    });
+  }
+}
