@@ -193,15 +193,12 @@ def best_destinations():
     # loop trough reachable destinations and add rating to each one
     for destination in reachable_destinations:
 
-        print(destination)
-
         lat = destination.get("coordinates").get("lat")
         lon = destination.get("coordinates").get("lon")
 
         query_string = f"?lat={lat}&lon={lon}&date={date}"
         request_url = base_url + port + endpoint + query_string
-        print(request_url)
-    
+        
         try:
             external_response = requests.get(request_url)
             status_code = external_response.status_code
