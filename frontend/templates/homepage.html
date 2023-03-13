@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Daytrip</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   </head>
 
   <body>
@@ -30,11 +31,11 @@
         <br>
       </form>
       <br><br>
-      <div id="destination-cards"></div>
+      <div id="destination-cards" style="text-align:center;"></div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    
+
     <script>
       const destinationForm = document.getElementById('destination-form');
       const destinationCards = document.getElementById('destination-cards');
@@ -89,16 +90,16 @@
             }
             else{
               destinations = data.data.destinations;
+              
               destinations.forEach(destination => {
-
-                console.log(destination);
-
+                
                 const card = document.createElement('div');
                 card.classList.add('card');
                 card.classList.add('mb-3');
+                
 
                 card.style.width = "30rem";
-                card.style.height = "30rem";
+                card.style.height = "auto";
 
                 //center the card
                 card.style.margin = "auto";
@@ -107,36 +108,40 @@
 
                 const cardBody = document.createElement('div');
                 cardBody.classList.add('card-body');
+                cardBody.classList.add('mx-auto');
+                cardBody.classList.add('d-block');
     
                 const cardTitle = document.createElement('h5');
                 cardTitle.classList.add('card-title');
                 cardTitle.innerText = destination.name;
+                cardTitle.style.marginTop = "1rem";
     
                 const cardText = document.createElement('p');
                 cardText.classList.add('card-text');
                 cardText.innerText = destination.description;
+                cardText.style.marginTop = "1rem";
 
                 //add image
                 const cardImage = document.createElement('img');
+                //round all corners
                 cardImage.classList.add('card-img-top');
+                cardImage.classList.add('rounded');
+                cardImage.classList.add('mx-auto');
+                cardImage.classList.add('d-block');
+
                 cardImage.src = destination.image_url;
                 cardImage.alt = destination.name;
                 
-                //resize the image that must be a landscape and fit the card
                 cardImage.style.width = "25rem";
-                cardImage.style.height = "auto";
-                 
+                cardImage.style.height = "15rem";
+                cardImage.style.marginTop = "1rem";
+                
                 //add rank to the card
                 const cardRank = document.createElement('p');
                 cardRank.classList.add('card-text');
-                cardRank.innerText = "Rank: " + destination.rank;
+                cardRank.innerText = "Rank #" + destination.rank;
                 cardRank.style.fontWeight = "bold";
-
-                //add rating to the card
-                const cardRating = document.createElement('p');
-                cardRating.classList.add('card-text');
-                cardRating.innerText = "Rating: " + destination.rating;
-                cardRating.style.fontWeight = "bold";
+                cardRank.style.fontSize = "1.5rem";
 
                 //add a google maps link to the card
                 const cardDirections = document.createElement('a');
@@ -148,13 +153,54 @@
                 cardDirections.target = "_blank";
                 cardDirections.style.fontWeight = "bold";
 
+                // create a div to hold the rating system
+                const ratingContainer = document.createElement("div");
+                ratingContainer.classList.add("rating-container");
+
+                // create a function to update the rating based on the provided score
+                function updateRating(score) {
+                  for (let i = 0; i < 10; i++) {
+                    if (i < score) {
+                      stars[i].classList.add("fas");
+                      stars[i].classList.remove("far");
+                    } else {
+                      stars[i].classList.add("far");
+                      stars[i].classList.remove("fas");
+                    }
+                  }
+                }
+
+                // create an array to hold the star icons
+                const stars = [];
+
+                // create five star icons and add them to the rating container
+                for (let i = 0; i < 10; i++) {
+                  const star = document.createElement("i");
+                  star.classList.add("star", "far", "fa-star");
+                  ratingContainer.appendChild(star);
+                  stars.push(star);
+                }
+
+                stars.forEach(star => {
+                  star.style.color = "gold";
+                });
+
+                // set the size of the stars
+                stars.forEach(star => {
+                  star.style.fontSize = "2rem";
+                });
+
+                
+                const roundedRating = Math.round(destination.rating * 10);
+                updateRating(roundedRating);
+
                 cardBody.appendChild(cardRank);
-                cardBody.appendChild(cardRating);
+                cardBody.appendChild(ratingContainer);
                 cardBody.appendChild(cardImage);
                 cardBody.appendChild(cardTitle);
                 cardBody.appendChild(cardText);
                 cardBody.appendChild(cardDirections);
-
+                
                 card.appendChild(cardBody);
                 destinationCards.appendChild(card);
               });
