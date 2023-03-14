@@ -16,7 +16,7 @@ async function login(){
       return;
     }
   
-    const url = `http://localhost/user_login_service/api/accesses`;
+    const url = `http://localhost/user_login_service/api/sessions`;
   
     //fetch post request
     const response = await fetch(url, {

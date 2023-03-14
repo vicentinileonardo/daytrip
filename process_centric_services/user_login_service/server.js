@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
   res.status(200).send(response);
 });
 
-require("./app/routes/access.routes")(app);
+require("./app/routes/session.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.NODE_DOCKER_PORT || 8080;

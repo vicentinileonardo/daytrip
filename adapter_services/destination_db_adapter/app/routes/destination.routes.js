@@ -52,7 +52,8 @@ function verifyTokenAdmin(req, res, next) {
   const jwt = require('jsonwebtoken');
 
   // Get auth header value
-  const token = req.headers['authorization'];
+  let token = req.headers['authorization'];
+  console.log("token", token)  
 
   const SECRET_KEY = "MYKEY"
 
@@ -61,7 +62,8 @@ function verifyTokenAdmin(req, res, next) {
     "code": 401,
     "data": {"authorization": "You need to be authenticated in order to access this method"}
   });
-  try {
+  try {    
+    token = token.split(' ')[1];
     const verified = jwt.verify(token, SECRET_KEY);
     if(JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())["user"]["status"] == "ADMIN"){
       next();

@@ -1,10 +1,10 @@
 module.exports = app => {
-  const accesses = require("../controllers/access.controller.js");
+  const sessions = require("../controllers/session.controller.js");
 
   var router = require("express").Router();
 
   // Retrieve a single User with email
-  router.post("/", accesses.findByEmail);
+  router.post("/", sessions.findByEmail);
 
   // handle error 405 - method not allowed
   router.all("/", function(req, res, next) {
@@ -16,7 +16,7 @@ module.exports = app => {
     res.status(405).send(response);
   });
 
-  app.use("/api/accesses", router);
+  app.use("/api/sessions", router);
   
   //handle 404
   app.use(function(req, res, next) {

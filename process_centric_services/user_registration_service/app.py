@@ -17,7 +17,7 @@ def check():
     }
     return response, 200
 
-@app.route("/api/users/register", methods=["POST"])
+@app.route("/api/users/signup", methods=["POST"])
 def user_registration():
 
     # get request body 

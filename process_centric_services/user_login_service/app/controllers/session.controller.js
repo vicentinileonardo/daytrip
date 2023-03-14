@@ -47,7 +47,7 @@ exports.findByEmail = async (req, res) => {
           userId: data["data"]["users"][0]["id"]
         };
       
-        const token = jwt.sign({ user }, SECRET_KEY, { expiresIn: '600s' });
+        const token = "Bearer " + jwt.sign({ user }, SECRET_KEY, { expiresIn: '600s' });
       
         return res.status(200).send({
           "status": "success",
