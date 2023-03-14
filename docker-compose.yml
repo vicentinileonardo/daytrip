@@ -102,12 +102,12 @@ services:
     stdin_open: true
     tty: true
 
-  emailrep_api_adapter:
-    build: ./adapter_services/emailrep_api_adapter
+  emailcheck_api_adapter:
+    build: ./adapter_services/emailcheck_api_adapter
     restart: always
     env_file: ./.env
     ports:
-      - $EMAILREP_API_ADAPTER_LOCAL_PORT:$EMAILREP_API_ADAPTER_DOCKER_PORT
+      - $EMAILCHECK_API_ADAPTER_LOCAL_PORT:$EMAILCHECK_API_ADAPTER_DOCKER_PORT
     stdin_open: true
     tty: true
   
@@ -177,6 +177,16 @@ services:
       - $USER_REGISTRATION_LOCAL_PORT:$USER_REGISTRATION_DOCKER_PORT
     stdin_open: true
     tty: true
+
+  valid_email_service:
+    build: ./business_logic_services/valid_email_service
+    restart: always
+    env_file: ./.env
+    ports:
+      - $VALID_EMAIL_SERVICE_LOCAL_PORT:$VALID_EMAIL_SERVICE_DOCKER_PORT
+    stdin_open: true
+    tty: true
+  
     
   frontend:
     build: ./frontend

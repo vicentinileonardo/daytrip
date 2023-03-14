@@ -1,4 +1,4 @@
-# daytrip
+# Daytrip
 Repository related to the project of the Service Design and Engineering graduate course of University of Trento, academic year 2022/2023.
 
 The goal of the project is to ideate, design, develop a service-oriented application
@@ -159,6 +159,12 @@ When an API call fails due to an error on the server. For example:
 
 Adapter layer: used for standardizing the data coming from the external APIs. It is used to map the data coming from the external APIs to the data model used in the application. It is also used to map the data coming from the application to the data model used by the external APIs.
 mascherare alcune cose come le api key
+adapter layer: l'idea è che potrebbe essere usato da altre applicazioni, quindi è importante che sia indipendente dall'applicazione che lo usa. application / use case agnostic
+
+IMPORTANTE, DA METTERE NEL REPORT:
+NGINX is mainly use to serve the static files (html, css, js, images)
+Moreover, NGINX reverse proxy capability is leveraged to route the requests to the appropriate service only for request external to docker environment. 
+Services instead talk to each other using default docker network which is created when using a docker-compose file. 
 
 ## Acknowledgements
 

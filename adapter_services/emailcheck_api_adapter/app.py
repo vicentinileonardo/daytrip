@@ -1,7 +1,6 @@
 from flask import Flask
 from flask import request
 import requests
-import os
 
 app = Flask(__name__)
 
@@ -10,12 +9,12 @@ def check():
     
     response = {
         "status": "success",
-        "message": "EmailRep API Adapter is up and running!",
+        "message": "Email check API Adapter is up and running!",
         "data": None
     }
     return response, 200
 
-@app.route("/api/email_check", methods=["GET"])
+@app.route("/api/email_checks", methods=["GET"])
 def email_check():
 
     # extract the email from the query string
@@ -26,30 +25,26 @@ def email_check():
             "status": "fail",
             "data": {"email": "email is required"}
         }
-        return response, 400
+        return response, 400    
 
-    # build the query string for the EmailRep API
-    query_string = f"q={email}"
+    # call the EVA api, not using https because of certificate issue (expired)
+    eva_base_url = "http://api.eva.pingutil.com/email"
 
-    # call the EmailRep API
-    emailrep_base_url = "https://emailrep.io/";
+    # build the query string for the EVA API
+    query_string = "?email=" + email
 
+    full_url = eva_base_url + query_string
+    
     try:
-        # set headers
-        headers = {
-            "Accept": "application/json",
-            "User-Agent": "Daytrip - EmailRep API Adapter",
-            "Key": os.environ.get("EMAILREP_API_KEY")
-        }
         # make the request
-        external_response = requests.get(emailrep_base_url + query_string, headers=headers)
+        external_response = requests.get(full_url)
         status_code = external_response.status_code
         external_response = external_response.json()
     except requests.exceptions.RequestException:
         response = {
             "status": "error",
             "code": 500,
-            "message": "Error calling EmailRep API"    
+            "message": "Error calling EVA API"    
         }
         return response, 500
 
@@ -99,4 +94,3 @@ def method_not_allowed(error):
         "message": "The method is not allowed for the requested URL."
     }
     return response, 405
-
