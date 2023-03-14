@@ -45,7 +45,7 @@
       destinationForm.addEventListener('submit', (event) => {
         event.preventDefault();
 
-        destinationCards.innerHTML = '<img src="./img/loading.gif" alt="loading" style="width: 250px; height: auto; display: block; margin: auto; margin-top: 3rem">';
+        destinationCards.innerHTML = '<div style="width: 800px; height: 800px; margin: auto; margin-top: 1rem; position: relative; overflow: hidden;"> <img src="./img/loading.gif" alt="loading" style="width: 100%; height: auto; display: block; position: absolute; top: 25%; left: 50%; transform: translate(-50%, -50%); border-radius: 50%; clip-path: circle(25% at center);"> </div>';
 
         const formData = new FormData(destinationForm);
         const address = formData.get('address');
