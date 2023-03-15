@@ -166,6 +166,9 @@ NGINX is mainly use to serve the static files (html, css, js, images)
 Moreover, NGINX reverse proxy capability is leveraged to route the requests to the appropriate service only for request external to docker environment. 
 Services instead talk to each other using default docker network which is created when using a docker-compose file. 
 
+
+Decisione di provare ad utilizzare sia python che node.js per la realizzazione dei servizi. per mostrare il vantaggio di utilizzare il paradigma a servizi
+
 ## Acknowledgements
 
 + Node.js + Mongoose skeleton: https://github.com/bezkoder

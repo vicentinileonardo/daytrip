@@ -99,7 +99,6 @@ exports.findOne = async (req, res) => {
   let hour = Math.round(req.query.hour)
   let date = req.query.date
 
-
   //FORECAST_RATING
   base_url="http://forecast_api_adapter:"
   port = process.env.FORECAST_API_ADAPTER_DOCKER_PORT || 8080;
@@ -131,7 +130,6 @@ exports.findOne = async (req, res) => {
 
   temp_c_rating = 1-(Math.abs(data["temp_c"]-20)/30)  //20°C assumed as optimal temp
 
-
   chance_of_rain_rating = 1-(data["chance_of_rain"]/100)
   chance_of_snow_rating = 1-(data["chance_of_snow"]/100)
 
@@ -141,9 +139,9 @@ exports.findOne = async (req, res) => {
   if(wind_kph_rating<0) wind_kph_rating=0;
 
   const forecast_rating=(temp_c_rating+chance_of_rain_rating+chance_of_snow_rating+wind_kph_rating)/4
-
-  //FORECAST_DESCRIPTION
   const forecast_description=data["condition"]["text"]
+
+
 
   //CROWD_RATING
   base_url="http://crowd_api_adapter:"
@@ -165,38 +163,89 @@ exports.findOne = async (req, res) => {
 
   data = await external_response.json()
 
-  //error management
   let crowd_rating = 0
-  let crowd_description = "No data available"
-  if (data["status"]=="success") {
-
-    console.log(data)
-    //computation crowd rating
+  let crowd_description = ""
+  
+  if (data["status"]=="error" || data["status"]=="fail") {
+    //do not take into account crowd rating
+    crowd_rating = -1
+    crowd_description = "Not available, " + (data["message"] ? data["message"] : data["data"])
+  } else {
     data = data["data"]["crowd"]
-    
-    
     currentSpeed = data["currentSpeed"]
     freeFlowSpeed = data["freeFlowSpeed"]
 
-    console.log(currentSpeed)
-    console.log(freeFlowSpeed)
-
-    crowd_rating = 1-((freeFlowSpeed-currentSpeed)/freeFlowSpeed)
-
-    //CROWD_DESCRIPTION
     if(crowd_rating>=0.9) crowd_description="Not crowded"
     if(crowd_rating<0.9 && crowd_rating>=0.8) crowd_description="Slightly crowded"
     if(crowd_rating<0.80 && crowd_rating>=0.7) crowd_description="Crowded"
     if(crowd_rating<0.7) crowd_description="Very crowded"
 
-    final_rating=(crowd_rating+forecast_rating*3)/4
-
-  } else {
-    crowd_rating = -1
-    crowd_description = "No data available: " + (data["message"] ? data["message"] : data["data"])
-    final_rating = forecast_rating
+    crowd_rating = 1-((freeFlowSpeed-currentSpeed)/freeFlowSpeed)
   }
+
+  //AIR_POLLUTION_RATING
+  base_url="http://air_pollution_api_adapter:";
+  port = process.env.AIR_POLLUTION_API_ADAPTER_DOCKER_PORT || 8080;
+  endpoint = "/api/air_pollution_info?";
+  query_string = "lat=" + lat + "&lon=" + lon;
+
+  url = base_url + port + endpoint + query_string
+
+  try {
+    external_response = await fetch(url);
+  } catch (error) {
+    return res.status(500).send({
+      "status": "error",
+      "code": 500,
+      "message": "Error in fetching data from air pollution api adapter"
+    });
+  }
+
+  data = await external_response.json()
+
+  let air_pollution_rating = 0
+  let air_pollution_description = ""
   
+  if (data["status"]=="error" || data["status"]=="fail") {
+    //do not take into account air pollution rating
+    air_pollution_rating = -1
+    air_pollution_description = "Not available, " + (data["message"] ? data["message"] : data["data"])
+  } else {
+    data = data["data"]["air_pollution_info"]
+    aqi = data["aqi"]
+    
+    air_pollution_rating = 1-(aqi/5)
+    console.log("air pollution rating", air_pollution_rating)
+
+  }
+
+  //weights
+  forecast_weight = 0.87
+  crowd_weight = 0.15
+  air_pollution_weight = 0.03
+
+  //final rating computation. after the computation the rating must be normalized between 0 and 1
+  //check if the rating is available
+  if(forecast_rating>=0 && crowd_rating>=0 && air_pollution_rating>=0) {
+    final_rating = forecast_rating*forecast_weight + crowd_rating*crowd_weight + air_pollution_rating*air_pollution_weight
+  } else if(forecast_rating>=0 && crowd_rating>=0 && air_pollution_rating<0) {
+    //normalize weights
+    forecast_weight = 0.9
+    crowd_weight = 0.1
+    final_rating = forecast_rating*forecast_weight + crowd_rating*crowd_weight
+  } else if(forecast_rating>=0 && crowd_rating<0 && air_pollution_rating>=0) {
+    //normalize weights
+    forecast_weight = 0.95
+    air_pollution_weight = 0.05
+    final_rating = forecast_rating*forecast_weight + air_pollution_rating*air_pollution_weight
+  } else if(forecast_rating>=0 && crowd_rating<0 && air_pollution_rating<0) {
+    //normalize weights
+    forecast_weight = 1
+    final_rating = forecast_rating*forecast_weight
+  } else {
+    final_rating = -1
+  }
+
   //response with check for errors
   res.status(200).send({
     "status": "success",
@@ -207,6 +256,8 @@ exports.findOne = async (req, res) => {
         "forecast_description" : forecast_description,
         "crowd_rating" : crowd_rating,
         "crowd_description" : crowd_description,
+        "air_pollution_rating" : air_pollution_rating,
+        "air_pollution_description" : air_pollution_description,
         "final_rating" : final_rating
       }
     }

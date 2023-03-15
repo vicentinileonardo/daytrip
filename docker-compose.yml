@@ -120,6 +120,15 @@ services:
     stdin_open: true
     tty: true
 
+  air_pollution_api_adapter:
+    build: ./adapter_services/air_pollution_api_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $AIR_POLLUTION_API_ADAPTER_LOCAL_PORT:$AIR_POLLUTION_API_ADAPTER_DOCKER_PORT
+    stdin_open: true
+    tty: true
+
   coordinates_service:
     build: ./business_logic_services/coordinates_service
     restart: always
