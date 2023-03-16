@@ -44,15 +44,16 @@ exports.findByEmail = async (req, res) => {
         const user = {
           time: Date(),
           status: data["data"]["users"][0]["status"],
-          userId: data["data"]["users"][0]["id"]
+          userId: data["data"]["users"][0]["id"],
+          email: data["data"]["users"][0]["email"],
+          origin_name: data["data"]["users"][0]["origin_name"]
         };
       
-        const token = "Bearer " + jwt.sign({ user }, SECRET_KEY, { expiresIn: '600s' });
+        const token = "Bearer " + jwt.sign({ user }, SECRET_KEY, { expiresIn: '180s' });
       
         return res.status(200).send({
           "status": "success",
-          "data": { "user" : data["data"]["users"][0],
-                    "token" : token}
+          "data": { "token" : token}
         });
 
       }else{
@@ -73,5 +74,38 @@ exports.findByEmail = async (req, res) => {
   }
 
   
+
+};
+
+exports.updateToken = async (req, res) => {
+  const jwt = require('jsonwebtoken');
+
+  // Get auth header value
+  let token = req.headers['authorization'];
+
+  const SECRET_KEY = "MYKEY"
+
+  if (!token) return res.status(401).send({
+    "status": "fail",
+    "code": 401,
+    "data": {"authorization": "You need to be authenticated in order to access this method"}
+  });
+
+  decoded_token=JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())["user"];
+
+  const user = {
+    time: Date(),
+    status: decoded_token["status"],
+    userId: decoded_token["userId"],
+    email: decoded_token["email"],
+    origin_name: decoded_token["origin_name"]
+  };
+
+  const new_token = "Bearer " + jwt.sign({ user }, SECRET_KEY, { expiresIn: '180s' });
+
+  return res.status(200).send({
+    "status": "success",
+    "data": { "token" : new_token}
+  });
 
 };
