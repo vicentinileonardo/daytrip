@@ -1,5 +1,5 @@
 function checkIfLogged (div_name) {
-    if(get_cookie("token")){
+    if(getCookie("token")){
       let login_div=document.getElementById(div_name);
   
       let login_div_content=`
@@ -13,7 +13,7 @@ function checkIfLogged (div_name) {
   }
   
   function checkIfLoggedHomepage(){
-    if(get_cookie("token")){
+    if(getCookie("token")){
         let nav_right_div=document.getElementById("nav_right_div");
     
         let nav_right_div_content=`<a href="/login"><button type="button" class="btn btn-danger btn-small btn-nav" onclick="logout()">Logout</button></a>`;
@@ -25,14 +25,8 @@ function checkIfLogged (div_name) {
   }
 
   function logout(){
-    erase_cookie("token");
+    eraseCookie("token");
     location.reload();
-  }
-  
-  function get_cookie(name){
-    return document.cookie.split(';').some(c => {
-        return c.trim().startsWith(name + '=');
-    });
   }
   
   function getCookie(name) {
@@ -41,6 +35,6 @@ function checkIfLogged (div_name) {
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
   
-  function erase_cookie(name) {
+  function eraseCookie(name) {
     document.cookie = name + '=; Max-Age=0'
   }
