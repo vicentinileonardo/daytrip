@@ -68,7 +68,7 @@ async function register(){
       body: JSON.stringify({
         name: registerName.value,
         surname: registerSurname.value,
-        address: registerCity.value,
+        address: registerAddress.value,
         city: registerCity.value,
         country: registerCountry.value,
         email: registerEmail.value,
@@ -79,23 +79,25 @@ async function register(){
 
     const data = await response.json();
 
-    console.log("Responseeeee: ");
-    console.log(data);
-
     if (data.status == "error") {
       // create a new div element for the error message
       const errorDiv = document.createElement('div');
       // add a class to the div
       errorDiv.className = 'alert alert-danger';
+      errorDiv.style.width = "50%";
+      errorDiv.style.margin = "auto";
       // create a text node and append it to the div
       errorDiv.appendChild(document.createTextNode(data.message));
       // get elements
-      const container = document.querySelector('.container');
-      const form = document.querySelector('#register-form');
-      // insert error above the form
-      container.insertBefore(errorDiv, form);
+      
+      const formDiv = document.getElementById('form-div');
+      formDiv.remove();
+
+      const responseDiv = document.getElementById('response-div');
+      responseDiv.appendChild(errorDiv);
+      
       // clear error after 3 seconds
-      setTimeout(clearError, 5000);
+      //setTimeout(clearError, 5000);
       return;
     }
 
@@ -104,15 +106,21 @@ async function register(){
       const errorDiv = document.createElement('div');
       // add a class to the div
       errorDiv.className = 'alert alert-danger';
+      errorDiv.style.width = "50%";
+      errorDiv.style.margin = "auto";
       // create a text node and append it to the div
       errorDiv.appendChild(document.createTextNode(data.data));
       // get elements
-      const container = document.querySelector('.container');
-      const form = document.querySelector('#register-form');
-      // insert error above the form
-      container.insertBefore(errorDiv, form);
+
+      const formDiv = document.getElementById('form-div');
+      formDiv.remove();
+
+      const responseDiv = document.getElementById('response-div');
+      responseDiv.appendChild(errorDiv);
+
+
       // clear error after 3 seconds
-      setTimeout(clearError, 5000);
+      //setTimeout(clearError, 5000);
       return;
     }
 
@@ -122,14 +130,20 @@ async function register(){
       // add a class to the div
       successDiv.className = 'alert alert-success';
       // create a text node and append it to the div
+      //set size of the success div
+      successDiv.style.width = "50%";
+      successDiv.style.margin = "auto";
       successDiv.appendChild(document.createTextNode(data.message));
-      // get elements
-      const container = document.querySelector('.container');
-      const form = document.querySelector('#register-form');
-      // insert error above the form
-      container.insertBefore(successDiv, form);
-      // clear error after 3 seconds
-      setTimeout(clearSuccess, 5000);
+
+      const formDiv = document.getElementById('form-div');
+      formDiv.remove();
+
+      const responseDiv = document.getElementById('response-div');
+      responseDiv.appendChild(successDiv);
+
+      // clear message after 3 seconds
+      //setTimeout(clearMessage, 5000);
+
       return;
     }
 

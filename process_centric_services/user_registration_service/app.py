@@ -220,8 +220,6 @@ def user_registration():
         }
     }
 
-    print("request_body: ", request_body)
-
     # call the user_db_adapter service
     SERVICE_PORT = os.environ.get("USER_DB_ADAPTER_DOCKER_PORT")
 
@@ -258,10 +256,18 @@ def user_registration():
 
     print("final external_response: ", external_response)
 
-    response = {
-        "status": "test, dev",
-    }
+    user = external_response.get("data").get("user")
 
+    print("final user: ", user)
+
+    response = {
+        "status": "success",
+        "message": "User created successfully",
+        "data": {
+            "user": user
+        }
+    }
+    
     return response, 200
     
 # error 404
