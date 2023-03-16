@@ -71,7 +71,6 @@ def air_pollution_info():
     # call the OpenWeatherMap API
     open_weather_base_url = "http://api.openweathermap.org/data/2.5/air_pollution/forecast?"
     full_url = open_weather_base_url + "lat=" + str(lat) + "&lon=" + str(lon) + "&appid=" + os.environ.get("OPENWEATHER_API_KEY")
-    print("full_url", full_url)
 
     try:
         external_response = requests.get(full_url)

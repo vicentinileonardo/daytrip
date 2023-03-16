@@ -58,7 +58,7 @@ async function register(){
       return;
     }
 
-    const url = `http://localhost/user_registration_service/api/users/register`; 
+    const url = `http://localhost/user_registration_service/api/users/signup`; 
 
     const response = await fetch(url, {
       method: 'POST',
@@ -73,7 +73,7 @@ async function register(){
         country: registerCountry.value,
         email: registerEmail.value,
         password: registerPassword.value,
-        password2: registerPassword2.value
+        password_confirmation: registerPassword2.value
       })
     });
 
@@ -81,6 +81,57 @@ async function register(){
 
     console.log("Responseeeee: ");
     console.log(data);
+
+    if (data.status == "error") {
+      // create a new div element for the error message
+      const errorDiv = document.createElement('div');
+      // add a class to the div
+      errorDiv.className = 'alert alert-danger';
+      // create a text node and append it to the div
+      errorDiv.appendChild(document.createTextNode(data.message));
+      // get elements
+      const container = document.querySelector('.container');
+      const form = document.querySelector('#register-form');
+      // insert error above the form
+      container.insertBefore(errorDiv, form);
+      // clear error after 3 seconds
+      setTimeout(clearError, 5000);
+      return;
+    }
+
+    if (data.status == "fail") {
+      // create a new div element for the error message
+      const errorDiv = document.createElement('div');
+      // add a class to the div
+      errorDiv.className = 'alert alert-danger';
+      // create a text node and append it to the div
+      errorDiv.appendChild(document.createTextNode(data.data));
+      // get elements
+      const container = document.querySelector('.container');
+      const form = document.querySelector('#register-form');
+      // insert error above the form
+      container.insertBefore(errorDiv, form);
+      // clear error after 3 seconds
+      setTimeout(clearError, 5000);
+      return;
+    }
+
+    if (data.status == "success") {
+      // create a new div element for the message
+      const successDiv = document.createElement('div');
+      // add a class to the div
+      successDiv.className = 'alert alert-success';
+      // create a text node and append it to the div
+      successDiv.appendChild(document.createTextNode(data.message));
+      // get elements
+      const container = document.querySelector('.container');
+      const form = document.querySelector('#register-form');
+      // insert error above the form
+      container.insertBefore(successDiv, form);
+      // clear error after 3 seconds
+      setTimeout(clearSuccess, 5000);
+      return;
+    }
 
   }
 
