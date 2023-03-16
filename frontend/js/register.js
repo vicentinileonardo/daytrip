@@ -1,5 +1,5 @@
 async function register(){
-
+    
     const registerName = document.getElementById('registerName');
     const registerSurname = document.getElementById('registerSurname');
     const registerAddress = document.getElementById('registerAddress');
