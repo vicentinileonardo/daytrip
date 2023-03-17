@@ -16,8 +16,6 @@ other parameters:  drive distance, only public transportation
 database of points of interests to choose from
 
 
-authentication: google
-
 external apis: 
 + weather apis
   - Weather API
@@ -28,8 +26,6 @@ external apis:
 api paradigms: REST and GraphQL (probably we should try to use both for different tasks, due to our lab session)
 
 databases: MongoDB (on-premise)
-
-object storage (if needed): amazon S3 (cloud-based). For instance: Image service which use S3 as data layer. Images could be retrieved for the various point of interests (or only for the most important)
 
 
 docker compose for the entire infrastructure
@@ -100,15 +96,13 @@ When an API call fails due to an error on the server. For example:
 + controllare versione mongoose
 + controllare versione mongodb, MAYBE USE :lts in the various dockerfiles
 + controllare versione node, MAYBE USE :lts in the various dockerfiles
-+ integrazione con graphql nel destination_db_adapter (anche evitabile)
 + DOCUMENTAZIONE API
 + valutare se aggiungere versioning (v1) all'endpoint delle api
 + controllare che le post diano 201 (created) e non 200 (ok) 
 + vari ERRORI 404
 + vari ERRORI 405 (method not allowed), valutare come gestire
 + controllo status code errori, per adesso sono tutti 400 (bad request)
-+ pagination and limit in all GET requests (find all)
-+ registrazione utente, login, logout
+
 + Some API endpoints should require a basic form of authentication: creazione, modifica, eliminazione destinations
   - accesso non consentito se non autenticato, errore 401 (unauthorized)
   - accesso non consentito se autenticato ma non autorizzato, errore 403 (forbidden) (utente ma non admin) 
@@ -119,7 +113,7 @@ When an API call fails due to an error on the server. For example:
 
 + api chaching: https://www.npmjs.com/package/apicache middleware (da solo o con redis)
 
-+ eventualmente, image service per le immagini delle destinazioni 
++ service registry and discovery (da valutare se usare o meno)
 
 + eventualmente (all fine di tutto il resto), per sfruttare registrazione utenti, registrare le destinazione che un utente ha gia' visitato e rimuoverle dalla lista delle destinazioni proposte
   - in questo caso, ci sarebbe anche il **nesting di risorse** (destinazioni visitate di un utente), una caratteristica di REST che non abbiamo ancora visto
