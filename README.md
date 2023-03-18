@@ -10,8 +10,8 @@ The goal of the project is to ideate, design, develop a service-oriented applica
 
 combining weather and traffic data in order to propose daytrips to users.
 
-use current location (either automatically retrieved if authorized, or just a parameter inserted)
-other parameters:  drive distance, only public transportation 
+use current location (either automatically retrieved if user is already registered, or just a parameter inserted)
+other parameters:  drive distance
 
 database of points of interests to choose from
 
