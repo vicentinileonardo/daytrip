@@ -12,8 +12,13 @@ servers:
     description: User DB Adapter
   - url: http://localhost:6869/api/v1
     description: Destination DB Adapter
+  - url: https://{service1}
+    description: Production server
+    variables:
+      service1:
+        default: prova
 paths:
-  /users:
+  /{service1/users:
     post:
       description: >-
         Creates a new user in the system.
