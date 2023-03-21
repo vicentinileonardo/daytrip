@@ -119,7 +119,7 @@ def user_registration():
         }
         return response, 400  
     try:
-        origin_name = address + "," + city + "," + country
+        origin_name = address + ", " + city + ", " + country
     except:
         origin_name = "No address provided"
 
