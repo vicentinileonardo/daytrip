@@ -4,8 +4,8 @@
       "description": "A beautiful coastal town in Calabria, southern Italy",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/the-cliffside-town-of-tropea-768x1260.jpg",
       "coordinates": {
-        "lat": 38.6747,
-        "lon": 15.8975
+        "lat": 38.676343583949176,
+        "lon": 15.897439786247325
       }
     },
     {
@@ -13,8 +13,8 @@
       "description": "A charming seaside town in Apulia, southern Italy",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/beach-of-gallipoli-768x512.jpg",
       "coordinates": {
-        "lat": 40.0571,
-        "lon": 17.9914
+        "lat": 40.05652628658249,
+        "lon": 17.99304770147277
       }
     },
     {
@@ -22,8 +22,8 @@
       "description": "A beach resort town in Apulia, southern Italy",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/lido-tabu-porto-cesareo-768x576.jpg",
       "coordinates": {
-        "lat": 40.2683,
-        "lon": 17.8617
+        "lat": 40.261410278993516,
+        "lon": 17.896214361371726
       }
     },
     {
@@ -31,8 +31,8 @@
       "description": "A seaside town in Molise, central Italy",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/beach-of-termoli-768x514.jpg",
       "coordinates": {
-        "lat": 41.9925,
-        "lon": 15.0039
+        "lat": 42.002475746666526,
+        "lon": 14.996286473785538
       }
     },
     {
@@ -40,8 +40,8 @@
       "description": "A national park in the Apennine Mountains, central Italy",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/gran-sasso-e-monti-della-laga-national-park-768x498.jpg",
       "coordinates": {
-        "lat": 42.4823,
-        "lon": 13.5721
+        "lat": 42.472421620574494,
+        "lon": 13.500167015368573
       }
     },
     {
@@ -49,8 +49,8 @@
       "description": "A monastery and hermitage in Umbria, central Italy",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/eremo-di-san-domenico-768x512.jpg",
       "coordinates": {
-        "lat": 42.7664,
-        "lon": 12.5181
+        "lat": 41.94250619391048,
+        "lon": 13.828064744389554
       }
     },
     {
@@ -58,8 +58,8 @@
       "description": "A coastal town in Abruzzo, central Italy",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/lungomare-di-giulianova-768x576.jpg",
       "coordinates": {
-        "lat": 42.7594,
-        "lon": 13.9583
+        "lat": 42.75115390490591,
+        "lon": 13.965910671083554
       }
     },
     {
@@ -67,8 +67,8 @@
       "description": "A historic city in Umbria, central Italy",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/palazzo-dei-priori-768x512.jpg",
       "coordinates": {
-        "lat": 43.1107,
-        "lon": 12.3894
+        "lat": 43.11019385227359,
+        "lon": 12.389205396356003
       }
     },
     {
@@ -76,8 +76,8 @@
       "description": "A medieval town in Umbria, central Italy",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/the-architecture-of-gubbio-768x1152.jpg",
       "coordinates": {
-        "lat": 43.3522,
-        "lon": 12.5736
+        "lat": 43.35287783371163,
+        "lon": 12.57691374999088
       }
     },
     {
@@ -85,8 +85,8 @@
       "description": "An independent microstate surrounded by Italy",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/san-marino-768x431.jpg",
       "coordinates": {
-        "lat": 43.9424,
-        "lon": 12.4487
+        "lat": 43.93681511723808,
+        "lon": 12.447109156313113
       }
     },
     {
@@ -94,8 +94,8 @@
       "description": "A picturesque town on the Adriatic coast in Apulia, southern Italy",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/polignano-a-mare-768x512.jpg",
       "coordinates": {
-        "lat": 40.9978,
-        "lon": 17.2161
+        "lat": 40.99245826382909,
+        "lon": 17.22455575433016
       }
     },
     {
@@ -103,8 +103,8 @@
       "description": "An island in Lake Orta, Piedmont, northern Italy",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/san-giulio-island-768x512.jpg",
       "coordinates": {
-        "lat": 45.8083,
-        "lon": 8.4033
+        "lat": 45.79619318333487,
+        "lon": 8.399928320898884
       }
     },
     {
@@ -112,8 +112,8 @@
       "description": "A Roman amphitheatre in Verona, northern Italy",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/arena-di-verona-768x512.jpg",
       "coordinates": {
-        "lat": 45.4386,
-        "lon": 10.9939
+        "lat": 45.439018363248564,
+        "lon": 10.994475415067129
       }
     },
     {
@@ -121,8 +121,8 @@
       "description": "A beautiful Baroque cathedral located in the town of Noto, in southeastern Sicily.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/noto-cathedral-768x512.jpg",
       "coordinates": {
-        "lat": 36.891,
-        "lon": 15.0669
+        "lat": 36.89132009588601,
+        "lon": 15.07095311481547
       }
     },
     {
@@ -130,8 +130,8 @@
       "description": "A neoclassical triumphal arch located in Milan, Italy. It was built in the early 19th century to commemorate Napoleon's victories.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/porta-sempione-768x512.jpg",
       "coordinates": {
-        "lat": 45.4798,
-        "lon": 9.1797
+        "lat": 45.475700202187824,
+        "lon": 9.172472855544667
       }
     },
     {
@@ -139,8 +139,8 @@
       "description": "A villa located in the town of Frascati, near Rome. It was built in the early 17th century and features beautiful gardens and frescoes.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/villa-aldobrandini-768x520.jpg",
       "coordinates": {
-        "lat": 41.8127,
-        "lon": 12.6845
+        "lat": 41.89661558514612,
+        "lon": 12.48792502271736
       }
     },
     {
@@ -148,8 +148,8 @@
       "description": "A beautiful villa located in the Tuscan town of Camigliano. It was built in the late 16th century and features stunning gardens.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/villa-torrigiani-768x510.jpg",
       "coordinates": {
-        "lat": 43.7889,
-        "lon": 10.5964
+        "lat": 43.88762427984799,
+        "lon": 10.608760153201374
       }
     },
     {
@@ -157,8 +157,8 @@
       "description": "A beautiful villa located in the town of Ravello, on the Amalfi Coast. It was built in the 11th century and features stunning gardens and views of the coastline.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/villa-cimbrone-768x512.jpg",
       "coordinates": {
-        "lat": 40.6501,
-        "lon": 14.6139
+        "lat": 40.644324043433826,
+        "lon": 14.612438006608862
       }
     },
     {
@@ -166,8 +166,8 @@
       "description": "A villa located on the island of Capri, off the coast of Naples. It was built in the early 20th century and features beautiful gardens and views of the sea.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/villa-san-michele-768x512.jpg",
       "coordinates": {
-        "lat": 40.5471,
-        "lon": 14.2205
+        "lat": 40.55727119836694,
+        "lon": 14.22513130326735
       }
     },
     {
@@ -175,8 +175,8 @@
       "description": "A beautiful villa located in the town of Ravello, on the Amalfi Coast. It was built in the 13th century and features stunning gardens and views of the coastline.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/villa-rufolo-768x306.jpg",
       "coordinates": {
-        "lat": 40.6516,
-        "lon": 14.6133
+        "lat": 40.64916808228032,
+        "lon": 14.611991680020429
       }
     },
     {
@@ -184,17 +184,17 @@
       "description": "A beautiful villa located in the town of Tivoli, near Rome. It was built in the 16th century and features stunning gardens and fountains.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/villa-d-este-768x512.jpg",
       "coordinates": {
-        "lat": 41.9678,
-        "lon": 12.7983
+        "lat": 41.96330831116256,
+        "lon": 12.795843350911372
       }
     },
     {
       "name": "Cappello di Venere",
-      "description": "A mountain peak located in the Madonie Mountains of Sicily. Its name means 'Venus's Hat' in Italian, due to the shape of the peak.",
+      "description": "Small mountain waterfall in Campania surrounded by greenery, near the remains of a mill, with a picnic table.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/cappello-di-venere-waterfall-768x512.jpg",
       "coordinates": {
-        "lat": 37.8789,
-        "lon": 14.0022
+        "lat": 40.15607937918577,
+        "lon": 15.626968619823328
       }
     },
     {
@@ -202,8 +202,8 @@
       "description": "A stunning bridge in Rome, Italy, which dates back to the reign of Emperor Hadrian.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/the-bridge-of-angels-768x512.jpg",
       "coordinates": {
-        "lat": 41.903074,
-        "lon": 12.466348
+        "lat": 41.901879831721345,
+        "lon": 12.4664456067339
       }
     },
     {
@@ -211,8 +211,8 @@
       "description": "A beautiful cathedral in Genoa, Italy, featuring a mix of Gothic and Romanesque architecture.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/cattedrale-di-san-lorenzo-768x1024.jpg",
       "coordinates": {
-        "lat": 44.40751,
-        "lon": 8.93303
+        "lat": 44.407607221363186,
+        "lon": 8.931470126695956
       }
     },
     {
@@ -220,8 +220,8 @@
       "description": "A charming fishing village in the Liguria region of Italy, known for its colorful houses and stunning seaside views.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/camogli-768x431.jpg",
       "coordinates": {
-        "lat": 44.347778,
-        "lon": 9.160556
+        "lat": 44.3496375537585,
+        "lon": 9.155453505065937
       }
     },
     {
@@ -229,8 +229,8 @@
       "description": "One of the Seven Hills of Rome, Italy, where ancient ruins and artifacts can be found.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/palatine-hill-768x512.jpg",
       "coordinates": {
-        "lat": 41.8883,
-        "lon": 12.4875
+        "lat": 41.88927001664614,
+        "lon": 12.48780896258546
       }
     },
     {
@@ -238,8 +238,8 @@
       "description": "A picturesque coastal town in the Liguria region of Italy, known for its beautiful beaches and colorful architecture.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/levanto-768x549.jpg",
       "coordinates": {
-        "lat": 44.1725,
-        "lon": 9.6128
+        "lat": 44.17177870343738,
+        "lon": 9.611428439675256
       }
     },
     {
@@ -247,8 +247,8 @@
       "description": "A stunning Italian village on the Ligurian coast, featuring colorful houses and a picturesque harbor.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/portovenere-768x576.jpg",
       "coordinates": {
-        "lat": 44.0504,
-        "lon": 9.8264
+        "lat": 44.05226877285766,
+        "lon": 9.835813563020167
       }
     },
     {
@@ -256,8 +256,8 @@
       "description": "A magnificent ancient Roman temple in Rome, Italy, dedicated to all the gods.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/pantheon-of-rome-768x497.jpg",
       "coordinates": {
-        "lat": 41.8986,
-        "lon": 12.4768
+        "lat": 41.89860279355575,
+        "lon": 12.47686216894798
       }
     },
     {
@@ -265,8 +265,8 @@
       "description": "A Gothic palace in Venice, Italy, which was once the residence of the Doge of Venice.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/doges-palace-768x512.jpg",
       "coordinates": {
-        "lat": 45.4337,
-        "lon": 12.3396
+        "lat": 45.4336959504161,
+        "lon": 12.340367940220485
       }
     },
     {
@@ -274,8 +274,8 @@
       "description": "One of the most famous public squares in Rome, Italy, featuring beautiful fountains and Baroque architecture.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/piazza-navona-fontana-del-moro-768x512.jpg",
       "coordinates": {
-        "lat": 41.8992,
-        "lon": 12.4732
+        "lat": 41.899203207818935,
+        "lon": 12.473095655455815
       }
     },
     {
@@ -283,8 +283,8 @@
       "description": "A historic lighthouse in Trieste, Italy, which offers stunning views of the Adriatic Sea.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/victory-lighthouse-768x378.jpg",
       "coordinates": {
-        "lat": 45.643,
-        "lon": 13.7566
+        "lat": 45.67563469342727,
+        "lon": 13.756851967212592
       }
     },
     {
@@ -292,8 +292,8 @@
       "description": "A charming seaside town in the Liguria region of Italy, featuring colorful architecture and stunning coastal views.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/santa-margherita-ligure-768x576.jpg",
       "coordinates": {
-        "lat": 44.3314,
-        "lon": 9.2141
+        "lat": 44.332985993412834,
+        "lon": 9.213074641997597
       }
     },
     {
@@ -301,8 +301,8 @@
       "description": "A picturesque fishing village and resort town on the Italian Riviera coastline.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/portofino-768x510.jpg",
       "coordinates": {
-        "lat": 44.303,
-        "lon": 9.2095
+        "lat": 44.303313717627674,
+        "lon": 9.209791468953117
       }
     },
     {
@@ -310,8 +310,8 @@
       "description": "A sanctuary built into the side of a mountain in the Veneto region of Italy.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/madonna-della-corona-768x512.jpg",
       "coordinates": {
-        "lat": 45.6018,
-        "lon": 11.0053
+        "lat": 45.64963047949594,
+        "lon": 10.85668242673515
       }
     },
     {
@@ -319,17 +319,17 @@
       "description": "A town in the Umbria region of central Italy, known for its famous Basilica di San Francesco.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/assisi-768x206.jpg",
       "coordinates": {
-        "lat": 43.0708,
-        "lon": 12.6194
+        "lat": 43.06920341030249,
+        "lon": 12.617006155326337
       }
     },
     {
       "name": "San Felice Arch",
-      "description": "A historic arch in the town of Trento in the Trentino-Alto Adige/Südtirol region of northern Italy.",
+      "description": "San Felice Arch (or Arco di San Felice in Italian) is a natural rock formation on the Adriatic coast of Italy.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/san-felice-arch-768x488.jpg",
       "coordinates": {
-        "lat": 46.0689,
-        "lon": 11.1192
+        "lat": 41.830603414455396,
+        "lon": 16.1916679823094
       }
     },
     {
@@ -337,8 +337,8 @@
       "description": "A unique cave-dwelling district in the city of Matera in the Basilicata region of southern Italy.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/sassi-di-matera-768x512.jpg",
       "coordinates": {
-        "lat": 40.6638,
-        "lon": 16.607
+        "lat": 40.665746773261915,
+        "lon": 16.611520571020446
       }
     },
     {
@@ -346,8 +346,8 @@
       "description": "An ancient Greek theater in the town of Taormina on the east coast of Sicily.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/teatro-antico-di-taormina-768x513.jpg",
       "coordinates": {
-        "lat": 37.8515,
-        "lon": 15.2885
+        "lat": 37.85233442271791,
+        "lon": 15.292091382326353
       }
     },
     {
@@ -355,8 +355,8 @@
       "description": "A monastery built into the cliffs above Lake Maggiore in the Lombardy region of northern Italy.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/santa-caterina-del-sasso-768x431.jpg",
       "coordinates": {
-        "lat": 45.8264,
-        "lon": 8.5864
+        "lat": 45.87726748535937,
+        "lon": 8.596929484414302
       }
     },
     {
@@ -364,8 +364,8 @@
       "description": "A medieval castle in the town of Sirmione on the southern shore of Lake Garda in northern Italy.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/scaligero-castle-768x520.jpg",
       "coordinates": {
-        "lat": 45.5023,
-        "lon": 10.6072
+        "lat": 45.492244895310556,
+        "lon": 10.608432526730136
       }
     },
     {
@@ -373,8 +373,8 @@
       "description": "A hilltop town in the Tuscany region of central Italy known for its wine and Renaissance architecture.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/montepulciano-768x576.jpg",
       "coordinates": {
-        "lat": 43.0971,
-        "lon": 11.7873
+        "lat": 43.09801850121892,
+        "lon": 11.785597772424758
       }
     },
     {
@@ -382,8 +382,8 @@
       "description": "A seaside town on the east coast of Sardinia known for its beaches and access to the Gennargentu National Park.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/bue-marino-cave-768x576.jpg",
       "coordinates": {
-        "lat": 40.2848,
-        "lon": 9.6271
+        "lat": 40.282813741601935,
+        "lon": 9.635561983436462
       }
     },
     {
@@ -391,8 +391,8 @@
       "description": "A secluded beach on the north coast of Sardinia, accessible by footpath or by boat.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/spiaggia-di-li-cossi-768x512.jpg",
       "coordinates": {
-        "lat": 41.1299,
-        "lon": 9.5228
+        "lat": 41.04666611224344,
+        "lon": 8.935803607548252
       }
     },
     {
@@ -400,8 +400,8 @@
       "description": "One of the four bridges spanning the Grand Canal in Venice, known for its unique design and historic significance.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/ponte-di-rialto-768x512.jpg",
       "coordinates": {
-        "lat": 45.4387,
-        "lon": 12.3355
+        "lat": 45.43799923564213,
+        "lon": 12.335908726728407
       }
     },
     {
@@ -409,8 +409,8 @@
       "description": "A beautiful island in the Tuscan Archipelago, known for its clear waters and picturesque landscapes.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/giglio-island-768x512.jpg",
       "coordinates": {
-        "lat": 42.3626,
-        "lon": 10.9071
+        "lat": 42.35874733555396,
+        "lon": 10.904604709806497
       }
     },
     {
@@ -418,8 +418,8 @@
       "description": "A picturesque valley in Tuscany, known for its stunning landscapes, rolling hills, and medieval villages.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/val-d-orcia-768x384.jpg",
       "coordinates": {
-        "lat": 43.0527,
-        "lon": 11.6307
+        "lat": 43.06645547701274,
+        "lon": 11.655595127449057
       }
     },
     {
@@ -427,8 +427,8 @@
       "description": "A small town in Tuscany famous for its thermal springs and natural hot pools.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/saturnia-thermal-baths-768x500.jpg",
       "coordinates": {
-        "lat": 42.6486,
-        "lon": 11.5084
+        "lat": 42.664774384256845,
+        "lon": 11.50476554181425
       }
     },
     {
@@ -436,8 +436,8 @@
       "description": "A grandiose monument in Rome dedicated to Victor Emmanuel II, the first king of a united Italy.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/vittorio-emanuele-monument-768x493.jpg",
       "coordinates": {
-        "lat": 41.8948,
-        "lon": 12.4835
+        "lat": 41.89463453044618,
+        "lon": 12.483116636143013
       }
     },
     {
@@ -445,8 +445,8 @@
       "description": "A natural rock formation located on the coast of southern Sicily, famous for its white limestone cliffs and crystal clear waters.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/scala-dei-turchi-768x514.jpg",
       "coordinates": {
-        "lat": 37.3022,
-        "lon": 13.5335
+        "lat": 37.2897571309729,
+        "lon": 13.47279405090551
       }
     },
     {
@@ -454,8 +454,8 @@
       "description": "A charming coastal town on the Amalfi Coast, known for its stunning views, colorful buildings, and beautiful beaches.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/amalfi-town-768x332.jpg",
       "coordinates": {
-        "lat": 40.634,
-        "lon": 14.6022
+        "lat": 40.63397994467736,
+        "lon": 14.601280217322532
       }
     },
     {
@@ -463,8 +463,8 @@
       "description": "A collection of five colorful fishing villages located on the rugged Italian Riviera coastline, known for their stunning views and hiking trails.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/cinque-terre-768x512.jpg",
       "coordinates": {
-        "lat": 44.1098,
-        "lon": 9.7266
+        "lat": 44.123245711506655,
+        "lon": 9.70782312621345
       }
     },
     {
@@ -472,8 +472,8 @@
       "description": "A world-renowned opera house located in Milan, Italy.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/teatro-alla-scala-768x492.jpg",
       "coordinates": {
-        "lat": 45.4674,
-        "lon": 9.1903
+        "lat": 45.467383289264454,
+        "lon": 9.189556564412326
       }
     },
     {
@@ -481,8 +481,8 @@
       "description": "A historic castle located on the Gulf of Trieste, known for its beautiful gardens and stunning views of the Adriatic Sea.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/miramare-castle-768x768.jpg",
       "coordinates": {
-        "lat": 45.7029,
-        "lon": 13.7144
+        "lat": 45.702504200672784,
+        "lon": 13.71249685557281
       }
     },
     {
@@ -490,8 +490,8 @@
       "description": "A historic shopping arcade in Milan, known for its stunning architecture and high-end luxury shops.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/victor-emmanuel-gallery-768x510.jpg",
       "coordinates": {
-        "lat": 45.4659,
-        "lon": 9.1905
+        "lat": 45.46583006093278,
+        "lon": 9.190016441363225
       }
     },
     {
@@ -499,8 +499,8 @@
       "description": "Also known as the Duomo di Milano, this Gothic cathedral is the fifth-largest cathedral in the world and took almost six centuries to complete.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/duomo-di-milano-768x512.jpg",
       "coordinates": {
-        "lat": 45.4642,
-        "lon": 9.191
+        "lat": 45.46415959656219,
+        "lon": 9.191883258814244
       }
     },
     {
@@ -508,8 +508,8 @@
       "description": "A region in Tuscany known for its beautiful coastline, natural parks, and hot springs.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/maremma-768x510.jpg",
       "coordinates": {
-        "lat": 42.6333,
-        "lon": 11.0833
+        "lat": 42.632415708388834,
+        "lon": 11.074560669855677
       }
     },
     {
@@ -517,8 +517,8 @@
       "description": "A picturesque hill town in Tuscany known for its Etruscan heritage and ancient ruins.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/sorano-768x432.jpg",
       "coordinates": {
-        "lat": 42.6333,
-        "lon": 11.6667
+        "lat": 42.682975646338356,
+        "lon": 11.714324734033001
       }
     },
     {
@@ -526,8 +526,8 @@
       "description": "A medieval hill town in Tuscany known for its numerous towers and historic architecture.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/san-gimignano-768x432.jpg",
       "coordinates": {
-        "lat": 43.4667,
-        "lon": 11.05
+        "lat": 43.46718770365665,
+        "lon": 11.043198075744536
       }
     },
     {
@@ -535,8 +535,8 @@
       "description": "The largest island in the Tuscan Archipelago, known for its beaches, hiking trails, and Napoleon's brief exile.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/elba-island-768x575.jpg",
       "coordinates": {
-        "lat": 42.7605,
-        "lon": 10.3039
+        "lat": 42.76619108591657,
+        "lon": 10.233832886810735
       }
     },
     {
@@ -544,8 +544,8 @@
       "description": "Also known as the Florence Cathedral, this Gothic cathedral is the most iconic landmark in Florence.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/santa-maria-del-fiore-768x513.jpg",
       "coordinates": {
-        "lat": 43.7739,
-        "lon": 11.2558
+        "lat": 43.77314497922331,
+        "lon": 11.2559601978404
       }
     },
     {
@@ -553,8 +553,8 @@
       "description": "A beautiful beach on the island of Sardinia, known for its clear turquoise waters and soft white sand.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/spiaggia-la-cinta-768x576.jpg",
       "coordinates": {
-        "lat": 40.7826,
-        "lon": 9.6923
+        "lat": 40.79537640548413,
+        "lon": 9.670153238148611
       }
     },
     {
@@ -562,8 +562,8 @@
       "description": "A group of islands and islets off the coast of Sardinia, known for their stunning beaches, crystal-clear waters, and natural beauty.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/la-maddalena-archipelago-768x514.jpg",
       "coordinates": {
-        "lat": 41.2026,
-        "lon": 9.3957
+        "lat": 41.24537760334753,
+        "lon": 9.406258888616126
       }
     },
     {
@@ -571,8 +571,8 @@
       "description": "A beautiful cathedral in Venice, known for its Byzantine architecture and stunning golden mosaics.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/saint-marks-basilica-768x545.jpg",
       "coordinates": {
-        "lat": 45.4342,
-        "lon": 12.338
+        "lat": 45.434553050530475,
+        "lon": 12.339733855564221
       }
     },
     {
@@ -580,8 +580,8 @@
       "description": "A beautiful beach on the southern coast of Sardinia, known for its sand dunes, clear waters, and picturesque views.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/porto-pino-768x514.jpg",
       "coordinates": {
-        "lat": 39.1023,
-        "lon": 8.4646
+        "lat": 38.964653440129226,
+        "lon": 8.595818590254726
       }
     },
     {
@@ -589,8 +589,8 @@
       "description": "A stunning cove located on the east coast of Sardinia, with crystal-clear turquoise waters and a rocky shoreline.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/cala-mariolu-768x514.jpg",
       "coordinates": {
-        "lat": 40.258017,
-        "lon": 9.714354
+        "lat": 40.197242,
+        "lon": 9.535934
       }
     },
     {
@@ -598,8 +598,8 @@
       "description": "A medieval stone bridge over the Arno River in Florence, known for its shops and jewelry stores.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/ponte-vecchio-768x512.jpg",
       "coordinates": {
-        "lat": 43.7683,
-        "lon": 11.2536
+        "lat": 43.7679792138193,
+        "lon": 11.253111311332454
       }
     },
     {
@@ -607,8 +607,8 @@
       "description": "A gorgeous white sand beach in Sardinia, surrounded by turquoise waters and pine trees.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/spiaggia-di-cala-pira-768x513.jpg",
       "coordinates": {
-        "lat": 39.215373,
-        "lon": 9.615234
+        "lat": 39.172711745924815,
+        "lon": 9.571532042414798
       }
     },
     {
@@ -616,8 +616,8 @@
       "description": "A hidden gem of a beach located in the Gulf of Orosei, on the east coast of Sardinia.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/cala-goloritze-768x431.jpg",
       "coordinates": {
-        "lat": 40.130586,
-        "lon": 9.712663
+        "lat": 40.10790421017923,
+        "lon": 9.690125292559237
       }
     },
     {
@@ -625,8 +625,8 @@
       "description": "A stunning beach located in southern Sardinia, known for its crystal-clear waters and fine white sand.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/chia-beach-768x576.jpg",
       "coordinates": {
-        "lat": 38.8884,
-        "lon": 8.8824
+        "lat": 38.88578005491956,
+        "lon": 8.864952049334319
       }
     },
     {
@@ -634,8 +634,8 @@
       "description": "A beautiful beach located in southeastern Sardinia, known for its clear blue waters and fine white sand.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/spiaggia-di-porto-giunco-768x512.jpg",
       "coordinates": {
-        "lat": 39.1046,
-        "lon": 9.5355
+        "lat": 39.11550083766735,
+        "lon": 9.519085038233312
       }
     },
     {
@@ -643,8 +643,8 @@
       "description": "A picturesque alpine lake located in the Italian Dolomites, surrounded by rugged mountains and forests.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/lake-church-768x512.jpg",
       "coordinates": {
-        "lat": 46.617801,
-        "lon": 12.013556
+        "lat": 46.81182100727931,
+        "lon": 10.536969214337814
       }
     },
     {
@@ -652,8 +652,8 @@
       "description": "A stunning mountain lake located in the heart of the Dolomites, surrounded by rugged peaks and forests.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/braies-lake-and-the-dolomites-768x512.jpg",
       "coordinates": {
-        "lat": 46.699985,
-        "lon": 12.141911
+        "lat": 46.69344459743013,
+        "lon": 12.084641009331996
       }
     },
     {
@@ -661,8 +661,8 @@
       "description": "A beautiful lake located in northern Italy, surrounded by picturesque towns and stunning alpine scenery.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/lake-como-768x432.jpg",
       "coordinates": {
-        "lat": 45.965008,
-        "lon": 9.217504
+        "lat": 46.04489453957423,
+        "lon": 9.267681942844833
       }
     },
     {
@@ -670,8 +670,8 @@
       "description": "A rectangular plaza in the center of Rome, surrounded by the ruins of ancient government buildings and temples.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/the-roman-forum-768x482.jpg",
       "coordinates": {
-        "lat": 41.8925,
-        "lon": 12.4853
+        "lat": 41.892454292787306,
+        "lon": 12.485324997783755
       }
     },
     {
@@ -679,8 +679,8 @@
       "description": "A picturesque island located in the Bay of Naples, known for its stunning cliffs, crystal-clear waters, and charming towns.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/capri-island-768x508.jpg",
       "coordinates": {
-        "lat": 40.5543,
-        "lon": 14.2422
+        "lat": 40.55306061981552,
+        "lon": 14.23551911776001
       }
     },
     {
@@ -688,8 +688,8 @@
       "description": "A stunning Baroque fountain located in Rome, Italy. It is one of the most famous fountains in the world and a popular tourist destination.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/trevi-fountain-768x512.jpg",
       "coordinates": {
-        "lat": 41.9009,
-        "lon": 12.4833
+        "lat": 41.90090551172324,
+        "lon": 12.483305134291745
       }
     },
     {
@@ -697,8 +697,8 @@
       "description": "An iconic amphitheater in the center of Rome, Italy. It is one of the most recognizable landmarks in the world and a symbol of ancient Roman architecture.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/the-colosseum-scaled.jpg",
       "coordinates": {
-        "lat": 41.8902,
-        "lon": 12.4922
+        "lat": 41.890073115716575,
+        "lon": 12.492239435712552
       }
     },
     {
@@ -706,8 +706,8 @@
       "description": "An active stratovolcano on the east coast of Sicily, Italy. It is the tallest active volcano in Europe and one of the most active in the world.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/etna-volcano-768x432.jpg",
       "coordinates": {
-        "lat": 37.751,
-        "lon": 14.9934
+        "lat": 37.75099934584458,
+        "lon": 14.993605971006494
       }
     },
     {
@@ -715,8 +715,8 @@
       "description": "A monumental staircase in the heart of Rome, Italy. It is one of the most popular tourist attractions in the city, and a great place to sit and enjoy the view.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/the-spanish-steps-768x564.jpg",
       "coordinates": {
-        "lat": 41.9056,
-        "lon": 12.4828
+        "lat": 41.90609755787448,
+        "lon": 12.482795775726201
       }
     },
     {
@@ -724,8 +724,8 @@
       "description": "A large lake located on the south side of the Alps, straddling the border between Italy and Switzerland. It is known for its picturesque towns and scenic beauty.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/lago-maggiore-768x510.jpg",
       "coordinates": {
-        "lat": 45.9229,
-        "lon": 8.5622
+        "lat": 45.95869954906517,
+        "lon": 8.649912083334582
       }
     },
     {
@@ -733,8 +733,8 @@
       "description": "The principal public square of Venice, Italy, known for its stunning architecture, music, and carnival celebrations.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/piazza-san-marco-768x514.jpg",
       "coordinates": {
-        "lat": 45.4344,
-        "lon": 12.3383
+        "lat": 45.43418183666047,
+        "lon": 12.33849315556422
       }
     },
     {
@@ -742,8 +742,8 @@
       "description": "The largest lake in Italy, located in the northern part of the country. It is a popular tourist destination known for its scenic beauty and water sports.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/lago-di-garda-768x373.jpg",
       "coordinates": {
-        "lat": 45.6048,
-        "lon": 10.6352
+        "lat": 45.644583450821536,
+        "lon": 10.677330568642923
       }
     },
     {
@@ -751,8 +751,8 @@
       "description": "An independent city-state surrounded by Rome, Italy. It is the headquarters of the Roman Catholic Church and home to many famous works of art and architecture.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/the-vatican-768x432.jpg",
       "coordinates": {
-        "lat": 41.9029,
-        "lon": 12.4534
+        "lat": 41.90311332485637,
+        "lon": 12.45459317015959
       }
     },
     {
@@ -760,8 +760,8 @@
       "description": "A stratovolcano located near Naples, Italy, known for its eruption in AD 79 that destroyed the Roman city of Pompeii. It is one of the most dangerous volcanoes in the world.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/garden-of-the-fugitives.jpg",
       "coordinates": {
-        "lat": 40.8219,
-        "lon": 14.4262
+        "lat": 40.74765473677991,
+        "lon": 14.49934640656371
       }
     },
     {
@@ -769,8 +769,8 @@
       "description": "A beautiful beach located on the island of Sardinia, known for its clear turquoise water and fine white sand.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/cala-brandinchi-768x512.jpg",
       "coordinates": {
-        "lat": 40.857048,
-        "lon": 9.730205
+        "lat": 40.834834530069976,
+        "lon": 9.686055384458703
       }
     },
     {
@@ -778,8 +778,8 @@
       "description": "A small island located in the Mediterranean Sea, known for its crystal clear waters and sandy beaches.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/la-tabaccara-768x481.jpg",
       "coordinates": {
-        "lat": 35.506284,
-        "lon": 12.619504
+        "lat": 35.508542597632164,
+        "lon": 12.586935587010942
       }
     },
     {
@@ -787,8 +787,8 @@
       "description": "A palace located in Urbino, a small town in central Italy, which was the seat of the Duke of Urbino during the Renaissance period.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/palazzo-ducale-di-urbino-768x512.jpg",
       "coordinates": {
-        "lat": 43.72584,
-        "lon": 12.63768
+        "lat": 43.72435908611455,
+        "lon": 12.636449440167068
       }
     },
     {
@@ -796,8 +796,8 @@
       "description": "The historic center of Bologna, which includes two medieval towers that are iconic landmarks of the city.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/bologna-768x341.jpg",
       "coordinates": {
-        "lat": 44.493774,
-        "lon": 11.343064
+        "lat": 44.494592879935034,
+        "lon": 11.346680963611062
       }
     },
     {
@@ -805,8 +805,8 @@
       "description": "An ancient stone bridge located in the town of Cividale del Friuli, which is known for its unique architecture and historical significance.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/the-devils-bridge-768x449.jpg",
       "coordinates": {
-        "lat": 46.058246,
-        "lon": 13.435821
+        "lat": 46.09183621971548,
+        "lon": 13.431659982569695
       }
     },
     {
@@ -814,8 +814,8 @@
       "description": "A small lake located in the Dolomites, which is known for its clear blue waters and stunning natural scenery.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/lago-blu-768x576.jpg",
       "coordinates": {
-        "lat": 46.424981,
-        "lon": 11.855622
+        "lat": 45.922703243384255,
+        "lon": 7.618356078595343
       }
     },
     {
@@ -823,8 +823,8 @@
       "description": "A charming coastal town located on the Amalfi Coast, known for its colorful buildings and scenic views.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/positano-768x512.jpg",
       "coordinates": {
-        "lat": 40.629758,
-        "lon": 14.485314
+        "lat": 40.62814319056843,
+        "lon": 14.486364602899306
       }
     },
     {
@@ -832,8 +832,8 @@
       "description": "A famous tower in Pisa, known for its distinctive tilt and impressive architecture.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/tower-of-pisa-768x971.jpg",
       "coordinates": {
-        "lat": 43.722952,
-        "lon": 10.396597
+        "lat": 43.722967486474595,
+        "lon": 10.396618455510682
       }
     },
     {
@@ -841,8 +841,8 @@
       "description": "A historic castle in Rome, which was once the mausoleum of the Roman emperor Hadrian and later served as a fortress and residence for popes.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/castel-sant-angelo-768x513.jpg",
       "coordinates": {
-        "lat": 41.903431,
-        "lon": 12.466921
+        "lat": 41.903055194112135,
+        "lon": 12.466265268948082
       }
     },
     {
@@ -850,8 +850,8 @@
       "description": "A popular beach resort town located on the Adriatic Sea, which is known for its vibrant nightlife and beautiful sandy beaches.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/rimini-beach-768x432.jpg",
       "coordinates": {
-        "lat": 44.059478,
-        "lon": 12.565528
+        "lat": 44.06133732008897,
+        "lon": 12.588761064676286
       }
     },
     {
@@ -859,8 +859,8 @@
       "description": "The beautiful waterways of Venice, Italy, which are lined with historic buildings and beautiful bridges.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/the-canals-of-venice-768x512.jpg",
       "coordinates": {
-        "lat": 45.4408,
-        "lon": 12.3155
+        "lat": 45.43644246791323,
+        "lon": 12.332318580914835
       }
     },
     {
@@ -868,8 +868,8 @@
       "description": "A charming town on the northern coast of Sicily known for its beautiful beaches, historic architecture, and stunning views of the Tyrrhenian Sea.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/cefalu-768x540.jpg",
       "coordinates": {
-        "lat": 38.0343,
-        "lon": 14.0222
+        "lat": 38.03379510837742,
+        "lon": 14.0188807763535
       }
     },
     {
@@ -877,8 +877,8 @@
       "description": "A beautiful Baroque church in Rome, Italy, known for its ornate interior and impressive dome.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/sant-andrea-della-valle-768x512.jpg",
       "coordinates": {
-        "lat": 41.8978,
-        "lon": 12.4714
+        "lat": 41.89642681678795,
+        "lon": 12.474369655455744
       }
     },
     {
@@ -886,8 +886,8 @@
       "description": "A picturesque coastal town in the Liguria region of Italy, known for its beautiful beaches, scenic hiking trails, and delicious cuisine.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/sori-768x576.jpg",
       "coordinates": {
-        "lat": 44.3661,
-        "lon": 9.0658
+        "lat": 44.371291759295424,
+        "lon": 9.1027910572499
       }
     },
     {
@@ -895,8 +895,8 @@
       "description": "An underground city beneath the streets of Naples, Italy, which includes ancient ruins, catacombs, and hidden tunnels.",
       "image_url":"https://www.touristmaker.com/wp-content/uploads/2020/12/naples-underground-768x512.jpg",
       "coordinates": {
-        "lat": 40.8533,
-        "lon": 14.2539
+        "lat": 40.85133878453765,
+        "lon": 14.256994085785154
       }
     }
 ]
