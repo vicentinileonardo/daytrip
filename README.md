@@ -93,6 +93,9 @@ When an API call fails due to an error on the server. For example:
 
 ## TODO
 
+High priority:
++ fare in modo che per il rating il solo valore essenziale sia il weather. ovvero se i servizi di crowd e pollution non sono disponibili non dare errore, ma semplicemente non considerare il rating di quei servizi
+
 + controllare versione mongoose
 + controllare versione mongodb, MAYBE USE :lts in the various dockerfiles
 + controllare versione node, MAYBE USE :lts in the various dockerfiles
