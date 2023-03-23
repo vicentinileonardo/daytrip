@@ -206,6 +206,12 @@ def reachable_destinations():
         if destination_in_polygon:
             reachable_destinations.append(destination)
     
+    request_body = {
+        "boundary_points": boundary_points,
+        "origin_point": origin_point,
+        "destinations": destinations
+    }
+
     if reachable_destinations == []:
         response = {
             "status": "fail",

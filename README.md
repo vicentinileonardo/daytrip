@@ -130,9 +130,6 @@ When an API call fails due to an error on the server. For example:
 
 
 
-
-
-
 ## Acknowledgements
 
 + Node.js + Mongoose skeleton template: https://github.com/bezkoder
@@ -144,3 +141,5 @@ When an API call fails due to an error on the server. For example:
 + Nominatim self-hosted as a docker container (Not used, too slow startup for the demo test of the project): https://github.com/mediagis/nominatim-docker
 
 + Diagram: https://diagrams.mingrammer.com/
+
++ https://github.com/keithrozario/Klayers
