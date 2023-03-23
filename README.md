@@ -120,32 +120,6 @@ When an API call fails due to an error on the server. For example:
   - in questo caso, ci sarebbe anche il **nesting di risorse** (destinazioni visitate di un utente), una caratteristica di REST che non abbiamo ancora visto
 
 
-## Business logic services:
-
-+ coordinates: talk to geocoding_api_adapter
-  - input: location string 
-  - response: coordinates
-
-+ bounding box (range): talk to range_api_adapter
-  - input: origin_coordinates, entire set of destinations
-  - response: filtered set of destinations
-
-  - TO BE CITED IN THE REPORT: Both "/reachable_destinations" and "/destinations/reachable" can be considered RESTful resource names. However, "/destinations/reachable" is more RESTful compliant as it follows the RESTful principle of using hierarchical URIs to represent relationships between resources.
-
-  In REST, resources can be organized into a hierarchy based on their relationships with other resources. By using a hierarchical URI like "/destinations/reachable", it becomes clear that the reachable destinations resource is a subset of the destinations resource, and it helps to maintain a consistent and logical structure for the API.
-
-  On the other hand, "/reachable_destinations" does not indicate any relationship between the reachable destinations resource and the destinations resource, which could make the API less intuitive to use and harder to understand.
-
-  So, "/destinations/reachable" is the more RESTful compliant option.
-
-  The same reasoning applies to the "/destinations/best" endpoint.
-
-
-+ rating destinations: talk to forecast_api_adapter, crowd_api_adapter
-  - response: for each destination, a rating
-
-+ bounding box + rating destinations
-  - loop through the list of destinations and calculate the rating for each destination
 
 
 
@@ -161,10 +135,12 @@ When an API call fails due to an error on the server. For example:
 
 ## Acknowledgements
 
-+ Node.js + Mongoose skeleton: https://github.com/bezkoder
++ Node.js + Mongoose skeleton template: https://github.com/bezkoder
 
 + JSend specification: https://github.com/omniti-labs/jsend
 
 + GeoCoding (Nominatim): © OpenStreetMap
 
 + Nominatim self-hosted as a docker container (Not used, too slow startup for the demo test of the project): https://github.com/mediagis/nominatim-docker
+
++ Diagram: https://diagrams.mingrammer.com/
