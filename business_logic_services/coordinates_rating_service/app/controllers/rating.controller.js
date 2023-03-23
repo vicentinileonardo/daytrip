@@ -93,7 +93,6 @@ exports.findOne = async (req, res) => {
     });
   } 
 
-  //recupero paramteri
   let lat = req.query.lat
   let lon = req.query.lon
   let hour = Math.round(req.query.hour)
@@ -107,9 +106,17 @@ exports.findOne = async (req, res) => {
 
   url= base_url + port + endpoint + arguments_forecast
 
-  external_response = await fetch(url);
-  data = await external_response.json()
-
+  try {
+    external_response = await fetch(url);
+    data = await external_response.json()
+  } catch (error) {
+    return res.status(500).send({
+      "status": "error",
+      "code": 500,
+      "message": "Error in fetching data from forecast API adapter"
+    });
+  }
+  
   //error management
   if (data["status"]=="error") {
     return res.status(400).send({
@@ -141,8 +148,6 @@ exports.findOne = async (req, res) => {
   const forecast_rating=(temp_c_rating+chance_of_rain_rating+chance_of_snow_rating+wind_kph_rating)/4
   const forecast_description=data["condition"]["text"]
 
-
-
   //CROWD_RATING
   base_url="http://crowd_api_adapter:"
   port = process.env.CROWD_API_ADAPTER_DOCKER_PORT || 8080;
@@ -153,15 +158,14 @@ exports.findOne = async (req, res) => {
 
   try {
     external_response = await fetch(url);
+    data = await external_response.json()
   } catch (error) {
-    return res.status(500).send({
+    data = {
       "status": "error",
       "code": 500,
       "message": "Error in fetching data from crowd api adapter"
-    });
+    }
   }
-
-  data = await external_response.json()
 
   let crowd_rating = 0
   let crowd_description = ""
@@ -193,15 +197,14 @@ exports.findOne = async (req, res) => {
 
   try {
     external_response = await fetch(url);
+    data = await external_response.json();
   } catch (error) {
-    return res.status(500).send({
+    data = {
       "status": "error",
       "code": 500,
       "message": "Error in fetching data from air pollution api adapter"
-    });
+    }
   }
-
-  data = await external_response.json()
 
   let air_pollution_rating = 0
   let air_pollution_description = ""
@@ -213,10 +216,15 @@ exports.findOne = async (req, res) => {
   } else {
     data = data["data"]["air_pollution_info"]
     aqi = data["aqi"]
+
+    if (aqi<=1) air_pollution_description = "Good"
+    if (aqi>1 && aqi<=2) air_pollution_description = "Fair"
+    if (aqi>2 && aqi<=3) air_pollution_description = "Moderate"
+    if (aqi>3 && aqi<=4) air_pollution_description = "Poor"
+    if (aqi>4 && aqi<=5) air_pollution_description = "Very poor"
     
     air_pollution_rating = 1-(aqi/5)
-    console.log("air pollution rating", air_pollution_rating)
-
+    
   }
 
   //weights
@@ -245,6 +253,10 @@ exports.findOne = async (req, res) => {
   } else {
     final_rating = -1
   }
+
+  //boundaries
+  if(final_rating>1) final_rating=1
+  if(final_rating<0) final_rating=0
 
   //response with check for errors
   res.status(200).send({

@@ -82,11 +82,8 @@ fetch(url)
                 str += data.data[key].charAt(0).toUpperCase() + data.data[key].slice(1) + " ";
             }
         }
-
         cardTitle.innerText = str;
-        console.log("str", str);
 
-        
         cardBody.appendChild(cardTitle);
         card.appendChild(cardBody);
         destinationCards.appendChild(card);

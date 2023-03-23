@@ -93,8 +93,6 @@ When an API call fails due to an error on the server. For example:
 
 ## TODO
 
-High priority:
-+ fare in modo che per il rating il solo valore essenziale sia il weather. ovvero se i servizi di crowd e pollution non sono disponibili non dare errore, ma semplicemente non considerare il rating di quei servizi
 
 + controllare versione mongoose
 + controllare versione mongodb, MAYBE USE :lts in the various dockerfiles
@@ -154,17 +152,12 @@ High priority:
 
 ## Report notes
 
-Adapter layer: used for standardizing the data coming from the external APIs. It is used to map the data coming from the external APIs to the data model used in the application. It is also used to map the data coming from the application to the data model used by the external APIs.
-mascherare alcune cose come le api key
-adapter layer: l'idea è che potrebbe essere usato da altre applicazioni, quindi è importante che sia indipendente dall'applicazione che lo usa. application / use case agnostic
-
-IMPORTANTE, DA METTERE NEL REPORT:
-NGINX is mainly use to serve the static files (html, css, js, images)
-Moreover, NGINX reverse proxy capability is leveraged to route the requests to the appropriate service only for request external to docker environment. 
-Services instead talk to each other using default docker network which is created when using a docker-compose file. 
 
 
-Decisione di provare ad utilizzare sia python che node.js per la realizzazione dei servizi. per mostrare il vantaggio di utilizzare il paradigma a servizi
+
+
+
+
 
 ## Acknowledgements
 
