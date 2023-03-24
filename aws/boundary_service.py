@@ -21,15 +21,34 @@ def lambda_handler(event, context):
 def handle_get(event):
 
     body = json.loads(event['body'])
-    
+
+    boundary_points = body['boundary_points']
+    origin_point = body['origin_point']
+    destinations = body['destinations']
 
     
-    boundary_points = [(0,0), (0,2), (2,2), (2,0)]
-    origin_point = (4,4)
     
     path = mplPath.Path(boundary_points)
     origin_in_polygon = path.contains_points([origin_point])
-    print(origin_in_polygon)
+
+    # if origin is not inside polygon
+    if not origin_in_polygon:
+        response = {
+            "status": "fail",
+            "data": {"destinations": "The origin is not inside the range, weird because the range was calculated using the origin"}
+        }
+        return response, 500
+
+    # check every destination if it is inside the range
+    reachable_destinations = []
+    for destination in destinations:
+        destination_point = (destination.get("coordinates").get("lat"), destination.get("coordinates").get("lon"))        
+        destination_in_polygon = path.contains_points([destination_point])
+        if destination_in_polygon:
+            reachable_destinations.append(destination)
+
+    
+
     
     return {
         'statusCode': 200,

@@ -186,25 +186,10 @@ def reachable_destinations():
         boundary_points.append((boundary_point.get("latitude"), boundary_point.get("longitude")))
     
     origin_point = (lat_origin, lon_origin)
+
+    ### call to lambda function
     
-    path = mplPath.Path(boundary_points)
-    origin_in_polygon = path.contains_points([origin_point])
 
-    # if origin is not inside polygon
-    if not origin_in_polygon:
-        response = {
-            "status": "fail",
-            "data": {"destinations": "The origin is not inside the range, weird because the range was calculated using the origin"}
-        }
-        return response, 500
-
-    # check every destination if it is inside the range
-    reachable_destinations = []
-    for destination in destinations:
-        destination_point = (destination.get("coordinates").get("lat"), destination.get("coordinates").get("lon"))        
-        destination_in_polygon = path.contains_points([destination_point])
-        if destination_in_polygon:
-            reachable_destinations.append(destination)
     
     request_body = {
         "boundary_points": boundary_points,
