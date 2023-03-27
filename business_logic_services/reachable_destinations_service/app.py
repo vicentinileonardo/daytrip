@@ -2,7 +2,7 @@ from flask import Flask
 from flask import request
 import requests
 import os
-import matplotlib.path as mplPath
+import json
 
 app = Flask(__name__)
 
@@ -187,17 +187,53 @@ def reachable_destinations():
     
     origin_point = (lat_origin, lon_origin)
 
-    ### call to lambda function
-    
-
+    #call to lambda function    
     
     request_body = {
         "boundary_points": boundary_points,
         "origin_point": origin_point,
         "destinations": destinations
     }
+    
+    #encode request body into json
+    request_body = json.dumps(request_body)
 
-    if reachable_destinations == []:
+    # get environment variable
+    AWS_API_GATEWAY_URL = os.environ.get("AWS_API_GATEWAY_URL")
+
+    base_url = f"{AWS_API_GATEWAY_URL}"
+    endpoint = "/prod/boundary_info"
+
+    try:
+        external_response = requests.post(base_url + endpoint, data=request_body, headers={'Content-Type': 'application/json'})
+        status_code = external_response.status_code
+        external_response = external_response.json()
+    except requests.exceptions.ConnectionError:
+        response = {
+            "status": "error",
+            "code": 500,
+            "message": "Error connecting to API Gateway or Lambda function"
+        }
+        return response, 500
+
+    if external_response.get("status") == "error":
+        response = {
+            "status": "error",
+            "code": status_code,
+            "message": "Error retrieving data from Boundary Service (Lambda): " + external_response.get("message")
+        }
+        return response, status_code
+
+    if external_response.get("status") == "fail":
+        response = {
+            "status": "fail",
+            "data": external_response.get("data")
+        }
+        return response, status_code
+    
+    reachable_destinations = external_response.get("data").get("destinations")
+    
+    if reachable_destinations == [] or reachable_destinations == None:
         response = {
             "status": "fail",
             "data": {"destinations": "There are no destinations reachable from the origin"}
