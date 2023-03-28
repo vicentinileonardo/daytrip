@@ -110,6 +110,9 @@ When an API call fails due to an error on the server. For example:
 + working testing environment
 + sia nei file python che nei file di node (controllers in particolare), aggiungere try catch per le richieste sia esterne che interne (agli adapter) e poi testare che vengano gestiti correttamente, stoppando manualmente il container dell'adapter
 
++ controllare commenti e coerenza con documentazione 
+
+
 <br>
 
 + api chaching: https://www.npmjs.com/package/apicache middleware (da solo o con redis)

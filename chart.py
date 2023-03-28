@@ -9,15 +9,43 @@ from diagrams.programming.framework import Flask
 from diagrams.onprem.network import Nginx
 
 from diagrams.aws.compute import Lambda
+from diagrams.aws.network import APIGateway
 
 graph_attr = {
-    "fontsize": "35",
-    "bgcolor": "transparent"
+    "size": "100,100",
+    "fontsize": "75",
+    "center": "true",
+    "bgcolor": "transparent",
+    
+    
 }
 
-with Diagram("Daytrip", show=False, direction="TB", graph_attr=graph_attr, filename="daytrip"):
 
-    with Cluster("Nginx"):
+
+with Diagram("Daytrip", show=False, direction="TB", graph_attr=graph_attr, filename="daytrip", outformat=["png","svg"]):
+
+    cluster_attr = {
+        "margin": "30",
+        "nodesep": "1.0",
+        #"ranksep": "1.0",
+        #"bgcolor": "transparent",
+        #"style": "filled",
+        "fillcolor": "#f0f0f0",
+        #"color": "transparent",
+        "fontcolor": "black",
+        "fontsize": "75",
+        "labeljust": "l",
+        "labelloc": "t",
+        "label": "Daytrip",
+        "fontname": "Helvetica",
+        "penwidth": "0.0",
+        #"rankdir": "TB",
+        #"rank": "same",
+        #"splines": "ortho",
+
+
+    }
+    with Cluster("Nginx", graph_attr=cluster_attr):
         nginx = Nginx("nginx")
         
         with Cluster("Presentation Layer"):
@@ -33,18 +61,24 @@ with Diagram("Daytrip", show=False, direction="TB", graph_attr=graph_attr, filen
             with Cluster("User Registration Service"):
                 user_registration_service = Flask("Python + Flask")
         
-        with Cluster("Business Logic Layer"):
+        with Cluster("Business Logic Layer", graph_attr={"rank": "same"}):
             with Cluster("Coordinates Rating Service"):
                 coordinates_rating_service = NodeJS("NodeJS + Express")
             with Cluster("Coordinates Service"):
                 coordinates_service = Flask("Python + Flask")
-            with Cluster("Reachable Destinations Service"):
-                reachable_destinations_service = Flask("Python + Flask")
+            
             with Cluster("Valid Email Service"):
                 valid_email_service = Flask("Python + Flask")
-            with Cluster("Boundary service"):
-                boundary_service = Lambda("Python")
+
+            with Cluster("Reachable Destinations Service"):
+                reachable_destinations_service = Flask("Python + Flask")
             
+            with Cluster("AWS"):
+                with Cluster("Boundary service", graph_attr={"rank": "same"}):
+                    boundary_service_api = APIGateway("API Gateway")
+                    boundary_service_lambda = Lambda("Lambda function")
+                    #boundary_service_api - boundary_service_lambda
+                    
         
         with Cluster("Adapter Layer"):
             
@@ -83,13 +117,16 @@ with Diagram("Daytrip", show=False, direction="TB", graph_attr=graph_attr, filen
         data_layer_cluster_attr = {
             "fillcolor": "#f0f0f0",
             "style": "filled",
+            "outputorder": "edgesfirst",
+            "overlap_scaling": "1.0",
         }
         with Cluster("Data Layer", graph_attr=data_layer_cluster_attr):
-            with Cluster("User DB"):
-                user_db = MongoDB("(MongoDB)")
             
             with Cluster("Destination DB"):
                 destination_db = MongoDB("(MongoDB)")
+
+            with Cluster("User DB"):
+                user_db = MongoDB("(MongoDB)")
             
             with Cluster("TomTom API"):
                 tomtom_api = Custom("", "./chart/TomTom.png")
@@ -142,8 +179,13 @@ with Diagram("Daytrip", show=False, direction="TB", graph_attr=graph_attr, filen
 
         reachable_destinations_service >> Edge(color="darkgreen") << destination_db_adapter
         reachable_destinations_service >> Edge(color="darkgreen") << range_api_adapter
+        #reachable_destinations_service - boundary_service_api
 
         valid_email_service >> Edge(color="darkgreen") << emailcheck_api_adapter
+
+
+
+        
 
 
 
@@ -151,12 +193,13 @@ with Diagram("Daytrip", show=False, direction="TB", graph_attr=graph_attr, filen
         
         air_pollution_api_adapter >> Edge(color="darkgreen") << owm
         crowd_api_adapter >> Edge(color="darkgreen") << tomtom_api
-        destination_db_adapter >> Edge(color="darkgreen") << destination_db
+        
         emailcheck_api_adapter >> Edge(color="darkgreen") << eva_api
         forecast_api_adapter >> Edge(color="darkgreen") << weather_api
         geocoding_api_adapter >> Edge(color="darkgreen") << openstreetmap_api
         ip_api_adapter >> Edge(color="darkgreen") << ip_api
         range_api_adapter >> Edge(color="darkgreen") << tomtom_api
+        destination_db_adapter >> Edge(color="darkgreen") << destination_db
         user_db_adapter >> Edge(color="darkgreen") << user_db
         
 
