@@ -18,232 +18,1763 @@ servers:
       service1:
         default: prova
 paths:
-  /{service1/users:
+  /air_pollution_api_adapter/air_pollution_info: 
+    get:
+      description: >-
+        Gets air pollution info
+      summary: Get air pollution
+      parameters:
+        - name: lat
+          in: path
+          required: true
+          description: 'lat of the area considered'
+        - name: lon
+          in: path
+          required: true
+          description: 'lon of the area considered'
+      responses:
+        '200':
+          description: 'The air pollution info are retrieved'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Air pollution info retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      airPollution:
+                        $ref: '#/components/schemas/AirPollution'
+        '400':
+          description: 'Some parameters are missing (e.g lon)'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon:
+                        type: string
+                        default: 'lon is required'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+                    
+  /crowd_api_adapter/crowds: 
+    get:
+      description: >-
+        Gets currentSpeed and freeFlowSpeed of a certain street
+      summary: Get Crowd
+      parameters:
+        - name: lat
+          in: path
+          required: true
+          description: 'lat of the street considered'
+        - name: lon
+          in: path
+          required: true
+          description: 'lon of the street considered'
+      responses:
+        '200':
+          description: 'The crowd is retrieved'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Crowd retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      destination:
+                        $ref: '#/components/schemas/Crowd'
+        '400':
+          description: 'Error retrieving the crowd, missing some parameters (e.g. "lon")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'lon is required'
+        '400':
+          description: 'Error retrieving the crowd, some parameters have a wrong format (e.g. "lon")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'lon must have a valid value (between -180 and 180)'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+
+  /destination_db_adapter/destinations: 
     post:
       description: >-
-        Creates a new user in the system.
-      summary: Create a new user
+        Creates a new destination in the system.
+      summary: Create a new destination
       requestBody:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - username
-                - email
-              properties:
-                username:
-                  type: string
-                  description: 'Username of the user'
-                email:
-                  type: string
-                  description: 'Email address of the user'
+              $ref: '#/components/schemas/Destination'
+
       responses:
-        '201':
+        '200':
+          description: 'The created destination'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Destination added successfully'
+                  data:
+                    type: object
+                    properties:
+                      destinations:
+                        $ref: '#/components/schemas/Destination'
+        '400':
+          description: 'Error creating a destination, are missed some parameters (e.g. "lon")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'lon is required'
+        '400':
+          description: 'Error creating a destination, some parameters have a wrong format (e.g. "lon")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'lon must have a valid value (between -180 and 180)'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+    get:
+      description: >-
+        Gets all the destinations
+      summary: Get destinations
+      responses:
+        '200':
+          description: 'The destinations are retrieved'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Destinations retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      destinations:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Destination'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+
+    delete:
+      description: >-
+        Deletes all the destinations.
+      summary: Delete all the destination
+      responses:
+        '200':
+          description: "All the destinations are deleted"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Destinations deleted successfully'
+                  data:
+                    default: null
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+
+  /destination_db_adapter/destinations/{id}:
+    get:
+      description: >-
+        Gets the destination with the specified id
+      summary: Get destination
+      responses:
+        '200':
+          description: 'The destination is retrieved'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Destination retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      destination:
+                        $ref: '#/components/schemas/Destination'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+    put:
+      description: >-
+        Updates a specific destination, changing properties like its name, the description, the image_url
+        and the coordinates object. In the request, must be sent all the fields, even the unchanged ones.
+      summary: Update destination
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Destination'
+      responses:
+        '200':
+          description: "The destination is updated"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Destination updated successfully'
+                  data:
+                    default: null
+        '400':
+          description: 'Error updating a destination, are missed some parameters (e.g. "lon")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'lon is required'
+        '400':
+          description: 'Error updating a destination, some parameters have a wrong format (e.g. "lon")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'lon must have a valid value (between -180 and 180)'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 'ID of the destination to modify'
+
+    delete:
+      description: >-
+        Deletes a destination.
+      summary: Delete a destination
+      responses:
+        '200':
+          description: "The destination is deleted"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Destination deleted successfully'
+                  data:
+                    default: null
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 'ID of the destination to delete'
+  
+  /emailcheck_api_adapter/email_checks: 
+    get:
+      description: >-
+        Gets information about a given email address
+      summary: Get information about a given email address
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: 'email to check'
+      responses:
+        '200':
+          description: 'The check is retrieved successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Email check retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      email_check:
+                        type: string
+                        default: ''
+        '400':
+          description: 'The email parameter is missing'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        default: 'email not found'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+  /forecast_api_adapter/forecasts: 
+    get:
+      description: >-
+        Gets forecast information about a given area
+      summary: Get forecast information about a given area
+      parameters:
+        - name: lat
+          in: path
+          required: true
+          description: 'lat of the area'
+        - name: lon
+          in: path
+          required: true
+          description: 'lon of the area'
+        - name: date
+          in: path
+          required: true
+          description: 'date of the forecast information'
+
+      responses:
+        '200':
+          description: 'The forecast info are retrieved'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Forecast retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      forecast:
+                        type: string
+                        default: ''
+        '400':
+          description: 'Some parameters are missing (e.g. date)'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        default: 'date is required'
+
+        '400':
+          description: 'Some parameters have a wrong format (e.g. date)'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      date:
+                        type: string
+                        default: 'date must have a valid format (YYYY-MM-DD)'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+  /geocoding_api_adapter/geocodes: 
+    get:
+      description: >-
+        Gets the convertion between the name of an area and its coordinates
+      summary: Get the convertion between the name of an area and its coordinates
+      parameters:
+        - name: address
+          in: path
+          required: true
+          description: 'address of the location'
+
+      responses:
+        '200':
+          description: 'Geocode retrieved successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Geocode retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      geocode:
+                        type: string
+                        default: ''
+        '400':
+          description: 'the address parameter is missing'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      address:
+                        type: string
+                        default: 'address not found'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+  /ip_api_adapter/ip_info: 
+    get:
+      description: >-
+        Gets the convertion between an IP address of and its location
+      summary: Get the convertion between an IP address of and its location
+      parameters:
+        - name: ip_address
+          in: path
+          required: true
+          description: 'ip_address of the location'
+
+      responses:
+        '200':
+          description: 'Ip info retrieved successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Ip info retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      ip_info:
+                        type: string
+                        default: ''
+        '400':
+          description: 'the ip_address parameter is missing'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      address:
+                        type: string
+                        default: 'ip_address is required'
+        '400':
+          description: 'the ip_address parameter has a wrong format'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      address:
+                        type: string
+                        default: 'ip_address is invalid'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+  /range_api_adapter/ranges: 
+    get:
+      description: >-
+        Gets the polygon that limits the area that can be travelled in a given time starting from a given location
+      summary: Get the polygon that limits the area that can be travelled in a given time starting from a given location
+      parameters:
+        - name: lat
+          in: path
+          required: true
+          description: 'lat of the location'
+        - name: lon
+          in: path
+          required: true
+          description: 'lon of the location'
+        - name: timeBudgetInSec
+          in: path
+          required: true
+          description: 'timeBudgetInSec at disposition'
+
+
+      responses:
+        '200':
+          description: 'Range retrieved successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Range retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      ip_info:
+                        type: string
+                        default: ''
+        '400':
+          description: 'some parameters are missing (e.g. lon)'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      address:
+                        type: string
+                        default: 'lon is required'
+        '400':
+          description: 'some parameters have a wrong format (e.g. lon)'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      address:
+                        type: string
+                        default: 'lon must have a valid value (between -180 and 180)'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+  /user_db_adapter/users: 
+    post:
+      description: >-
+        Creates a new user in the system.
+      summary: Create a new destination
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+
+      responses:
+        '200':
           description: 'The created user'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-
-  /users/{id}:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'User added successfully'
+                  data:
+                    type: object
+                    properties:
+                      destinations:
+                        $ref: '#/components/schemas/User'
+        '400':
+          description: 'Error creating a user, are missed some parameters (e.g. "name")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'name is required'
+        '400':
+          description: 'Error creating a user, some parameters have a wrong format (e.g. "coordinates.lon")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'lon must have a valid value (between -180 and 180)'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
     get:
       description: >-
-        Gets information about a specific user, identified by an ID
-      summary: Get a user
+        Gets all the destinations
+      summary: Get destinations
+      responses:
+        '200':
+          description: 'The destinations are retrieved'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Destinations retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      destinations:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Destination'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+
+    delete:
+      description: >-
+        Deletes all the users.
+      summary: Delete all the users
+      responses:
+        '200':
+          description: "All the users are deleted"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Users deleted successfully'
+                  data:
+                    default: null
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+
+  /user_db_adapter/users/{id}:
+    get:
+      description: >-
+        Gets the user with the specified id
+      summary: Get user
+      responses:
+        '200':
+          description: 'The user is retrieved'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'User retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      destination:
+                        $ref: '#/components/schemas/User'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+    put:
+      description: >-
+        Updates a specific user, changing properties like its name, the surname, the email, the password,
+        the origin_name and the coordinates object. In the request, must be sent all the fields, even the unchanged ones.
+      summary: Update user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: "The user is updated"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'User updated successfully'
+                  data:
+                    default: null
+        '400':
+          description: 'Error updating a user, are missed some parameters (e.g. "coordinates.lon")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'lon is required'
+        '400':
+          description: 'Error updating a user, some parameters have a wrong format (e.g. "coordinates.lon")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'lon must have a valid value (between -180 and 180)'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
       parameters:
         - name: id
           in: path
           required: true
-          description: 'ID of the requested user'
+          description: 'ID of the user to modify'
+
+    delete:
+      description: >-
+        Deletes a user.
+      summary: Delete a user
       responses:
         '200':
-          description: 'The user corresponding to the input ID'
+          description: "The user is deleted"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-  /assignments:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'User deleted successfully'
+                  data:
+                    default: null
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 'ID of the user to delete'
+  /user_db_adapter/users/email/{email}: 
+     get:
+      description: >-
+        Gets the user with the specified email
+      summary: Get user
+      responses:
+        '200':
+          description: 'The user is retrieved'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'User retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      destination:
+                        $ref: '#/components/schemas/User'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+  /coordinates_rating_service/ratings: 
+     get:
+      description: >-
+        Gets a rating associated on how much a place could be enjoyable taking into account the weather info, the traffic and the air quality
+      summary: Get rating
+      parameters:
+        - name: lat
+          in: path
+          required: true
+          description: 'lat of the place considered'
+        - name: lon
+          in: path
+          required: true
+          description: 'lon of the place considered'
+        - name: hour
+          in: path
+          required: true
+          description: 'hour used in order to get meteorological informations'
+        - name: date
+          in: path
+          required: true
+          description: 'date of the meteorological informations'
+
+      responses:
+        '200':
+          description: 'Rating retrieved successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'User retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      rating:
+                        $ref: '#/components/schemas/Rating'
+        '400':
+          description: 'Error obtaining a rating, are missed some parameters (e.g. "coordinates.lon")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'lon is required'
+        '400':
+          description: 'Error obtaining a rating, some parameters have a wrong format (e.g. "coordinates.lon")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'lon must have a valid value (between -180 and 180)'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+  /coordinates_service/coordinates: 
+     get:
+      description: >-
+        Converts a location name to its coordinates
+      summary: Get coordinates from location
+      parameters:
+        - name: location_name
+          in: path
+          required: true
+          description: 'location_name of the place considered'
+       
+
+      responses:
+        '200':
+          description: 'Coordinates retrieved successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Coordinates retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      coordinates:
+                        type: object
+                        properties:
+                          lat:
+                            type: string
+                            default: '45'
+                          lon:
+                            type: string
+                            default: '50'
+        '400':
+          description: 'Error obtaining the coordinates, are missed some parameters (e.g. "coordinates.lon")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'lon is required'
+        '400':
+          description: 'Error obtaining the coordinates, some parameters have a wrong format (e.g. "coordinates.lon")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'lon must have a valid value (between -180 and 180)'
+        
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+  /valid_email_service/email_checks/valid: 
+     get:
+      description: >-
+        Check if mail is existing and if it's not categorized as smpa,
+      summary: Get mail informations
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: 'email  considered'
+       
+
+      responses:
+        '200':
+          description: 'Coordinates retrieved successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Email check retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      coordinates:
+                        type: object
+                        properties:
+                          email:
+                            type: string
+                            default: 'lv@example.com'
+                          valid:
+                            type: string
+                            default: 'True'
+        '400':
+          description: 'email is required'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'email is required'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+  /user_login_service/sessions: 
     post:
       description: >-
-        Creates an assignment.
-      summary: Create an assignment
+        Creates a new session and return the jwt generated.
+      summary: Create a session
       requestBody:
         content:
           application/json:
             schema:
               type: object
-              required:
-                - name
-                - deadline
-                - status
               properties:
-                name:
+                email:
                   type: string
-                  description: 'Name for the assignment'
-                deadline:
+                  default: 'lv@example.com'
+                message:
                   type: string
-                  description: 'Datetime of the deadline in ISO 8601 format'
-                status:
-                  type: string
-                  enum: [open, closed]
-                  description: 'Defined whether the assignment is open for replies or not'
-      responses:
-        '201':
-          description: 'The created assignment'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Assignment'
-    get:
-      description: >-
-        Gets the list of assignments. Optionally, you can pass the ID of the user as a parameter.
-        If the passed user is a teacher, then the list represents assignments that the teacher has created;
-        if it is a student, then the list represents the assignments they have to complete.
-      summary: Get assignments
+                  default: '*****'
+
       responses:
         '200':
-          description: 'Collection of assignments'
+          description: 'The generated token'
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Assignment'
-      parameters:
-        - in: query
-          name: userId
-          description: 'Optional parameter. The user ID is used to restrict the results of the request'
-  /assignments/{id}:
-    get:
-      description: >-
-        Gets information about a specific assignment
-      summary: Get an assignment
-      responses:
-        '200':
-          description: 'The assignment corresponding to the input ID'
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        default: 'aa.bb.cc'
+        '400':
+          description: 'Error generating a token, email is missed'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Assignment'
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: 'ID of the requested assignment'
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      email: 
+                        type: string
+                        default: 'email is required'
+        '400':
+          description: 'Error generating a token, wrong password'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      password: 
+                        type: string
+                        default: 'Wrong Password'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
     put:
       description: >-
-        Updates a specific assignment, changing properties like its name, the status (open/closed),
-        and the list of tasks. In the request, send only the fields that you want to change.
-      summary: Update assignment
+        Update a session, updating the expiration date to 180s to the current date.
+      summary: Update a session
+
       responses:
         '200':
-          description: 'The updated assignment'
+          description: 'The updated token'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Assignment'
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: 'ID of the assignment to modify'
-    delete:
-      description: >-
-        Deletes an assignment.
-      summary: Delete an assignment
-      responses:
-        '204':
-          description: ''
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: 'ID of the assignment to delete'
-  /marks:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        default: 'aa.bc.cd'
+  /user_registration_service/signup: 
     post:
       description: >-
-        Gives a mark for an assignment made by a student.
-      summary: Give a mark
-      responses:
-        '201':
-          description: ''
+        Creates a new user.
+      summary: Create a user
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Mark'
-    get:
-      description: >-
-        Gets marks. It is possible to get the marks for all the assignments a user has taken,
-        or the mark for a specific exam.
-      summary: Get marks
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: 'Name'
+                surname:
+                  type: string
+                  default: 'Surna,e'
+                email:
+                  type: string
+                  default: 'lv@example.com'
+                password:
+                  type: string
+                  default: '*****'
+                password_confirmation:
+                  type: string
+                  default: '*****'
+                address:
+                  type: string
+                  default: 'Via Toledo'
+                city:
+                  type: string
+                  default: 'Naples'
+                country:
+                  type: string
+                  default: 'Italy'
+
       responses:
         '200':
-          description: 'A collection of marks'
+          description: 'The generated token'
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
-      parameters:
-        - in: query
-          name: userId
-        - in: query
-          name: assignmentId
-          
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  status:
+                    type: string
+                    default: 'User created successfully'
+                  data:
+                    type: object
+                    properties:                      
+                      user:
+                        $ref: '#/components/schemas/User'
+
+        '400':
+          description: 'Error creating a user, some parameters are missing (e.g. Name)'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      email: 
+                        type: string
+                        default: 'name is required'
+        '400':
+          description: 'Error creating a user, some parameters have a wrong format (e.g. email)'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      password: 
+                        type: string
+                        default: 'The email is not valid, please use a real email'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '500'
+                  message:
+                    type: string
+                    default: 'Error'
+
 components:
   schemas:
-    User:
+    AirPollution:
       type: object
-      required:
-        - id
-        - username
-        - email
       properties:
-        id:
+        lat:
           type: integer
-          description: 'ID of the user'
-        username:
-          type: string
-          description: 'Username of the user'
-        email:
-          type: string
-          description: 'Email address of the user'
-    Assignment:
+          description: 'lat of the area given'
+        lon:
+          type: integer
+          description: 'lon of the area given'
+        aqi:
+          type: integer
+          description: 'Air quality index of the area given'
+
+    Crowd:
       type: object
-      required:
-        - name
-        - deadline
-        - status
+      properties:
+        currentSpeed:
+          type: integer
+          description: 'currentSpeed of the street identified'
+        freeFlowSpeed:
+          type: integer
+          description: 'freeFlowSpeed of the street identified'
+    Destination:
+      type: object
       properties:
         name:
           type: string
-          description: 'Name for the assignment'
-        deadline:
+          description: 'Name of the destination'
+        description:
           type: string
-          description: 'Datetime of the deadline in ISO 8601 format'
-        status:
+          description: 'Description of the destination'
+        image_url:
           type: string
-          enum: [open, closed]
-          description: 'Defined whether the assignment is open for replies or not'
-    Mark:
+          description: 'Link to the image of the destination'
+        coordinates:
+          type: object
+          description: 'coordinates of the destination'
+          properties:
+            lat:
+              type: integer
+              description: 'lat of the destination'
+            lon:
+              type: integer
+              description: 'lon of the destination'
+    User:
       type: object
-      required:
-      - userId
-      - assignmentId
-      - mark
       properties:
-        userId:
-          type: integer
-          description: 'ID of the user the mark has been given to'
-        assignmentId:
-          type: integer
-          description: 'ID of the assignment'
-        mark:
+        name:
           type: string
-          description: 'The given mark value'
-        text:
+          description: 'Name of the user'
+        surname:
           type: string
-          description: 'Comment associated to the mark'
+          description: 'Surname of the user'
+        email:
+          type: string
+          description: 'Email of the user'
+        password:
+          type: string
+          description: 'Password of the user'
+        origin_name:
+          type: string
+          description: 'Address of the user, to be used as origin in the destination search'
+        origin_coordinates:
+          type: object
+          description: 'coordinates of the origin_name'
+          properties:
+            lat:
+              type: integer
+              description: 'lat of the origin_name'
+            lon:
+              type: integer
+              description: 'lon of the origin_name'
+    Rating:
+      type: object
+      properties:
+        forecast_rating:
+          type: string
+          description: '1'
+        forecast_description:
+          type: string
+          description: 'Sunny and Warm'
+        crowd_rating:
+          type: string
+          description: '1'
+        crowd_description:
+          type: string
+          description: 'Not crowded'
+        air_pollution_rating:
+          type: string
+          description: '1'
+        air_pollution_description:
+          type: string
+          description: 'Good'
+        final_rating:
+          type: string
+          description: '1'
