@@ -18,6 +18,13 @@ exports.findOne = async (req, res) => {
     });
   }
 
+  if (isNaN(req.query.lat)) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must be a number" }
+    });
+  }
+
   if (req.query.lat < -90 || req.query.lat > 90) {
     return res.status(400).send({
       "status": "fail",
@@ -25,27 +32,19 @@ exports.findOne = async (req, res) => {
     });
   } 
 
-  if (isNaN(req.query.lat)) {
+  if (isNaN(req.query.lon)) {
     return res.status(400).send({
       "status": "fail",
-      "data": { "lat" : "lat must be a number" }
+      "data": { "lon" : "lon must be a number" }
     });
-  } 
-
+  }
+ 
   if (req.query.lon < -180 || req.query.lon > 180) {
     return res.status(400).send({
       "status": "fail",
       "data": { "lon" : "lon must have a valid value (between -180 and 180)" }
     });
   }
-
-
-  if (isNaN(req.query.lon)) {
-    return res.status(400).send({
-      "status": "fail",
-      "data": { "lon" : "lon must be a number" }
-    });
-  } 
 
   if (!req.query.date) {
     return res.status(400).send({
@@ -107,17 +106,25 @@ exports.findOne = async (req, res) => {
   
   let url = base_url + "?key=" + api_key + "&q=" + q + "&dt=" + date + "&days=" + days + "&alerts=no"
 
-  const external_response = await fetch(url);
-  if (external_response.status != 200) {
-    let response = {
-      status: "error",
-      code: external_response.status ? external_response.status : 500,
-      message: external_response.statusText ? external_response.statusText : "Error while retrieving forecast",
+  try {
+    external_response = await fetch(url);
+    data = await external_response.json();
+  } catch (error) {
+    data = {
+      "status": "error",
+      "code": 500,
+      "message": "Error in fetching data from external API"
     }
-    return res.send(response);
   }
 
-  const data = await external_response.json();
+  if (data["error"]) {
+    res.send({
+        "status" : "error",
+        "code": 500,
+        "message" : data["error"]
+      });
+    return;
+  }
 
   //filtering
   let forecast = data.forecast.forecastday

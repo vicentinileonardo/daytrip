@@ -1,7 +1,7 @@
 {
-  "name": "crowd_db_adapter",
+  "name": "crowd_api_adapter",
   "version": "1.0.0",
-  "description": "Node.js Restful CRUD API with Node.js, Express",
+  "description": "crowd_api_adapter: Node.js Restful CRUD API with Node.js, Express",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,8 +10,7 @@
     "nodejs",
     "express",
     "rest",
-    "api",
-    "mongodb"
+    "api"
   ],
   "author": "Leonardo Vicentini, Luca Vian",
   "license": "ISC",

@@ -6,13 +6,13 @@ module.exports = app => {
   //bulk import (ONLY FOR DEVELOPMENT)
   router.post("/bulk", verifyTokenAdmin, destinations.import);
 
-  // Create a new Destination
+  // Creates a new destination in the system
   router.post("/", verifyTokenAdmin, destinations.create);
 
-  // Retrieve all Destinations
+  // Gets all the destinations
   router.get("/", destinations.findAll);
 
-  // Retrieve a single Destination with id
+  // Gets the destination with the specified id
   router.get("/:id", destinations.findOne);
 
   // Update a Destination with id
@@ -35,7 +35,7 @@ module.exports = app => {
     res.status(405).send(response);
   });
 
-  app.use("/api/destinations", router);
+  app.use("/api/v1/destinations", router);
   
   //handle 404
   app.use(function(req, res, next) {
@@ -55,7 +55,7 @@ function verifyTokenAdmin(req, res, next) {
   let token = req.headers['authorization'];
   console.log("token", token)  
 
-  const SECRET_KEY = "MYKEY"
+  const SECRET_KEY = process.env.JWT_SECRET;
 
   if (!token) return res.status(401).send({
     "status": "fail",

@@ -3,7 +3,7 @@ module.exports = app => {
 
   var router = require("express").Router();
 
-  // Retrieve a single Destination with id
+  // Gets forecast information about a given area
   router.get("/", forecasts.findOne);
 
   // handle error 405 - method not allowed
@@ -16,7 +16,7 @@ module.exports = app => {
     res.status(405).send(response);
   });
 
-  app.use("/api/forecasts", router);
+  app.use("/api/v1/forecasts", router);
 
   //handle 404
   app.use(function(req, res, next) {

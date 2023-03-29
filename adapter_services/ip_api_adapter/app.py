@@ -15,7 +15,7 @@ def check():
     }
     return response, 200
 
-@app.route("/api/ip_info", methods=["GET"])
+@app.route("/api/v1/ip_info", methods=["GET"])
 def ip_info():
 
     # extract the address from the query string
@@ -97,4 +97,3 @@ def method_not_allowed(error):
         "message": "The method is not allowed for the requested URL."
     }
     return response, 405
-

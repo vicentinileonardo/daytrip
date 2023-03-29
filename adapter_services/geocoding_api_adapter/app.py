@@ -14,7 +14,8 @@ def check():
     }
     return response, 200
 
-@app.route("/api/geocodes", methods=["GET"])
+# Get the conversion between the name of an area and its coordinates
+@app.route("/api/v1/geocodes", methods=["GET"])
 def geocode():
 
     # extract the address from the query string
@@ -93,4 +94,3 @@ def method_not_allowed(error):
         "message": "The method is not allowed for the requested URL."
     }
     return response, 405
-

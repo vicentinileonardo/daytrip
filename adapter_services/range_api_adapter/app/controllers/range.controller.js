@@ -18,17 +18,24 @@ exports.findOne = async (req, res) => {
     });
   }
 
+  if (isNaN(req.query.lon)) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must be a number" }
+    });
+  }
+
   if (req.query.lon < -180 || req.query.lon > 180) {
     return res.status(400).send({
       "status": "fail",
       "data": { "lon" : "lon must have a valid value (between -180 and 180)" }
     });
   }
-
-  if (isNaN(req.query.lon)) {
+  
+  if (isNaN(req.query.lat)) {
     return res.status(400).send({
       "status": "fail",
-      "data": { "lon" : "lon must be a number" }
+      "data": { "lat" : "lat must be a number" }
     });
   } 
 
@@ -39,13 +46,6 @@ exports.findOne = async (req, res) => {
     });
   } 
 
-  if (isNaN(req.query.lat)) {
-    return res.status(400).send({
-      "status": "fail",
-      "data": { "lat" : "lat must be a number" }
-    });
-  } 
-  
   // Validate timeBudgetInSec format that must be a number
   if (req.query.timeBudgetInSec) {
     let timeBudgetInSec_regex = /^\d+$/
@@ -72,17 +72,16 @@ exports.findOne = async (req, res) => {
   
   let url = base_url + "/" + origin + "/json?" + "traffic=" + traffic + "&timeBudgetInSec=" + timeBudgetInSec + "&key=" + api_key 
 
-  const external_response = await fetch(url);
-  const data = await external_response.json();
-
-  if (data["error"]) {
-    let response = {
+  try {
+    external_response = await fetch(url);
+    data = await external_response.json();
+  } catch (error) {
+    data = {
       "status": "error",
       "code": 500,
-      "message": data["error"]["description"]
+      "message": "Error in fetching data from external API"
     }
-    res.status(500).send(response);
-    return;
+    return res.status(500).send(data);
   }
   
   //filtered_response

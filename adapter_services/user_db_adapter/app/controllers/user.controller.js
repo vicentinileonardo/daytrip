@@ -71,6 +71,13 @@ exports.create = (req, res) => {
     });
   }
 
+  if (isNaN(req.body.origin_coordinates["lon"])) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must be a number" }
+    });
+  }
+
   if (req.body.origin_coordinates["lon"] < -180 || req.body.origin_coordinates["lon"] > 180) {
     return res.status(400).send({
       "status": "fail",
@@ -78,11 +85,10 @@ exports.create = (req, res) => {
     });
   } 
 
-
-  if (isNaN(req.body.origin_coordinates["lon"])) {
+  if (isNaN(req.body.origin_coordinates["lat"])) {
     return res.status(400).send({
       "status": "fail",
-      "data": { "lon" : "lon must be a number" }
+      "data": { "lat" : "lat must be a number" }
     });
   } 
 
@@ -93,13 +99,6 @@ exports.create = (req, res) => {
     });
   } 
  
-  if (isNaN(req.body.origin_coordinates["lat"])) {
-    return res.status(400).send({
-      "status": "fail",
-      "data": { "lat" : "lat must be a number" }
-    });
-  } 
-
   //hash password
   const saltRounds = 10;
   let password = String(req.body.password);
@@ -137,9 +136,7 @@ exports.create = (req, res) => {
             "message" : err.message || "Some error occurred while creating the User."
           });
       });
-
   });
-
 };
 
 // Retrieve all Users from the database.
@@ -197,30 +194,6 @@ exports.findOne = (req, res) => {
         "code": 500,
         "message" : "Error retrieving User with id=" + id
       });
-    });
-};
-
-// Retrieve all Users from the database.
-exports.findByEmail = (req, res) => {
-  const email = req.params.email;
-
-  //condition
-  var condition = { "email": email };
-
-  User.find(condition)
-    .then(data => {
-        res.status(200).send({
-          "status" : "success",
-          "message": "User retrieved successfully",
-          "data" : {"user":data[0]}
-        });
-    })
-    .catch(err => {
-      res.status(500).send({
-          "status" : "error",
-          "code": 500,
-          "message" : err.message || "Some error occurred while retrieving the User"
-        });
     });
 };
 
@@ -302,13 +275,6 @@ exports.update = (req, res) => {
     });
   }
 
-  if (req.body.origin_coordinates["lon"] < -180 || req.body.origin_coordinates["lon"] > 180) {
-    return res.status(400).send({
-      "status": "fail",
-      "data": { "lon" : "lon must have a valid value (between -180 and 180)" }
-    });
-  } 
-
   if (isNaN(req.body.origin_coordinates["lon"])) {
     return res.status(400).send({
       "status": "fail",
@@ -316,10 +282,10 @@ exports.update = (req, res) => {
     });
   } 
 
-  if (req.body.origin_coordinates["lat"] < -90 || req.body.origin_coordinates["lat"] > 90) {
+  if (req.body.origin_coordinates["lon"] < -180 || req.body.origin_coordinates["lon"] > 180) {
     return res.status(400).send({
       "status": "fail",
-      "data": { "lat" : "lat must have a valid value (between -90 and 90)" }
+      "data": { "lon" : "lon must have a valid value (between -180 and 180)" }
     });
   } 
 
@@ -327,6 +293,13 @@ exports.update = (req, res) => {
     return res.status(400).send({
       "status": "fail",
       "data": { "lat" : "lat must be a number" }
+    });
+  } 
+
+  if (req.body.origin_coordinates["lat"] < -90 || req.body.origin_coordinates["lat"] > 90) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must have a valid value (between -90 and 90)" }
     });
   } 
 

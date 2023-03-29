@@ -3,7 +3,7 @@ module.exports = app => {
 
   var router = require("express").Router();
 
-  // Retrieve a Crowds information related to a (lat,lon) couple
+  // Gets currentSpeed and freeFlowSpeed of a certain street
   router.get("/", crowds.findOne);
 
   // handle error 405 - method not allowed
@@ -16,7 +16,7 @@ module.exports = app => {
     res.status(405).send(response);
   });
 
-  app.use("/api/crowds", router);
+  app.use("/api/v1/crowds", router);
   
   //handle 404
   app.use(function(req, res, next) {

@@ -15,12 +15,13 @@ def check():
     }
     return response, 200
 
-@app.route("/api/air_pollution_info", methods=["GET"])
+# Gets air pollution info
+@app.route("/api/v1/air_pollution_info", methods=["GET"])
 def air_pollution_info():
 
     # extract the address from the query string
-    lat = request.args.get("lat")
-    lon = request.args.get("lon")
+    lat = request.args.get("lat") # lat of the area considered
+    lon = request.args.get("lon") # lon of the area considered
 
     if lat is None:
         response = {
@@ -141,4 +142,3 @@ def method_not_allowed(error):
         "message": "The method is not allowed for the requested URL."
     }
     return response, 405
-

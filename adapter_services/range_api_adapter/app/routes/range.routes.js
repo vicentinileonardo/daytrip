@@ -3,7 +3,7 @@ module.exports = app => {
 
   var router = require("express").Router();
 
-  // Retrieve a Ranges informations related to a (lat,lon) couple
+  // Gets the polygon that limits the area that can be traveled in a given time starting from a given location
   router.get("/", ranges.findOne);
 
   // handle error 405 - method not allowed
@@ -16,7 +16,7 @@ module.exports = app => {
     res.status(405).send(response);
   });
 
-  app.use("/api/ranges", router);
+  app.use("/api/v1/ranges", router);
 
   //handle 404
   app.use(function(req, res, next) {

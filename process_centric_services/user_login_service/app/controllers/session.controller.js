@@ -39,7 +39,7 @@ exports.findByEmail = async (req, res) => {
       if(result){
         const jwt = require('jsonwebtoken');
 
-        const SECRET_KEY = "MYKEY"
+        const SECRET_KEY = process.env.JWT_SECRET;
         
         const user = {
           time: Date(),
@@ -83,7 +83,7 @@ exports.updateToken = async (req, res) => {
   // Get auth header value
   let token = req.headers['authorization'];
 
-  const SECRET_KEY = "MYKEY"
+  const SECRET_KEY = process.env.JWT_SECRET;
 
   if (!token) return res.status(401).send({
     "status": "fail",

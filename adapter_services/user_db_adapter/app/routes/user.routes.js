@@ -25,9 +25,6 @@ module.exports = app => {
   // Delete all Users
   router.delete("/", users.deleteAll);
 
-  // Retrieve a single User with id
-  router.get("/email/:email", users.findByEmail);
-
 
   // handle error 405 - method not allowed
   router.all("/", function(req, res, next) {
@@ -39,7 +36,7 @@ module.exports = app => {
     res.status(405).send(response);
   });
 
-  app.use("/api/users", router);
+  app.use("/api/v1/users", router);
 
   //handle 404
   app.use(function(req, res, next) {

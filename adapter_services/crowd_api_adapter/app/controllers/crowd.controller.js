@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 
-// Find a single crowd Forecast 
+// Gets currentSpeed and freeFlowSpeed of a certain street
 exports.findOne = async (req, res) => {
 
   if (!req.query.lat) {
@@ -46,8 +46,8 @@ exports.findOne = async (req, res) => {
   } 
 
   //recupero paramteri
-  let lat = req.query.lat
-  let lon = req.query.lon
+  let lat = req.query.lat //lat of the street considered
+  let lon = req.query.lon //lon of the street considered
 
   //chiamata API esterna
   let base_url = "https://api.tomtom.com/traffic/services/4/flowSegmentData/absolute/10/json"
@@ -56,8 +56,16 @@ exports.findOne = async (req, res) => {
   
   let url = base_url + "?key=" + api_key + "&point=" + point
 
-  const response = await fetch(url);
-  const data = await response.json();
+  try {
+    external_response = await fetch(url);
+    data = await external_response.json();
+  } catch (error) {
+    data = {
+      "status": "error",
+      "code": 500,
+      "message": "Error in fetching data from external API"
+    }
+  }
 
   if (data["error"]) {
     res.send({
@@ -74,6 +82,7 @@ exports.findOne = async (req, res) => {
   //response with check for errors
   res.status(200).send({
     "status" : "success",
+    "message": "Crowd information retrieved successfully",
     "data" : {
       "crowd":{
         "currentSpeed":currentSpeed,

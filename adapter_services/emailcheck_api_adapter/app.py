@@ -14,7 +14,8 @@ def check():
     }
     return response, 200
 
-@app.route("/api/email_checks", methods=["GET"])
+# Gets information about a given email address
+@app.route("/api/v1/email_checks", methods=["GET"])
 def email_check():
 
     # extract the email from the query string

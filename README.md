@@ -112,6 +112,8 @@ When an API call fails due to an error on the server. For example:
 
 + controllare commenti e coerenza con documentazione 
 
++ controllare try catch servizi con node js
+
 
 <br>
 

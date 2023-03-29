@@ -40,13 +40,6 @@ exports.create = (req, res) => {
     });
   }
 
-  if (req.body.coordinates["lon"] < -180 || req.body.coordinates["lon"] > 180) {
-    return res.status(400).send({
-      "status": "fail",
-      "data": { "lon" : "lon must have a valid value (between -180 and 180)" }
-    });
-  } 
-
   if (isNaN(req.body.coordinates["lon"])) {
     return res.status(400).send({
       "status": "fail",
@@ -54,10 +47,10 @@ exports.create = (req, res) => {
     });
   } 
 
-  if (req.body.coordinates["lat"] < -90 || req.body.coordinates["lat"] > 90) {
+  if (req.body.coordinates["lon"] < -180 || req.body.coordinates["lon"] > 180) {
     return res.status(400).send({
       "status": "fail",
-      "data": { "lat" : "lat must have a valid value (between -90 and 90)" }
+      "data": { "lon" : "lon must have a valid value (between -180 and 180)" }
     });
   } 
 
@@ -68,14 +61,21 @@ exports.create = (req, res) => {
     });
   } 
 
+  if (req.body.coordinates["lat"] < -90 || req.body.coordinates["lat"] > 90) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must have a valid value (between -90 and 90)" }
+    });
+  } 
+
   // Create a Destination
   const destination = new Destination({
-    name: req.body.name,
-    description: req.body.description,
-    image_url: req.body.image_url,
-    coordinates: {
-      lat:req.body.coordinates["lat"],
-      lon:req.body.coordinates["lon"]
+    name: req.body.name,                //Name of the destination
+    description: req.body.description,  //Description of the destination
+    image_url: req.body.image_url,      //Link to the image of the destination
+    coordinates: {                      //Coordinates of the destination
+      lat:req.body.coordinates["lat"],  //lat of the destination
+      lon:req.body.coordinates["lon"]   //lon of the destination
     }
   });
 
@@ -98,11 +98,11 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Destinations from the database.
+// Gets all the destinations
 exports.findAll = (req, res) => {
 
   const paginationOptions = {
-    page: parseInt(req.query.page, 10) || 0,
+    page: parseInt(req.query.page, 10) || 0, 
     limit: parseInt(req.query.limit, 10) || 0
   }
 
@@ -113,7 +113,7 @@ exports.findAll = (req, res) => {
       res.status(200).send({
         "status" : "success",
         "message": "Destinations retrieved successfully",
-        "data" : {"destinations":data}
+        "data" : {"destination":data}
       });
      })
     .catch(err => {
@@ -125,7 +125,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find a single User with an id
+// Find a single Destination with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -164,9 +164,6 @@ exports.update = (req, res) => {
     });
   }
 
-  //console.log("req.params: ", req.params);
-  //console.log("req.body: ", req.body);
-
   // check each field
   if (!req.body.name) {
     return res.status(400).send({
@@ -203,13 +200,6 @@ exports.update = (req, res) => {
     });
   }
 
-  if (req.body.coordinates["lon"] < -180 || req.body.coordinates["lon"] > 180) {
-    return res.status(400).send({
-      "status": "fail",
-      "data": { "lon" : "lon must have a valid value (between -180 and 180)" }
-    });
-  } 
-
   if (isNaN(req.body.coordinates["lon"])) {
     return res.status(400).send({
       "status": "fail",
@@ -217,10 +207,10 @@ exports.update = (req, res) => {
     });
   } 
 
-  if (req.body.coordinates["lat"] < -90 || req.body.coordinates["lat"] > 90) {
+  if (req.body.coordinates["lon"] < -180 || req.body.coordinates["lon"] > 180) {
     return res.status(400).send({
       "status": "fail",
-      "data": { "lat" : "lat must have a valid value (between -90 and 90)" }
+      "data": { "lon" : "lon must have a valid value (between -180 and 180)" }
     });
   } 
 
@@ -228,6 +218,13 @@ exports.update = (req, res) => {
     return res.status(400).send({
       "status": "fail",
       "data": { "lat" : "lat must be a number" }
+    });
+  } 
+
+  if (req.body.coordinates["lat"] < -90 || req.body.coordinates["lat"] > 90) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lat" : "lat must have a valid value (between -90 and 90)" }
     });
   } 
 
