@@ -45,11 +45,11 @@ exports.findOne = async (req, res) => {
     });
   } 
 
-  //recupero paramteri
+  //get parameters
   let lat = req.query.lat //lat of the street considered
   let lon = req.query.lon //lon of the street considered
 
-  //chiamata API esterna
+  //fetch data from external API
   let base_url = "https://api.tomtom.com/traffic/services/4/flowSegmentData/absolute/10/json"
   let api_key = process.env.API_KEY
   let point = lat + "," + lon
@@ -60,26 +60,18 @@ exports.findOne = async (req, res) => {
     external_response = await fetch(url);
     data = await external_response.json();
   } catch (error) {
-    data = {
+    response = {
       "status": "error",
       "code": 500,
       "message": "Error in fetching data from external API"
     }
-  }
-
-  if (data["error"]) {
-    res.send({
-        "status" : "error",
-        "code": 500,
-        "message" : data["error"]
-      });
-    return;
+    return res.status(500).send(response);
   }
 
   const currentSpeed=Number(data.flowSegmentData.currentSpeed)
   const freeFlowSpeed=Number(data.flowSegmentData.freeFlowSpeed)
 
-  //response with check for errors
+  //response
   res.status(200).send({
     "status" : "success",
     "message": "Crowd information retrieved successfully",

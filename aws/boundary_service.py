@@ -11,9 +11,9 @@ def lambda_handler(event, context):
         return handle_post(event)
     else:
         response = {
-                "status": "fail",
-                "data": {"destinations": "Method not allowed"}
-            }
+            "status": "fail",
+            "data": {"destinations": "Method not allowed"}
+        }
         return {
             'statusCode': 405,
             'body': json.dumps(response)
@@ -21,9 +21,9 @@ def lambda_handler(event, context):
         
 def handle_get(event):
     response = {
-                "status": "success",
-                "message": "boundary service is up and running!"
-            }
+        "status": "success",
+        "message": "boundary service is up and running!"
+    }
     return {
         'statusCode': 200,
         'body': json.dumps(response)
@@ -72,6 +72,7 @@ def handle_post(event):
     
         response = {
             "status": "success",
+            "message": "Successfully calculated reachable destinations",
             "data": {"destinations": reachable_destinations}
         }
     
@@ -85,7 +86,7 @@ def handle_post(event):
                 "data": {"destinations": "Provided malformed body"}
             }
         return {
-            'statusCode': 200,
+            'statusCode': 400,
             'body': json.dumps(response)
         }
         

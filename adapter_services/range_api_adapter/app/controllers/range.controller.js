@@ -76,12 +76,12 @@ exports.findOne = async (req, res) => {
     external_response = await fetch(url);
     data = await external_response.json();
   } catch (error) {
-    data = {
+    response = {
       "status": "error",
       "code": 500,
       "message": "Error in fetching data from external API"
     }
-    return res.status(500).send(data);
+    return res.status(500).send(response);
   }
   
   //filtered_response
