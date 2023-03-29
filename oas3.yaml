@@ -67,8 +67,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -149,8 +149,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -187,7 +187,7 @@ paths:
                       destination:
                         $ref: '#/components/schemas/Destination'
         '400':
-          description: 'Error creating a destination, are missed some parameters (e.g. "lon")'
+          description: 'Error creating a destination, some parameters are missing (e.g. "lon")'
           content:
             application/json:
               schema:
@@ -229,8 +229,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -279,8 +279,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -316,8 +316,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -331,6 +331,8 @@ paths:
         - name: id
           in: path
           required: true
+          description: 'ID of the destination to retrieve'
+
       responses:
         '200':
           description: 'The destination is retrieved'
@@ -361,8 +363,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '404'
+                    type: integer
+                    default: 404
                   message:
                     type: string
                     default: 'Not found Destination with id={id}'
@@ -377,8 +379,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -392,6 +394,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Destination'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 'ID of the destination to modify'
+
       responses:
         '200':
           description: "The destination is updated"
@@ -451,8 +459,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -472,16 +480,16 @@ paths:
                   message:
                     type: string
                     default: 'Cannot update Destination with id={id}. Maybe Destination was not found'
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: 'ID of the destination to modify'
 
     delete:
       description: >-
         Deletes a destination.
       summary: Delete a destination
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 'ID of the destination to delete'
       responses:
         '200':
           description: "The destination is deleted"
@@ -509,8 +517,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '404'
+                    type: integer
+                    default: 404
                   message:
                     type: string
                     default: 'Cannot delete Destination with id={id}. Maybe Destination was not found'
@@ -525,16 +533,12 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: 'ID of the destination to delete'
+
   
   /emailcheck_api_adapter/api/v1/email_checks: 
     get:
@@ -592,8 +596,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -688,8 +692,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -750,8 +754,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -828,8 +832,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -916,8 +920,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -952,7 +956,7 @@ paths:
                       destinations:
                         $ref: '#/components/schemas/User'
         '400':
-          description: 'Error creating a user, are missed some parameters (e.g. "name")'
+          description: 'Error creating a user, some parameters are missing(e.g. "name")'
           content:
             application/json:
               schema:
@@ -994,8 +998,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -1048,8 +1052,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -1085,8 +1089,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -1096,6 +1100,11 @@ paths:
       description: >-
         Gets the user with the specified id
       summary: Get user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 'ID of the user to retrieve'
       responses:
         '200':
           description: 'The user is retrieved'
@@ -1126,8 +1135,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '404'
+                    type: integer
+                    default: 404
                   message:
                     type: string
                     default: 'Not found User with id={id}'
@@ -1142,8 +1151,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -1152,6 +1161,11 @@ paths:
         Updates a specific user, changing properties like its name, the surname, the email, the password,
         the origin_name and the coordinates object. In the request, must be sent all the fields, even the unchanged ones.
       summary: Update user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 'ID of the user to update'
       requestBody:
         content:
           application/json:
@@ -1174,7 +1188,7 @@ paths:
                   data:
                     default: null
         '400':
-          description: 'Error updating a user, are missed some parameters (e.g. "coordinates.lon")'
+          description: 'Error updating a user, some parameters are missing (e.g. "coordinates.lon")'
           content:
             application/json:
               schema:
@@ -1236,21 +1250,21 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: 'ID of the user to modify'
 
     delete:
       description: >-
         Deletes a user.
       summary: Delete a user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 'ID of the user to delete'
       responses:
         '200':
           description: "The user is deleted"
@@ -1294,16 +1308,11 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: 'ID of the user to delete'
 
   /coordinates_rating_service/ratings: 
      get:
@@ -1348,7 +1357,7 @@ paths:
                       rating:
                         $ref: '#/components/schemas/Rating'
         '400':
-          description: 'Error obtaining a rating, are missed some parameters (e.g. "coordinates.lon")'
+          description: 'Error obtaining a rating, some parameters are missing (e.g. "coordinates.lon")'
           content:
             application/json:
               schema:
@@ -1390,8 +1399,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -1434,7 +1443,7 @@ paths:
                             type: string
                             default: '50'
         '400':
-          description: 'Error obtaining the coordinates, are missed some parameters (e.g. "coordinates.lon")'
+          description: 'Error obtaining the coordinates, some parameters are missing(e.g. "coordinates.lon")'
           content:
             application/json:
               schema:
@@ -1477,8 +1486,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -1547,8 +1556,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -1630,8 +1639,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -1756,8 +1765,8 @@ paths:
                     type: string
                     default: 'error'
                   code:
-                    type: string
-                    default: '500'
+                    type: integer
+                    default: 500
                   message:
                     type: string
                     default: 'Error'
@@ -1769,9 +1778,11 @@ components:
       properties:
         lat:
           type: integer
+          default: 42.16382
           description: 'lat of the area given'
         lon:
           type: integer
+          default: 12.74924
           description: 'lon of the area given'
         aqi:
           type: integer
@@ -1782,21 +1793,26 @@ components:
       properties:
         currentSpeed:
           type: integer
+          default: 15
           description: 'currentSpeed of the street identified'
         freeFlowSpeed:
           type: integer
+          default: 19
           description: 'freeFlowSpeed of the street identified'
     Destination:
       type: object
       properties:
         name:
           type: string
+          default: 'Tropea'
           description: 'Name of the destination'
         description:
           type: string
+          default: 'A beautiful coastal town in Calabria, southern Italy'
           description: 'Description of the destination'
         image_url:
           type: string
+          default: 'https://www.touristmaker.com/wp-content/uploads/2020/12/the-cliffside-town-of-tropea-768x1260.jpg'
           description: 'Link to the image of the destination'
         coordinates:
           type: object
@@ -1804,27 +1820,34 @@ components:
           properties:
             lat:
               type: integer
+              default: 42.12453
               description: 'lat of the destination'
             lon:
               type: integer
+              default: 12.73528
               description: 'lon of the destination'
     User:
       type: object
       properties:
         name:
           type: string
+          default: 'Mario'
           description: 'Name of the user'
         surname:
           type: string
+          default: 'Rossi'
           description: 'Surname of the user'
         email:
           type: string
+          default: 'lv@example.com'
           description: 'Email of the user'
         password:
           type: string
+          default: '*****'
           description: 'Password of the user'
         origin_name:
           type: string
+          default: 'Rome, Italy'
           description: 'Address of the user, to be used as origin in the destination search'
         origin_coordinates:
           type: object
@@ -1832,34 +1855,37 @@ components:
           properties:
             lat:
               type: integer
+              default: 41.890210
               description: 'lat of the origin_name'
             lon:
               type: integer
+              default: 12.492231
               description: 'lon of the origin_name'
+
     Rating:
       type: object
       properties:
         forecast_rating:
-          type: string
-          default: '1'
+          type: integer
+          default: 1
         forecast_description:
           type: string
           default: 'Sunny and Warm'
         crowd_rating:
-          type: string
-          default: '1'
+          type: integer
+          default: 1
         crowd_description:
           type: string
           default: 'Not crowded'
         air_pollution_rating:
-          type: string
-          default: '1'
+          type: integer
+          default: 1
         air_pollution_description:
           type: string
           default: 'Good'
         final_rating:
-          type: string
-          default: '1'
+          type: integer
+          default: 1
     Email_check:
       type: object
       properties:
@@ -1894,11 +1920,11 @@ components:
       type: object
       properties:
         lat:
-          type: string
-          default: '41.890210'
+          type: integer
+          default: 41.890210
         lon:
-          type: string
-          default: '12.492231'
+          type: integer
+          default: 12.492231
         display_name:
           type: string
           default: 'Colosseo, Roma'
