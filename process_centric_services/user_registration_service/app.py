@@ -15,7 +15,8 @@ def check():
     }
     return response, 200
 
-@app.route("/api/users/signup", methods=["POST"])
+# Creates a new user 
+@app.route("/api/v1/users/signup", methods=["POST"])
 def user_registration():
 
     try:
@@ -128,7 +129,7 @@ def user_registration():
 
     base_url = "http://valid_email_service:"
     port = f"{SERVICE_PORT}"
-    endpoint = "/api/email_checks/valid?"
+    endpoint = "/api/v1/email_checks/valid?"
     query_params = f"email={email}"
     
     try:
@@ -173,7 +174,7 @@ def user_registration():
 
     base_url = "http://coordinates_service:"
     port = f"{SERVICE_PORT}"
-    endpoint = "/api/coordinates?"
+    endpoint = "/api/v1/coordinates?"
     query_params = f"location_name={origin_name}"
     
     try:
@@ -225,7 +226,7 @@ def user_registration():
 
     base_url = "http://user_db_adapter:"
     port = f"{SERVICE_PORT}"
-    endpoint = "/api/users"
+    endpoint = "/api/v1/users"
     
     try:
         external_response = requests.post(base_url + port + endpoint, json=request_body)
@@ -254,11 +255,7 @@ def user_registration():
         }
         return response, status_code
 
-    print("final external_response: ", external_response)
-
     user = external_response.get("data").get("user")
-
-    print("final user: ", user)
 
     response = {
         "status": "success",

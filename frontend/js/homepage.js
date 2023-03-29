@@ -37,7 +37,7 @@ const address = formData.get('address');
 const timeBudgetInHour = formData.get('timeBudgetInHour');
 const date = formData.get('date');
 
-const url = `http://localhost/best_destinations_service/api/destinations/best?address=${address}&timeBudgetInHour=${timeBudgetInHour}&date=${date}`;
+const url = `http://localhost/best_destinations_service/api/v1/destinations/best?address=${address}&timeBudgetInHour=${timeBudgetInHour}&date=${date}`;
 
 fetch(url)
     .then(response => response.json())

@@ -51,6 +51,13 @@ exports.findOne = async (req, res) => {
     });
   }
 
+  if (isNaN(req.query.lon)) {
+    return res.status(400).send({
+      "status": "fail",
+      "data": { "lon" : "lon must be a number" }
+    });
+  } 
+
   if (req.query.lon < -180 || req.query.lon > 180) {
     return res.status(400).send({
       "status": "fail",
@@ -58,10 +65,10 @@ exports.findOne = async (req, res) => {
     });
   }
 
-  if (isNaN(req.query.lon)) {
+  if (isNaN(req.query.lat)) {
     return res.status(400).send({
       "status": "fail",
-      "data": { "lon" : "lon must be a number" }
+      "data": { "lat" : "lat must be a number" }
     });
   } 
 
@@ -72,10 +79,10 @@ exports.findOne = async (req, res) => {
     });
   } 
 
-  if (isNaN(req.query.lat)) {
+  if (isNaN(req.query.hour)) {
     return res.status(400).send({
       "status": "fail",
-      "data": { "lat" : "lat must be a number" }
+      "data": { "hour" : "hour must be a number" }
     });
   } 
 
@@ -83,13 +90,6 @@ exports.findOne = async (req, res) => {
     return res.status(400).send({
       "status": "fail",
       "data": { "hour" : "hour must have a valid value (between 0 and 23)" }
-    });
-  } 
-
-  if (isNaN(req.query.hour)) {
-    return res.status(400).send({
-      "status": "fail",
-      "data": { "hour" : "hour must be a number" }
     });
   } 
 
@@ -101,7 +101,7 @@ exports.findOne = async (req, res) => {
   //FORECAST_RATING
   base_url="http://forecast_api_adapter:"
   port = process.env.FORECAST_API_ADAPTER_DOCKER_PORT || 8080;
-  endpoint = "/api/forecasts/?"
+  endpoint = "/api/v1/forecasts?"
   arguments_forecast = "lat=" + lat + "&" + "lon=" + lon + "&date=" + date
 
   url= base_url + port + endpoint + arguments_forecast
@@ -151,7 +151,7 @@ exports.findOne = async (req, res) => {
   //CROWD_RATING
   base_url="http://crowd_api_adapter:"
   port = process.env.CROWD_API_ADAPTER_DOCKER_PORT || 8080;
-  endpoint = "/api/crowds/?"
+  endpoint = "/api/v1/crowds?"
   arguments_crowd = "lat=" + lat + "&" + "lon=" + lon
 
   url = base_url + port + endpoint + arguments_crowd
@@ -190,7 +190,7 @@ exports.findOne = async (req, res) => {
   //AIR_POLLUTION_RATING
   base_url="http://air_pollution_api_adapter:";
   port = process.env.AIR_POLLUTION_API_ADAPTER_DOCKER_PORT || 8080;
-  endpoint = "/api/air_pollution_info?";
+  endpoint = "/api/v1/air_pollution_info?";
   query_string = "lat=" + lat + "&lon=" + lon;
 
   url = base_url + port + endpoint + query_string

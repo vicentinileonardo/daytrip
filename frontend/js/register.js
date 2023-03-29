@@ -58,7 +58,7 @@ async function register(){
       return;
     }
 
-    const url = `http://localhost/user_registration_service/api/users/signup`; 
+    const url = `http://localhost/user_registration_service/api/v1/users/signup`; 
 
     const response = await fetch(url, {
       method: 'POST',
@@ -109,7 +109,13 @@ async function register(){
       errorDiv.style.width = "50%";
       errorDiv.style.margin = "auto";
       // create a text node and append it to the div
-      errorDiv.appendChild(document.createTextNode(data.data));
+      console.log("data")
+      console.log(data);
+      
+      //get value of the first element of the object data.data
+      
+
+      errorDiv.appendChild(document.createTextNode(data.data[0]));
       // get elements
 
       const formDiv = document.getElementById('form-div');
@@ -117,6 +123,8 @@ async function register(){
 
       const responseDiv = document.getElementById('response-div');
       responseDiv.appendChild(errorDiv);
+
+      //TODO gestisce errori di validazione
 
 
       // clear error after 3 seconds
@@ -160,7 +168,7 @@ async function getLocationFromIP(){
   });
 
   //get location from ip address
-  let base_url = `http://localhost/ip_api_adapter/api/ip_info`;
+  let base_url = `http://localhost/ip_api_adapter/api/v1/ip_info`;
   let url = `${base_url}?ip_address=${ip_address}`;
 
   try {

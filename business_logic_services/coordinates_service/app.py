@@ -15,7 +15,8 @@ def check():
     }
     return response, 200
 
-@app.route("/api/coordinates", methods=["GET"])
+# Converts a location name to its coordinates
+@app.route("/api/v1/coordinates", methods=["GET"])
 def coordinates():
 
     location_name = request.args.get("location_name")
@@ -32,7 +33,7 @@ def coordinates():
 
     base_url = "http://geocoding_api_adapter:"
     port = f"{SERVICE_PORT}"
-    endpoint = "/api/geocodes?"
+    endpoint = "/api/v1/geocodes?"
     query_string = f"address={location_name}"
     
     try:

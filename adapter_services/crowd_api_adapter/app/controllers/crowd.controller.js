@@ -68,6 +68,8 @@ exports.findOne = async (req, res) => {
     return res.status(500).send(response);
   }
 
+  //TODO: check if the response is valid
+
   const currentSpeed=Number(data.flowSegmentData.currentSpeed)
   const freeFlowSpeed=Number(data.flowSegmentData.freeFlowSpeed)
 

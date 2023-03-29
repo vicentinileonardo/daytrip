@@ -16,7 +16,8 @@ def check():
     }
     return response, 200
 
-@app.route("/api/destinations/reachable", methods=["GET"])
+# Retrieves the reachable destinations available given an origin and a time budget
+@app.route("/api/v1/destinations/reachable", methods=["GET"])
 def reachable_destinations():
 
     lat_origin = request.args.get("lat_origin")
@@ -97,7 +98,7 @@ def reachable_destinations():
 
     base_url = "http://destination_db_adapter:"
     port = f"{DESTINATION_DB_ADAPTER_PORT}"
-    endpoint = "/api/destinations"
+    endpoint = "/api/v1/destinations"
     
     try:
         external_response = requests.get(base_url + port + endpoint)
@@ -129,7 +130,7 @@ def reachable_destinations():
     destinations = external_response.get("data").get("destinations")
 
     # if there are no destinations in the database
-    if destinations == []:
+    if destinations == [] or destinations == None:
         response = {
             "status": "fail",
             "data": {"reachable_destinations": "There are no destinations in the database"}
@@ -141,7 +142,7 @@ def reachable_destinations():
 
     base_url = "http://range_api_adapter:"
     port = f"{RANGE_API_ADAPTER_PORT}"
-    endpoint = "/api/ranges"
+    endpoint = "/api/v1/ranges"
     query_string = f"?lat={lat_origin}&lon={lon_origin}&timeBudgetInSec={timeBudgetInSec}"
     
     try:
@@ -242,7 +243,7 @@ def reachable_destinations():
 
     response = {
         "status": "success",
-        "message": "Destinations reachable from the origin",
+        "message": "Destinations reachable from the origin retrieved successfully",
         "data": {"destinations": reachable_destinations}
     }
     

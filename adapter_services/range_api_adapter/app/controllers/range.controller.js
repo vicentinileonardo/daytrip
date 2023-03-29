@@ -83,6 +83,15 @@ exports.findOne = async (req, res) => {
     }
     return res.status(500).send(response);
   }
+
+  if(data["error"]){
+    response = {
+      "status": "error",
+      "code": 500,
+      "message": data["error"]["description"]
+    }
+    return res.status(500).send(response);
+  }
   
   //filtered_response
   let response = {

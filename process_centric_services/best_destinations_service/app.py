@@ -27,7 +27,7 @@ def check():
     }
     return response, 200
 
-@app.route("/api/destinations/best", methods=["GET"])
+@app.route("/api/v1/destinations/best", methods=["GET"])
 def best_destinations():
 
     address = request.args.get("address")
@@ -104,7 +104,7 @@ def best_destinations():
 
     base_url = "http://coordinates_service:"
     port = f"{COORDINATES_SERVICE_PORT}"
-    endpoint = "/api/coordinates"
+    endpoint = "/api/v1/coordinates"
     query_string = f"?location_name={address}"
 
     try:
@@ -143,7 +143,7 @@ def best_destinations():
 
     base_url = "http://reachable_destinations_service:"
     port = f"{REACHABLE_DESTINATIONS_SERVICE_PORT}"
-    endpoint = "/api/destinations/reachable"
+    endpoint = "/api/v1/destinations/reachable"
     query_string = f"?lat_origin={lat_origin}&lon_origin={lon_origin}&timeBudgetInSec={timeBudgetInSec}"
     
     try:
@@ -176,7 +176,7 @@ def best_destinations():
     reachable_destinations = external_response.get("data").get("destinations")
 
     # if there are no destinations in the database
-    if reachable_destinations == []:
+    if reachable_destinations == [] or reachable_destinations is None:
         response = {
             "status": "fail",
             "data": {"destinations": "There are no reachable destinations"}
@@ -188,7 +188,7 @@ def best_destinations():
 
     base_url = "http://coordinates_rating_service:"
     port = f"{COORDINATES_RATING_SERVICE_PORT}"
-    endpoint = "/api/ratings"
+    endpoint = "/api/v1/ratings"
     
     # loop trough reachable destinations and add rating to each one
     for destination in reachable_destinations:
@@ -227,9 +227,9 @@ def best_destinations():
             return response, status_code
         
         rating = external_response.get("data").get("rating").get("final_rating")
-        print("rating", rating)
+        
         destination["rating"] = rating
-        print("destination", destination)
+       
     
     # sort destinations by rating
     sorted_destinations = sorted(reachable_destinations, key=lambda k: k['rating'], reverse=True)

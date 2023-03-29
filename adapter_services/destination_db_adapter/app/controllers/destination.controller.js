@@ -113,7 +113,7 @@ exports.findAll = (req, res) => {
       res.status(200).send({
         "status" : "success",
         "message": "Destinations retrieved successfully",
-        "data" : {"destination":data}
+        "data" : {"destinations": data}
       });
      })
     .catch(err => {
@@ -306,8 +306,7 @@ exports.deleteAll = (req, res) => {
 //import from a json file
 exports.import = (req, res) => {
   const destinations = require("../../preset_destinations/preset_desinations.json");
-  console.log("destinations: ", destinations);
-
+  
   Destination.insertMany(destinations)
     .then(data => {
       res.status(200).send({

@@ -15,7 +15,8 @@ def check():
     }
     return response, 200
 
-@app.route("/api/email_checks/valid", methods=["GET"])
+# Check if mail is existing and if it's not categorized as smpa
+@app.route("/api/v1/email_checks/valid", methods=["GET"])
 def coordinates():
 
     email = request.args.get("email")
@@ -32,7 +33,7 @@ def coordinates():
 
     base_url = "http://emailcheck_api_adapter:"
     port = f"{SERVICE_PORT}"
-    endpoint = "/api/email_checks?"
+    endpoint = "/api/v1/email_checks?"
     query_string = f"email={email}"
     
     try:

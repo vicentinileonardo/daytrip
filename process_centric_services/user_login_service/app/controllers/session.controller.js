@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 
-exports.findByEmail = async (req, res) => {
+exports.login = async (req, res) => {
   const bcrypt = require('bcrypt');
 
   if (!req.body.email) {
@@ -19,13 +19,22 @@ exports.findByEmail = async (req, res) => {
 
   base_url="http://user_db_adapter:"
   port = process.env.USER_DB_ADAPTER_DOCKER_PORT || 8080;
-  endpoint = "/api/users?email="
+  endpoint = "/api/v1/users?email="
   email_argument = req.body.email
 
   url= base_url + port + endpoint + email_argument
 
-  external_response = await fetch(url);
-  data = await external_response.json()
+  try {
+    external_response = await fetch(url);
+    data = await external_response.json();
+  } catch (error) {
+    response = {
+      "status": "error",
+      "code": 500,
+      "message": "Error in fetching data from external API"
+    }
+    return res.status(500).send(response);
+  }
 
   if(data["data"]["users"][0]){
     bcrypt.compare(req.body.password,data["data"]["users"][0]["password"],(err,result)=>{
@@ -51,8 +60,9 @@ exports.findByEmail = async (req, res) => {
       
         const token = "Bearer " + jwt.sign({ user }, SECRET_KEY, { expiresIn: '180s' });
       
-        return res.status(200).send({
+        return res.status(201).send({
           "status": "success",
+          "message": "User logged in successfully.",
           "data": { "token" : token}
         });
 
@@ -73,8 +83,6 @@ exports.findByEmail = async (req, res) => {
     });
   }
 
-  
-
 };
 
 exports.updateToken = async (req, res) => {
@@ -87,7 +95,6 @@ exports.updateToken = async (req, res) => {
 
   if (!token) return res.status(401).send({
     "status": "fail",
-    "code": 401,
     "data": {"authorization": "You need to be authenticated in order to access this method"}
   });
 
@@ -105,6 +112,7 @@ exports.updateToken = async (req, res) => {
 
   return res.status(200).send({
     "status": "success",
+    "message": "Token updated successfully.",
     "data": { "token" : new_token}
   });
 

@@ -4,7 +4,7 @@ module.exports = app => {
   var router = require("express").Router();
 
   // Retrieve a single User with email and generate token
-  router.post("/", sessions.findByEmail);
+  router.post("/", sessions.login);
 
   // check and update token exp
   router.put("/", verifyToken, sessions.updateToken);
@@ -20,7 +20,7 @@ module.exports = app => {
     res.status(405).send(response);
   });
 
-  app.use("/api/sessions", router);
+  app.use("/api/v1/sessions", router);
   
   //handle 404
   app.use(function(req, res, next) {
@@ -41,7 +41,7 @@ function verifyToken(req, res, next) {
   let token = req.headers['authorization'];
   console.log("token", token)  
 
-  const SECRET_KEY = "MYKEY"
+  const SECRET_KEY = process.env.JWT_SECRET;
 
   if (!token) return res.status(401).send({
     "status": "fail",
