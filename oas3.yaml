@@ -2,34 +2,23 @@ openapi: 3.0.0
 info:
   version: '1.0'
   title: "Daytrip API collection"
-  description: Daytrip API collection.
+  description: Daytrip API collection. For each endpoint there is the prefix of the relative service
   license:
     name: TO BE DECIDED
-servers:
-  - url: http://assignments-api.herokuapp.com.com/api/v1
-    description: Heroku instance
-  - url: http://localhost:6868/api/v1
-    description: User DB Adapter
-  - url: http://localhost:6869/api/v1
-    description: Destination DB Adapter
-  - url: https://{service1}
-    description: Production server
-    variables:
-      service1:
-        default: prova
+
 paths:
-  /air_pollution_api_adapter/air_pollution_info: 
+  /air_pollution_api_adapter/api/v1/air_pollution_info: 
     get:
       description: >-
         Gets air pollution info
       summary: Get air pollution
       parameters:
         - name: lat
-          in: path
+          in: query
           required: true
           description: 'lat of the area considered'
         - name: lon
-          in: path
+          in: query
           required: true
           description: 'lon of the area considered'
       responses:
@@ -84,23 +73,23 @@ paths:
                     type: string
                     default: 'Error'
                     
-  /crowd_api_adapter/crowds: 
+  /crowd_api_adapter/api/v1/crowds: 
     get:
       description: >-
         Gets currentSpeed and freeFlowSpeed of a certain street
       summary: Get Crowd
       parameters:
         - name: lat
-          in: path
+          in: query
           required: true
           description: 'lat of the street considered'
         - name: lon
-          in: path
+          in: query
           required: true
           description: 'lon of the street considered'
       responses:
         '200':
-          description: 'The crowd is retrieved'
+          description: 'Crowd information retrieved successfully'
           content:
             application/json:
               schema:
@@ -111,7 +100,7 @@ paths:
                     default: 'success'
                   message:
                     type: string
-                    default: 'Crowd retrieved successfully'
+                    default: 'Crowd information retrieved successfully'
                   data:
                     type: object
                     properties:
@@ -166,10 +155,11 @@ paths:
                     type: string
                     default: 'Error'
 
-  /destination_db_adapter/destinations: 
+  /destination_db_adapter/api/v1/destinations: 
     post:
       description: >-
-        Creates a new destination in the system.
+        Creates a new destination in the system. 
+        (You need to be an authenticated ADMIN to access this endpoint)
       summary: Create a new destination
       requestBody:
         content:
@@ -178,7 +168,7 @@ paths:
               $ref: '#/components/schemas/Destination'
 
       responses:
-        '200':
+        '201':
           description: 'The created destination'
           content:
             application/json:
@@ -194,7 +184,7 @@ paths:
                   data:
                     type: object
                     properties:
-                      destinations:
+                      destination:
                         $ref: '#/components/schemas/Destination'
         '400':
           description: 'Error creating a destination, are missed some parameters (e.g. "lon")'
@@ -248,6 +238,15 @@ paths:
       description: >-
         Gets all the destinations
       summary: Get destinations
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: 'Pagination parameter to compute offset'
+        - name: limit
+          in: query
+          required: false
+          description: 'Pagination parameter to compute limit'
       responses:
         '200':
           description: 'The destinations are retrieved'
@@ -323,11 +322,15 @@ paths:
                     type: string
                     default: 'Error'
 
-  /destination_db_adapter/destinations/{id}:
+  /destination_db_adapter/api/v1/destinations/{id}:
     get:
       description: >-
         Gets the destination with the specified id
       summary: Get destination
+      parameters:
+        - name: id
+          in: path
+          required: true
       responses:
         '200':
           description: 'The destination is retrieved'
@@ -347,6 +350,22 @@ paths:
                     properties:
                       destination:
                         $ref: '#/components/schemas/Destination'
+        '404':
+          description: 'Not found Destination with id={id}'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '404'
+                  message:
+                    type: string
+                    default: 'Not found Destination with id={id}'
         '500':
           description: 'Server Error'
           content:
@@ -390,7 +409,7 @@ paths:
                   data:
                     default: null
         '400':
-          description: 'Error updating a destination, are missed some parameters (e.g. "lon")'
+          description: 'Error updating a destination, some parameters are missing (e.g. "lon")'
           content:
             application/json:
               schema:
@@ -437,6 +456,22 @@ paths:
                   message:
                     type: string
                     default: 'Error'
+        '404':
+          description: 'Cannot update Destination with id={id}. Maybe Destination was not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: integer
+                    default: 404
+                  message:
+                    type: string
+                    default: 'Cannot update Destination with id={id}. Maybe Destination was not found'
       parameters:
         - name: id
           in: path
@@ -463,6 +498,22 @@ paths:
                     default: 'Destination deleted successfully'
                   data:
                     default: null
+        '404':
+          description: 'Cannot delete Destination with id={id}. Maybe Destination was not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '404'
+                  message:
+                    type: string
+                    default: 'Cannot delete Destination with id={id}. Maybe Destination was not found'
         '500':
           description: 'Server Error'
           content:
@@ -485,19 +536,19 @@ paths:
           required: true
           description: 'ID of the destination to delete'
   
-  /emailcheck_api_adapter/email_checks: 
+  /emailcheck_api_adapter/api/v1/email_checks: 
     get:
       description: >-
         Gets information about a given email address
       summary: Get information about a given email address
       parameters:
         - name: email
-          in: path
+          in: query
           required: true
           description: 'email to check'
       responses:
         '200':
-          description: 'The check is retrieved successfully'
+          description: 'The email check is retrieved successfully'
           content:
             application/json:
               schema:
@@ -513,8 +564,7 @@ paths:
                     type: object
                     properties:
                       email_check:
-                        type: string
-                        default: ''
+                        $ref: '#/components/schemas/Email_check'
         '400':
           description: 'The email parameter is missing'
           content:
@@ -547,24 +597,32 @@ paths:
                   message:
                     type: string
                     default: 'Error'
-  /forecast_api_adapter/forecasts: 
+  /forecast_api_adapter/api/v1/forecasts: 
     get:
       description: >-
         Gets forecast information about a given area
       summary: Get forecast information about a given area
       parameters:
         - name: lat
-          in: path
+          in: query
           required: true
           description: 'lat of the area'
         - name: lon
-          in: path
+          in: query
           required: true
           description: 'lon of the area'
         - name: date
-          in: path
+          in: query
           required: true
           description: 'date of the forecast information'
+        - name: begin_hour
+          in: query
+          required: false
+          description: 'begin_hour of the forecast information'
+        - name: end_hour
+          in: query
+          required: false
+          description: 'end_hour of the forecast information'
 
       responses:
         '200':
@@ -635,14 +693,14 @@ paths:
                   message:
                     type: string
                     default: 'Error'
-  /geocoding_api_adapter/geocodes: 
+  /geocoding_api_adapter/api/v1/geocodes: 
     get:
       description: >-
-        Gets the convertion between the name of an area and its coordinates
-      summary: Get the convertion between the name of an area and its coordinates
+        Gets the conversion between the name of an area and its coordinates
+      summary: Get the conversion between the name of an area and its coordinates
       parameters:
         - name: address
-          in: path
+          in: query
           required: true
           description: 'address of the location'
 
@@ -664,8 +722,7 @@ paths:
                     type: object
                     properties:
                       geocode:
-                        type: string
-                        default: ''
+                        $ref: '#/components/schemas/Geocode'
         '400':
           description: 'the address parameter is missing'
           content:
@@ -698,14 +755,14 @@ paths:
                   message:
                     type: string
                     default: 'Error'
-  /ip_api_adapter/ip_info: 
+  /ip_api_adapter/api/v1/ip_info: 
     get:
       description: >-
-        Gets the convertion between an IP address of and its location
-      summary: Get the convertion between an IP address of and its location
+        Gets the conversion between an IP address and its location
+      summary: Get the conversion between an IP address and its location
       parameters:
         - name: ip_address
-          in: path
+          in: query
           required: true
           description: 'ip_address of the location'
 
@@ -727,8 +784,7 @@ paths:
                     type: object
                     properties:
                       ip_info:
-                        type: string
-                        default: ''
+                        $ref: '#/components/schemas/Ip_info'
         '400':
           description: 'the ip_address parameter is missing'
           content:
@@ -777,23 +833,23 @@ paths:
                   message:
                     type: string
                     default: 'Error'
-  /range_api_adapter/ranges: 
+  /range_api_adapter/api/v1/ranges: 
     get:
       description: >-
-        Gets the polygon that limits the area that can be travelled in a given time starting from a given location
-      summary: Get the polygon that limits the area that can be travelled in a given time starting from a given location
+        Gets the polygon that limits the area that can be traveled in a given time starting from a given location
+      summary: Get the polygon that limits the area that can be traveled in a given time starting from a given location
       parameters:
         - name: lat
-          in: path
+          in: query
           required: true
           description: 'lat of the location'
         - name: lon
-          in: path
+          in: query
           required: true
           description: 'lon of the location'
         - name: timeBudgetInSec
-          in: path
-          required: true
+          in: query
+          required: false
           description: 'timeBudgetInSec at disposition'
 
 
@@ -814,9 +870,9 @@ paths:
                   data:
                     type: object
                     properties:
-                      ip_info:
-                        type: string
-                        default: ''
+                      range:
+                        $ref: '#/components/schemas/Range'
+                        
         '400':
           description: 'some parameters are missing (e.g. lon)'
           content:
@@ -865,11 +921,11 @@ paths:
                   message:
                     type: string
                     default: 'Error'
-  /user_db_adapter/users: 
+  /user_db_adapter/api/v1/users: 
     post:
       description: >-
         Creates a new user in the system.
-      summary: Create a new destination
+      summary: Create a new user in the system.
       requestBody:
         content:
           application/json:
@@ -877,7 +933,7 @@ paths:
               $ref: '#/components/schemas/User'
 
       responses:
-        '200':
+        '201':
           description: 'The created user'
           content:
             application/json:
@@ -945,11 +1001,24 @@ paths:
                     default: 'Error'
     get:
       description: >-
-        Gets all the destinations
-      summary: Get destinations
+        Gets all users
+      summary: Get all users
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: 'Pagination parameter to compute offset'
+        - name: limit
+          in: query
+          required: false
+          description: 'Pagination parameter to compute limit'
+        - name: email
+          in: query
+          required: false
+          description: 'parameter to filter users by email'
       responses:
         '200':
-          description: 'The destinations are retrieved'
+          description: 'Users are retrieved'
           content:
             application/json:
               schema:
@@ -960,14 +1029,14 @@ paths:
                     default: 'success'
                   message:
                     type: string
-                    default: 'Destinations retrieved successfully'
+                    default: 'Users retrieved successfully'
                   data:
                     type: object
                     properties:
                       destinations:
                         type: array
                         items:
-                          $ref: '#/components/schemas/Destination'
+                          $ref: '#/components/schemas/User'
         '500':
           description: 'Server Error'
           content:
@@ -1022,7 +1091,7 @@ paths:
                     type: string
                     default: 'Error'
 
-  /user_db_adapter/users/{id}:
+  /user_db_adapter/api/v1/users/{id}:
     get:
       description: >-
         Gets the user with the specified id
@@ -1044,8 +1113,24 @@ paths:
                   data:
                     type: object
                     properties:
-                      destination:
+                      user:
                         $ref: '#/components/schemas/User'
+        '404':
+          description: 'Not found User with id={id}'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: string
+                    default: '404'
+                  message:
+                    type: string
+                    default: 'Not found User with id={id}'
         '500':
           description: 'Server Error'
           content:
@@ -1120,6 +1205,26 @@ paths:
                       lon: 
                         type: string
                         default: 'lon must have a valid value (between -180 and 180)'
+        '404':
+          description: 'Cannot update User with id={id}. Maybe User was not found'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: integer
+                    default: 404
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'Cannot update User with id={id}. Maybe User was not found'
+                        
         '500':
           description: 'Server Error'
           content:
@@ -1162,6 +1267,22 @@ paths:
                     default: 'User deleted successfully'
                   data:
                     default: null
+        '404':
+          description: 'Could not delete the User with id={id}'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: integer
+                    default: 404
+                  message:
+                    type: string
+                    default: 'Could not delete the User with id={id}'
         '500':
           description: 'Server Error'
           content:
@@ -1183,46 +1304,7 @@ paths:
           in: path
           required: true
           description: 'ID of the user to delete'
-  /user_db_adapter/users/email/{email}: 
-     get:
-      description: >-
-        Gets the user with the specified email
-      summary: Get user
-      responses:
-        '200':
-          description: 'The user is retrieved'
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    default: 'success'
-                  message:
-                    type: string
-                    default: 'User retrieved successfully'
-                  data:
-                    type: object
-                    properties:
-                      destination:
-                        $ref: '#/components/schemas/User'
-        '500':
-          description: 'Server Error'
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    default: 'error'
-                  code:
-                    type: string
-                    default: '500'
-                  message:
-                    type: string
-                    default: 'Error'
+
   /coordinates_rating_service/ratings: 
      get:
       description: >-
@@ -1718,7 +1800,7 @@ components:
           description: 'Link to the image of the destination'
         coordinates:
           type: object
-          description: 'coordinates of the destination'
+          description: 'Coordinates of the destination'
           properties:
             lat:
               type: integer
@@ -1759,22 +1841,92 @@ components:
       properties:
         forecast_rating:
           type: string
-          description: '1'
+          default: '1'
         forecast_description:
           type: string
-          description: 'Sunny and Warm'
+          default: 'Sunny and Warm'
         crowd_rating:
           type: string
-          description: '1'
+          default: '1'
         crowd_description:
           type: string
-          description: 'Not crowded'
+          default: 'Not crowded'
         air_pollution_rating:
           type: string
-          description: '1'
+          default: '1'
         air_pollution_description:
           type: string
-          description: 'Good'
+          default: 'Good'
         final_rating:
           type: string
-          description: '1'
+          default: '1'
+    Email_check:
+      type: object
+      properties:
+        catch_all:
+          type: boolean
+          default: false
+        deliverable:
+          type: boolean
+          default: false
+        disposable:
+          type: boolean
+          default: false
+        domain:
+          type: string
+          default: 'gmail.com'
+        email_address:
+          type: string
+          default: 'a.b@gmail.com'
+        gibberish:
+          type: boolean
+          default: false
+        spam:
+          type: boolean
+          default: false
+        valid_syntax:
+          type: boolean
+          default: true
+        webmail:
+          type: boolean
+          default: true
+    Geocode:
+      type: object
+      properties:
+        lat:
+          type: string
+          default: '41.890210'
+        lon:
+          type: string
+          default: '12.492231'
+        display_name:
+          type: string
+          default: 'Colosseo, Roma'
+    Ip_info:
+      type: object
+      properties:
+        city:
+          type: string
+          default: 'Ashburn'
+        country:
+          type: string
+          default: 'United States'
+    Range:
+      type: object
+      properties:
+        origin:
+          type: object
+          default: {
+                "lat": "70.4383707",
+                "lon": "20.9935591"
+            }
+        boundary:
+          type: array
+          default: [{
+                    "latitude": 61.35679,
+                    "longitude": 10.28692
+                },
+                {
+                    "latitude": 60.65965,
+                    "longitude": 9.04911
+                },]
