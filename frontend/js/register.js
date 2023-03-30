@@ -77,7 +77,27 @@ async function register(){
       })
     });
 
-    const data = await response.json();
+    let data;
+    try {
+      data = await response.json();
+    } catch (error) {
+        const errorDiv = document.createElement('div');
+        
+        errorDiv.className = 'alert alert-danger';
+        errorDiv.style.width = "50%";
+        errorDiv.style.margin = "auto";
+        errorDiv.appendChild(document.createTextNode("Something went wrong. Please try again later."));
+        
+        const formDiv = document.getElementById('form-div');
+        formDiv.remove();
+
+        const responseDiv = document.getElementById('response-div');
+        responseDiv.appendChild(errorDiv);
+        
+        // clear error after 3 seconds
+        //setTimeout(clearError, 5000);
+        return;
+    }
 
     if (data.status == "error") {
       // create a new div element for the error message
@@ -108,24 +128,16 @@ async function register(){
       errorDiv.className = 'alert alert-danger';
       errorDiv.style.width = "50%";
       errorDiv.style.margin = "auto";
-      // create a text node and append it to the div
-      console.log("data")
-      console.log(data);
+          
+      let errorText = Object.values(data.data)[0];
+      errorText = errorText.charAt(0).toUpperCase() + errorText.slice(1);
+      errorDiv.appendChild(document.createTextNode(errorText));
       
-      //get value of the first element of the object data.data
-      
-
-      errorDiv.appendChild(document.createTextNode(data.data[0]));
-      // get elements
-
       const formDiv = document.getElementById('form-div');
       formDiv.remove();
 
       const responseDiv = document.getElementById('response-div');
       responseDiv.appendChild(errorDiv);
-
-      //TODO gestisce errori di validazione
-
 
       // clear error after 3 seconds
       //setTimeout(clearError, 5000);
