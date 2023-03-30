@@ -104,7 +104,7 @@ paths:
                   data:
                     type: object
                     properties:
-                      destination:
+                      crowd:
                         $ref: '#/components/schemas/Crowd'
         '400':
           description: 'Error retrieving the crowd, missing some parameters (e.g. "lon")'
@@ -646,8 +646,7 @@ paths:
                     type: object
                     properties:
                       forecast:
-                        type: string
-                        default: ''
+                        $ref: '#/components/schemas/Forecast'
         '400':
           description: 'Some parameters are missing (e.g. date)'
           content:
@@ -953,7 +952,7 @@ paths:
                   data:
                     type: object
                     properties:
-                      destinations:
+                      user:
                         $ref: '#/components/schemas/User'
         '400':
           description: 'Error creating a user, some parameters are missing(e.g. "name")'
@@ -1037,7 +1036,7 @@ paths:
                   data:
                     type: object
                     properties:
-                      destinations:
+                      users:
                         type: array
                         items:
                           $ref: '#/components/schemas/User'
@@ -1314,26 +1313,26 @@ paths:
                     type: string
                     default: 'Error'
 
-  /coordinates_rating_service/ratings: 
+  /coordinates_rating_service/api/v1/ratings: 
      get:
       description: >-
         Gets a rating associated on how much a place could be enjoyable taking into account the weather info, the traffic and the air quality
       summary: Get rating
       parameters:
         - name: lat
-          in: path
+          in: query
           required: true
           description: 'lat of the place considered'
         - name: lon
-          in: path
+          in: query
           required: true
           description: 'lon of the place considered'
         - name: hour
-          in: path
-          required: true
+          in: query
+          required: false
           description: 'hour used in order to get meteorological informations'
         - name: date
-          in: path
+          in: query
           required: true
           description: 'date of the meteorological informations'
 
@@ -1350,7 +1349,7 @@ paths:
                     default: 'success'
                   message:
                     type: string
-                    default: 'User retrieved successfully'
+                    default: 'Rating retrieved successfully'
                   data:
                     type: object
                     properties:
@@ -1404,14 +1403,14 @@ paths:
                   message:
                     type: string
                     default: 'Error'
-  /coordinates_service/coordinates: 
+  /coordinates_service/api/v1/coordinates: 
      get:
       description: >-
         Converts a location name to its coordinates
       summary: Get coordinates from location
       parameters:
         - name: location_name
-          in: path
+          in: query
           required: true
           description: 'location_name of the place considered'
        
@@ -1491,21 +1490,109 @@ paths:
                   message:
                     type: string
                     default: 'Error'
-  /valid_email_service/email_checks/valid: 
+  /reachable_destinations_service/api/v1/destinations/reachable: 
+    get:
+      description: >-
+        Gets destinations reachable from a starting point in a certain amount of time
+      summary: Get destinations reachable from a starting point in a certain amount of time
+      parameters:
+        - name: lat
+          in: query
+          required: true
+          description: 'lat of the origin point'
+        - name: lon
+          in: query
+          required: true
+          description: 'lon of the origin point'
+        - name: timeBudgetInSec
+          in: query
+          required: true
+          description: 'time budget available'
+
+      responses:
+        '200':
+          description: 'Destinations reachable from the origin retrieved successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Destinations reachable from the origin retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      destinations:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Destination'
+        '400':
+          description: 'Error obtaining the destinations, some parameters are missing(e.g. "lon")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'lon is required'
+        '400':
+          description: 'Error obtaining the destinations, some parameters have a wrong format (e.g. "lon")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'lon must have a valid value (between -180 and 180)'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: integer
+                    default: 500
+                  message:
+                    type: string
+                    default: 'Error'
+  /valid_email_service/api/v1/email_checks/valid: 
      get:
       description: >-
-        Check if mail is existing and if it's not categorized as smpa,
+        Check if mail is existing and if it's not categorized as spam,
       summary: Get mail informations
       parameters:
         - name: email
-          in: path
+          in: query
           required: true
           description: 'email  considered'
        
 
       responses:
         '200':
-          description: 'Coordinates retrieved successfully'
+          description: 'Email check retrieved successfully'
           content:
             application/json:
               schema:
@@ -1561,7 +1648,95 @@ paths:
                   message:
                     type: string
                     default: 'Error'
-  /user_login_service/sessions: 
+  /best_destinations_service/api/v1/destinations/best: 
+    get:
+      description: >-
+        Gets all the destinations reachable from an address in a certain amount of time
+      summary: Get all the destinations reachable from an address in a certain amount of time
+      parameters:
+        - name: address
+          in: query
+          required: true
+          description: 'address of the origin'
+        - name: date
+          in: query
+          required: true
+          description: 'date of the daytrip'
+        - name: timeBudgetInHur
+          in: query
+          required: true
+          description: 'time budget available'
+
+      responses:
+        '200':
+          description: 'Best destinations retrieved successfully'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'success'
+                  message:
+                    type: string
+                    default: 'Best destinations retrieved successfully'
+                  data:
+                    type: object
+                    properties:
+                      destinations:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Destination'
+        '400':
+          description: 'Error obtaining the destinations, some parameters are missing(e.g. "address")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'address is required'
+        '400':
+          description: 'Error obtaining the destinations, some parameters have a wrong format (e.g. "date")'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  data:
+                    type: object
+                    properties:
+                      lon: 
+                        type: string
+                        default: 'date must be between today and next 14 days'
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: integer
+                    default: 500
+                  message:
+                    type: string
+                    default: 'Error'
+  /user_login_service/api/v1/sessions: 
     post:
       description: >-
         Creates a new session and return the jwt generated.
@@ -1575,7 +1750,7 @@ paths:
                 email:
                   type: string
                   default: 'lv@example.com'
-                message:
+                password:
                   type: string
                   default: '*****'
 
@@ -1590,6 +1765,9 @@ paths:
                   status:
                     type: string
                     default: 'success'
+                  message:
+                    type: string
+                    default: 'User logged in successfully.'
                   data:
                     type: object
                     properties:
@@ -1660,13 +1838,16 @@ paths:
                   status:
                     type: string
                     default: 'success'
+                  message:
+                    type: string
+                    default: 'Token updated successfully.'
                   data:
                     type: object
                     properties:
                       token:
                         type: string
                         default: 'aa.bc.cd'
-  /user_registration_service/signup: 
+  /user_registration_service/api/v1/signup: 
     post:
       description: >-
         Creates a new user.
@@ -1704,7 +1885,7 @@ paths:
 
       responses:
         '200':
-          description: 'The generated token'
+          description: 'User created successfully'
           content:
             application/json:
               schema:
@@ -1713,7 +1894,7 @@ paths:
                   status:
                     type: string
                     default: 'success'
-                  status:
+                  message:
                     type: string
                     default: 'User created successfully'
                   data:
@@ -1868,24 +2049,31 @@ components:
         forecast_rating:
           type: integer
           default: 1
+          description: 'rating given by the forecast component'
         forecast_description:
           type: string
           default: 'Sunny and Warm'
+          description: 'textual description of the forecast_rating'
         crowd_rating:
           type: integer
           default: 1
+          description: 'rating given by the traffic component'
         crowd_description:
           type: string
           default: 'Not crowded'
+          description: 'textual description of the crowd_rating'
         air_pollution_rating:
           type: integer
           default: 1
+          description: 'rating given by the air quality component'
         air_pollution_description:
           type: string
           default: 'Good'
+          description: 'textual description of the air_pollution_rating'
         final_rating:
           type: integer
           default: 1
+          description: 'final rating obtained combining in a weighted the previous ones'
     Email_check:
       type: object
       properties:
@@ -1916,6 +2104,34 @@ components:
         webmail:
           type: boolean
           default: true
+    Forecast:
+      type: object
+      properties:
+        date:
+          type: string
+          default: '2023-01-01'
+        day:
+          type: object
+        hour:
+          type: array
+          default: [
+                {
+                    "time_epoch": 1680213600,
+                    "temp_c": 10.6,
+                    "condition": {
+                        "text": "Overcast",
+                        "icon": "//cdn.weatherapi.com/weather/64x64/night/122.png",
+                        "code": 1009
+                    },
+                    "pressure_mb": 1022,
+                    "precip_mm": 0,
+                    "humidity": 88,
+                    "cloud": 97,
+                    "will_it_rain": 0,
+                    "chance_of_rain": 0,
+                    "will_it_snow": 0,
+                    "chance_of_snow": 0,
+                }]
     Geocode:
       type: object
       properties:
