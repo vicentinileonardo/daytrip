@@ -118,6 +118,15 @@ exports.findOne = async (req, res) => {
     res.status(500).send(response);
   }
 
+  if (data == undefined || data == null) {
+    response = {
+      "status": "error",
+      "code": 500,
+      "message": "Error in fetching data from external API"
+    }
+    return res.status(500).send(response);
+  }
+
   //filtering
   let forecast = data.forecast.forecastday
   let forecast_filtered = []

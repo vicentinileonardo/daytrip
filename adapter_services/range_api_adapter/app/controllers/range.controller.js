@@ -84,11 +84,11 @@ exports.findOne = async (req, res) => {
     return res.status(500).send(response);
   }
 
-  if(data["error"]){
+  if(data["error"] || data == undefined || data == null){
     response = {
       "status": "error",
       "code": 500,
-      "message": data["error"]["description"]
+      "message": data["error"]["description"] ? data["error"]["description"] : "Error in fetching data from external API"
     }
     return res.status(500).send(response);
   }

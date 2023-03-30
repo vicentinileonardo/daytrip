@@ -47,7 +47,7 @@ def geocode():
         return response, 500
 
     # check if the response is empty
-    if external_response == []:
+    if external_response == [] or external_response == {} or external_response is None :
         response = {
             "status": "fail",
             "data": {"address": "address not found"}  

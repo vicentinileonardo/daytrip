@@ -68,8 +68,15 @@ exports.findOne = async (req, res) => {
     return res.status(500).send(response);
   }
 
-  //TODO: check if the response is valid
-
+  if (data["error"] || data["httpStatusCode"] != 200 || data == undefined || data == null) {
+    response = {
+      "status": "error",
+      "code": 500,
+      "message": "Error in fetching data from external API"
+    }
+    return res.status(500).send(response);
+  }
+  
   const currentSpeed=Number(data.flowSegmentData.currentSpeed)
   const freeFlowSpeed=Number(data.flowSegmentData.freeFlowSpeed)
 
