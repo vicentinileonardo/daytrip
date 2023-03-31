@@ -1651,8 +1651,8 @@ paths:
   /best_destinations_service/api/v1/destinations/best: 
     get:
       description: >-
-        Gets all the destinations reachable from an address in a certain amount of time
-      summary: Get all the destinations reachable from an address in a certain amount of time
+        Gets all the destinations reachable from an address in a certain amount of time ranked
+      summary: Get all the destinations reachable from an address in a certain amount of time ranked
       parameters:
         - name: address
           in: query
@@ -1687,7 +1687,7 @@ paths:
                       destinations:
                         type: array
                         items:
-                          $ref: '#/components/schemas/Destination'
+                          $ref: '#/components/schemas/DestinationRanked'
         '400':
           description: 'Error obtaining the destinations, some parameters are missing(e.g. "address")'
           content:
@@ -2172,3 +2172,38 @@ components:
                     "latitude": 60.65965,
                     "longitude": 9.04911
                 },]
+    DestinationRanked:
+      type: object
+      properties:
+        rating:
+          type: integer
+          default: 0.80
+          description: 'Rating between 0 and 1 regarding the forecast and the traffic in a certain place'
+        rank:
+          type: integer
+          default: 1
+          description: 'Rank given in order to sort the results by affinity'
+        name:
+          type: string
+          default: 'Tropea'
+          description: 'Name of the destination'
+        description:
+          type: string
+          default: 'A beautiful coastal town in Calabria, southern Italy'
+          description: 'Description of the destination'
+        image_url:
+          type: string
+          default: 'https://www.touristmaker.com/wp-content/uploads/2020/12/the-cliffside-town-of-tropea-768x1260.jpg'
+          description: 'Link to the image of the destination'
+        coordinates:
+          type: object
+          description: 'Coordinates of the destination'
+          properties:
+            lat:
+              type: integer
+              default: 42.12453
+              description: 'lat of the destination'
+            lon:
+              type: integer
+              default: 12.73528
+              description: 'lon of the destination'
