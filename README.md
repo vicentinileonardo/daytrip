@@ -7,23 +7,21 @@ This project aims to create a web application that suggests daytrip destinations
 
 ## Features
 
-Suggests ranked list of daytrip destinations based on weather, travel time, crowdedness, and other indicators
-Uses both internal and external data sources to provide recommendations
-Scalable service-oriented architecture that can easily incorporate new ranking indicators
-Docker Compose used to deploy the multi-container application
-REST APIs built to represent data resources
-
-docker compose for the entire infrastructure
++ Suggests ranked list of daytrip destinations based on weather, travel time, crowdedness, and other indicators
++ Uses both internal and external data sources to provide recommendations
++ Scalable service-oriented architecture that can easily incorporate new ranking indicators
++ Docker Compose used to deploy the multi-container application
++ REST APIs built to represent data resources
 
 
 ## Architecture
 
 The architecture is divided into 4 layers:
 
-1. Data layer - Contains databases and services for external data
-2. Adapter layer - Standardizes data from external APIs
-3. Business logic layer - Calculates ratings and performs business logic
-4. Process centric layer - Provides high level functionality to end users
+1. **Data layer** - Contains databases and services for external data
+2. **Adapter layer** - Standardizes data from external APIs
+3. **Business logic layer** - Calculates ratings and performs business logic
+4. **Process centric layer** - Provides high level functionality to end users
 
 In total, 25 services were built across the 4 layers. Docker Compose is used to define and deploy the multi-container application.
 
@@ -40,11 +38,11 @@ In total, 25 services were built across the 4 layers. Docker Compose is used to 
 
 The project leverages a number of external data sources to provide recommendations:
 
-+ TomTom APIs - Used to calculate reachable ranges based on travel time and vehicle, and to determine crowdedness based on traffic flow data. This helps filter relevant destinations and factor in how crowded they may be.
++ TomTom APIs - Used to calculate reachable ranges based on travel time and vehicle, and to determine crowdedness based on traffic flow data. 
 
 + Weather APIs - Weather API and OpenWeatherMap API are used to gather data on temperature, precipitation, wind, and air quality. This provides important indicators for recommending daytrip destinations.
 
-+ Geocoding APIs - TomTom, OpenStreetMap, and Google Maps APIs are used to convert between addresses and geographic coordinates, which is necessary to determine distances and travel times.
++ Geocoding APIs - OpenStreetMap, and Google Maps APIs are used to convert between addresses and geographic coordinates, which is necessary to determine distances and travel times.
 
 + IP geocoding APIs - ip-api and ipify APIs are used to determine the user's origin location based on their IP address. This is used as the starting point for destination recommendations.
 
