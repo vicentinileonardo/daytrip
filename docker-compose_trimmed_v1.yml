@@ -1,0 +1,156 @@
+version: "3.8"
+services:
+  user_db:
+    image: ${M}:${MV}  
+    env_file: ${E}
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MIRU}
+      - MONGO_INITDB_ROOT_PASSWORD=${MIRP}
+    ports:
+      - ${UDLP}:${UDDP}
+    volumes:
+      - $UDD:$V
+  destination_db:
+    image: $M:$MV
+    env_file: $E
+    environment:
+      - $MIRU=$DDU
+      - $MIRP=$DDP
+    ports:
+      - $DDLP:$DDDP
+    volumes:
+      - $DDD:$V    
+  user_db_adapter:
+    build: ./$AP/$UDA
+    image: $R/$UDA
+    env_file: $E
+    ports:
+      - $UDALP:$UDADP
+    environment:
+      - DB_HOST=$UDD
+      - DB_USER=$UDU
+      - DB_PASSWORD=$UDP
+      - DB_NAME=$UDD
+      - DB_PORT=$UDDP
+  destination_db_adapter:
+    build: ./$AP/$DDA
+    image: $R/$DDA
+    env_file: $E
+    ports:
+      - $DDALP:$DDADP
+    environment:
+      - DB_HOST=$DDD
+      - DB_USER=$DDU
+      - DB_PASSWORD=$DDP
+      - DB_NAME=$DDD
+      - DB_PORT=$DDDP
+  forecast_api_adapter:
+    build: ./$AS/$FAA
+    image: $R/$FAA
+    env_file: $E
+    ports:
+      - $FAALP:$FAADP
+    environment:
+      - API_KEY=$FAK
+      - NODE_ENV=$NE
+  geocoding_api_adapter:
+    build: ./$AS/$GAA
+    image: $R/$GAA
+    env_file: $E
+    ports:
+      - $GAALP:$GAADP
+  crowd_api_adapter:
+    build: ./$AP/$CAA
+    image: $R/$CAA
+    env_file: $E
+    ports:
+      - $CAALP:$CAADP
+    environment:
+      - API_KEY=$TAK
+  range_api_adapter:
+    build: ./$AS/$RAA
+    image: $R/$RAA
+    env_file: $E
+    ports:
+      - $RAALP:$RAADP
+    environment:
+      - API_KEY=$TAK
+  emailcheck_api_adapter:
+    build: ./$AS/$EAA
+    image: $R/$EAA
+    env_file: $E
+    ports:
+      - $EAALP:$EAADP
+  ip_api_adapter:
+    build: ./$AS/$IAA
+    image: $R/$IAA
+    env_file: $E
+    ports:
+      - $IAALP:$IAADP
+  air_pollution_api_adapter:
+    build: ./$AS/$APAA
+    image: $R/$APAA
+    env_file: $E
+    ports:
+      - $APAALP:$APAADP
+  coordinates_service:
+    build: ./$BS/$CS
+    image: $R/$CS
+    env_file: $E
+    ports:
+      - $CSLP:$CSDP
+  reachable_destinations_service:
+    build: ./$BS/$RDS
+    image: $R/$RDS
+    env_file: $E
+    ports:
+      - $RDSLP:$RDSDP
+  coordinates_rating_service:
+    build: ./$BS/$CRS
+    image: $R/$CRS
+    env_file: $E
+    ports:
+      - $CRSLP:$CRSDP
+  best_destinations_service:
+    build: ./$PS/$BDS
+    image: $R/$BDS
+    env_file: $E
+    ports:
+      - $BDSLP:$BDSDP
+  user_login_service:
+    build: ./$PS/$ULS
+    image: $R/$ULS
+    env_file: $E
+    ports:
+      - $ULLP:$ULDP
+  user_registration_service:
+    build: ./$PS/$URS
+    image: $R/$URS
+    env_file: $E
+    ports:
+      - $URLP:$URDP
+  valid_email_service:
+    build: ./$BS/$VES
+    image: $R/$VES
+    env_file: $E
+    ports:
+      - $VESLP:$VESDP
+  frontend:
+    build: ./$FE
+    image: $R/$FE
+    env_file: $E
+    ports:
+      - $FLP:$FDP    
+volumes:
+  userdb:
+    driver: $AF
+    driver_opts:
+      share_name: $UDSN
+      storage_account_name: $SAN
+      storage_account_key: $SAAK
+  destinationdb:
+    driver: $AF
+    driver_opts:
+      share_name: $DDSN
+      storage_account_name: $SAN
+      storage_account_key: $SAAK

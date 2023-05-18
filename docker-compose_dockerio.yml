@@ -1,0 +1,169 @@
+version: "3.8"
+services:
+  user_db:
+    image: mongo:5.0.2
+    restart: always
+    env_file: ./.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$USER_DB_USER
+      - MONGO_INITDB_ROOT_PASSWORD=$USER_DB_PASSWORD
+    ports:
+      - $USER_DB_LOCAL_PORT:$USER_DB_DOCKER_PORT
+    volumes:
+      - userdb:/data/db
+  destination_db:
+    image: mongo:5.0.2
+    restart: always
+    env_file: ./.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$DESTINATION_DB_USER
+      - MONGO_INITDB_ROOT_PASSWORD=$DESTINATION_DB_PASSWORD
+    ports:
+      - $DESTINATION_DB_LOCAL_PORT:$DESTINATION_DB_DOCKER_PORT
+    volumes:
+      - destinationdb:/data/db       
+  user_db_adapter:
+    depends_on:
+      - user_db
+    build: ./adapter_services/user_db_adapter
+    image: leovice/user_db_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $USER_DB_ADAPTER_LOCAL_PORT:$USER_DB_ADAPTER_DOCKER_PORT
+    environment:
+      - DB_HOST=user_db
+      - DB_USER=$USER_DB_USER
+      - DB_PASSWORD=$USER_DB_PASSWORD
+      - DB_NAME=$USER_DB_DATABASE
+      - DB_PORT=$USER_DB_DOCKER_PORT
+  destination_db_adapter:
+    depends_on:
+      - destination_db
+    build: ./adapter_services/destination_db_adapter
+    image: leovice/destination_db_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $DESTINATION_DB_ADAPTER_LOCAL_PORT:$DESTINATION_DB_ADAPTER_DOCKER_PORT
+    environment:
+      - DB_HOST=destination_db
+      - DB_USER=$DESTINATION_DB_USER
+      - DB_PASSWORD=$DESTINATION_DB_PASSWORD
+      - DB_NAME=$DESTINATION_DB_DATABASE
+      - DB_PORT=$DESTINATION_DB_DOCKER_PORT
+  forecast_api_adapter:
+    build: ./adapter_services/forecast_api_adapter
+    image: leovice/forecast_api_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $FORECAST_API_ADAPTER_LOCAL_PORT:$FORECAST_API_ADAPTER_DOCKER_PORT
+    environment:
+      - API_KEY=$FORECAST_API_KEY
+      - NODE_ENV=production
+  geocoding_api_adapter:
+    build: ./adapter_services/geocoding_api_adapter
+    image: leovice/geocoding_api_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $GEOCODING_API_ADAPTER_LOCAL_PORT:$GEOCODING_API_ADAPTER_DOCKER_PORT
+  crowd_api_adapter:
+    build: ./adapter_services/crowd_api_adapter
+    image: leovice/crowd_api_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $CROWD_API_ADAPTER_LOCAL_PORT:$CROWD_API_ADAPTER_DOCKER_PORT
+    environment:
+      - API_KEY=$TOMTOM_API_KEY
+  range_api_adapter:
+    build: ./adapter_services/range_api_adapter
+    image: leovice/range_api_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $RANGE_API_ADAPTER_LOCAL_PORT:$RANGE_API_ADAPTER_DOCKER_PORT
+    environment:
+      - API_KEY=$TOMTOM_API_KEY
+  emailcheck_api_adapter:
+    build: ./adapter_services/emailcheck_api_adapter
+    image: leovice/emailcheck_api_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $EMAILCHECK_API_ADAPTER_LOCAL_PORT:$EMAILCHECK_API_ADAPTER_DOCKER_PORT
+  ip_api_adapter:
+    build: ./adapter_services/ip_api_adapter
+    image: leovice/ip_api_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $IP_API_ADAPTER_LOCAL_PORT:$IP_API_ADAPTER_DOCKER_PORT
+  air_pollution_api_adapter:
+    build: ./adapter_services/air_pollution_api_adapter
+    image: leovice/air_pollution_api_adapter
+    restart: always
+    env_file: ./.env
+    ports:
+      - $AIR_POLLUTION_API_ADAPTER_LOCAL_PORT:$AIR_POLLUTION_API_ADAPTER_DOCKER_PORT
+  coordinates_service:
+    build: ./business_logic_services/coordinates_service
+    image: leovice/coordinates_service
+    restart: always
+    env_file: ./.env
+    ports:
+      - $COORDINATES_SERVICE_LOCAL_PORT:$COORDINATES_SERVICE_DOCKER_PORT
+  reachable_destinations_service:
+    build: ./business_logic_services/reachable_destinations_service
+    image: leovice/reachable_destinations_service
+    restart: always
+    env_file: ./.env
+    ports:
+      - $REACHABLE_DESTINATIONS_SERVICE_LOCAL_PORT:$REACHABLE_DESTINATIONS_SERVICE_DOCKER_PORT
+  coordinates_rating_service:
+    build: ./business_logic_services/coordinates_rating_service
+    image: leovice/coordinates_rating_service
+    restart: always
+    env_file: ./.env
+    ports:
+      - $COORDINATES_RATING_SERVICE_LOCAL_PORT:$COORDINATES_RATING_SERVICE_DOCKER_PORT
+  best_destinations_service:
+    build: ./process_centric_services/best_destinations_service
+    image: leovice/best_destinations_service
+    restart: always
+    env_file: ./.env
+    ports:
+      - $BEST_DESTINATIONS_SERVICE_LOCAL_PORT:$BEST_DESTINATIONS_SERVICE_DOCKER_PORT  
+  user_login_service:
+    build: ./process_centric_services/user_login_service
+    image: leovice/user_login_service
+    restart: always
+    env_file: ./.env
+    ports:
+      - $USER_LOGIN_LOCAL_PORT:$USER_LOGIN_DOCKER_PORT
+  user_registration_service:
+    build: ./process_centric_services/user_registration_service
+    image: leovice/user_registration_service
+    restart: always
+    env_file: ./.env
+    ports:
+      - $USER_REGISTRATION_LOCAL_PORT:$USER_REGISTRATION_DOCKER_PORT
+  valid_email_service:
+    build: ./business_logic_services/valid_email_service
+    image: leovice/valid_email_service
+    restart: always
+    env_file: ./.env
+    ports:
+      - $VALID_EMAIL_SERVICE_LOCAL_PORT:$VALID_EMAIL_SERVICE_DOCKER_PORT
+  frontend:
+    build: ./frontend
+    image: leovice/frontend
+    restart: always
+    env_file: ./.env
+    ports:
+      - $FRONTEND_LOCAL_PORT:$FRONTEND_DOCKER_PORT    
+volumes:
+  userdb:
+  destinationdb:

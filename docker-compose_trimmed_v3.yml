@@ -1,0 +1,107 @@
+version: "3.8"
+services:
+  user_db:
+    image: mongo:5.0.2
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${UDU}
+      - MONGO_INITDB_ROOT_PASSWORD=${UDP}
+    ports:
+      - 7017:27017
+    volumes:
+      -  ${WEBAPP_STORAGE_HOME}/userdb:/data/db
+  destination_db:
+    image: mongo:5.0.2
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DDU}
+      - MONGO_INITDB_ROOT_PASSWORD=${DDP}
+    ports:
+      - 7018:27017
+    volumes:
+      -  ${WEBAPP_STORAGE_HOME}/destinationdb:/data/db
+  destination_db_adapter:
+    image: leovice/destination_db_adapter
+    ports:
+      - 6869:8080
+    environment:
+      - DB_HOST=${DDD}
+      - DB_USER=${DDU}
+      - DB_PASSWORD=${DDP}
+      - DB_NAME=${DDD}
+      - DB_PORT=${DDDP}
+  user_db_adapter:
+    image: leovice/user_db_adapter
+    ports:
+      - 6868:8080
+    environment:
+      - DB_HOST=${UDD}
+      - DB_USER=${UDU}
+      - DB_PASSWORD=${UDP}
+      - DB_NAME=${UDD}
+      - DB_PORT=${UDDP}
+  forecast_api_adapter:
+    image: leovice/forecast_api_adapter
+    ports:
+      - 6870:8080
+    environment:
+      - API_KEY=${FAK}
+      - NODE_ENV=${NE}
+  geocoding_api_adapter:
+    image: leovice/geocoding_api_adapter
+    ports:
+      - 6871:8080
+  crowd_api_adapter:
+    image: leovice/crowd_api_adapter
+    ports:
+      - 6872:8080
+    environment:
+      - API_KEY=${TAK}
+  range_api_adapter:
+    image: leovice/range_api_adapter
+    ports:
+      - 6873:8080
+    environment:
+      - API_KEY=${TAK}
+  emailcheck_api_adapter:
+    image: leovice/emailcheck_api_adapter
+    ports:
+      - 6874:8080
+  ip_api_adapter:
+    image: leovice/ip_api_adapter
+    ports:
+      - 6875:8080
+  air_pollution_api_adapter:
+    image: leovice/air_pollution_api_adapter
+    ports:
+      - 6876:8080
+  coordinates_service:
+    image: leovice/coordinates_service
+    ports:
+      - 6877:8080
+  reachable_destinations_service:
+    image: leovice/reachable_destinations_service
+    ports:
+      - 6878:8080
+  coordinates_rating_service:
+    image: leovice/coordinates_rating_service
+    ports:
+      - 6879:8080
+  best_destinations_service:
+    image: leovice/best_destinations_service
+    ports:
+      - 6881:8080
+  user_login_service:
+    image: leovice/user_login_service
+    ports:
+      - 6882:8080
+  user_registration_service:
+    image: leovice/user_registration_service
+    ports:
+      - 6883:8080
+  valid_email_service:
+    image: leovice/valid_email_service
+    ports:
+      - 6880:8080
+  frontend:
+    image: leovice/frontend
+    ports:
+      - 80:80

@@ -1,38 +1,58 @@
 # Daytrip
-Repository related to the project of the Service Design and Engineering graduate course of University of Trento, academic year 2022/2023.
-
-The goal of the project is to ideate, design, develop a service-oriented application
+## A service-oriented web application for inspiring daytrips in Italy
 
 
-## generic ideas - notes (TO BE DELETED AND MOVED TO THE REPORT)
-
-[Google Doc](https://docs.google.com/document/d/1lDv2JqqlVAuygN2xbacw2XYzxtcyGfdxOXr0agXboIM/edit)
-
-combining weather and traffic data in order to propose daytrips to users.
-
-use current location (either automatically retrieved if user is already registered, or just a parameter inserted)
-other parameters:  drive distance
-
-database of points of interests to choose from
+This project aims to create a web application that suggests daytrip destinations in Italy based on weather conditions, travel time, and other indicators. A service-oriented architecture was used to build decoupled services that can be expanded and modified independently.
 
 
-external apis: 
-+ weather apis
-  - Weather API
-+ tomtom APIs for trafic
+## Features
 
-
-
-api paradigms: REST and GraphQL (probably we should try to use both for different tasks, due to our lab session)
-
-databases: MongoDB (on-premise)
-
+Suggests ranked list of daytrip destinations based on weather, travel time, crowdedness, and other indicators
+Uses both internal and external data sources to provide recommendations
+Scalable service-oriented architecture that can easily incorporate new ranking indicators
+Docker Compose used to deploy the multi-container application
+REST APIs built to represent data resources
 
 docker compose for the entire infrastructure
 
 
+## Architecture
+
+The architecture is divided into 4 layers:
+
+1. Data layer - Contains databases and services for external data
+2. Adapter layer - Standardizes data from external APIs
+3. Business logic layer - Calculates ratings and performs business logic
+4. Process centric layer - Provides high level functionality to end users
+
+In total, 25 services were built across the 4 layers. Docker Compose is used to define and deploy the multi-container application.
+
+## Technologies
+
++ Python (Flask)
++ JavaScript (Node.js)
++ MongoDB
++ Docker
++ Docker Compose
++ AWS Lambda
+
+## External sources
+
+The project leverages a number of external data sources to provide recommendations:
+
++ TomTom APIs - Used to calculate reachable ranges based on travel time and vehicle, and to determine crowdedness based on traffic flow data. This helps filter relevant destinations and factor in how crowded they may be.
+
++ Weather APIs - Weather API and OpenWeatherMap API are used to gather data on temperature, precipitation, wind, and air quality. This provides important indicators for recommending daytrip destinations.
+
++ Geocoding APIs - TomTom, OpenStreetMap, and Google Maps APIs are used to convert between addresses and geographic coordinates, which is necessary to determine distances and travel times.
+
++ IP geocoding APIs - ip-api and ipify APIs are used to determine the user's origin location based on their IP address. This is used as the starting point for destination recommendations.
+
++ Email validation API - EVA API is used to validate user emails during registration to ensure they are real email addresses.
+
 ## Response structure
-JSend specification: https://github.com/omniti-labs/jsend
+
+JSON specification used: JSend specification (https://github.com/omniti-labs/jsend)
 
 ```json
 {
@@ -91,48 +111,11 @@ When an API call fails due to an error on the server. For example:
 }
 ```
 
-## TODO
+# Future improvements
 
++ API caching: https://www.npmjs.com/package/apicache middleware (da solo o con redis)
 
-+ controllare versione mongoose
-+ controllare versione mongodb, MAYBE USE :lts in the various dockerfiles
-+ controllare versione node, MAYBE USE :lts in the various dockerfiles
-+ DOCUMENTAZIONE API
-+ valutare se aggiungere versioning (v1) all'endpoint delle api
-+ controllare che le post diano 201 (created) e non 200 (ok) 
-+ vari ERRORI 404
-+ vari ERRORI 405 (method not allowed), valutare come gestire
-+ controllo status code errori, per adesso sono tutti 400 (bad request)
-
-+ Some API endpoints should require a basic form of authentication: creazione, modifica, eliminazione destinations
-  - accesso non consentito se non autenticato, errore 401 (unauthorized)
-  - accesso non consentito se autenticato ma non autorizzato, errore 403 (forbidden) (utente ma non admin) 
-+ working testing environment
-+ sia nei file python che nei file di node (controllers in particolare), aggiungere try catch per le richieste sia esterne che interne (agli adapter) e poi testare che vengano gestiti correttamente, stoppando manualmente il container dell'adapter
-
-+ controllare commenti e coerenza con documentazione 
-
-+ controllare try catch servizi con node js
-
-
-<br>
-
-+ api chaching: https://www.npmjs.com/package/apicache middleware (da solo o con redis)
-
-+ service registry and discovery (da valutare se usare o meno)
-
-+ eventualmente (all fine di tutto il resto), per sfruttare registrazione utenti, registrare le destinazione che un utente ha gia' visitato e rimuoverle dalla lista delle destinazioni proposte
-  - in questo caso, ci sarebbe anche il **nesting di risorse** (destinazioni visitate di un utente), una caratteristica di REST che non abbiamo ancora visto
-
-
-
-
-
-
-## Report notes
-
-
-
++ Service Registry and Discovery in a more structured way
 
 
 ## Acknowledgements
@@ -143,8 +126,6 @@ When an API call fails due to an error on the server. For example:
 
 + GeoCoding (Nominatim): © OpenStreetMap
 
-+ Nominatim self-hosted as a docker container (Not used, too slow startup for the demo test of the project): https://github.com/mediagis/nominatim-docker
++ Nominatim self-hosted as a docker container (Discarded idea, oot used, too slow startup for the demo test of the project): https://github.com/mediagis/nominatim-docker
 
-+ Diagram: https://diagrams.mingrammer.com/
-
-+ https://github.com/keithrozario/Klayers
++ Layers for AWS Lambda function: https://github.com/keithrozario/Klayers
