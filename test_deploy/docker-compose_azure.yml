@@ -1,0 +1,318 @@
+version: "3.8"
+
+services:
+  user-db:
+    image: mongo:5.0.2
+    #restart: on-failure
+    env_file: ./.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$USER_DB_USER
+      - MONGO_INITDB_ROOT_PASSWORD=$USER_DB_PASSWORD
+      - STORAGE_ACCOUNT_ACCESS_KEY=$STORAGE_ACCOUNT_ACCESS_KEY
+    ports:
+      - $USER_DB_LOCAL_PORT:$USER_DB_LOCAL_PORT
+    volumes:
+      - userdb:/data/db
+    deploy:
+      resources:
+        limits:
+          cpus: "0.20"
+          memory: 0.3G
+
+  destination-db:
+    image: mongo:5.0.2
+    #restart: on-failure
+    env_file: ./.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=$DESTINATION_DB_USER
+      - MONGO_INITDB_ROOT_PASSWORD=$DESTINATION_DB_PASSWORD
+      - STORAGE_ACCOUNT_ACCESS_KEY=$STORAGE_ACCOUNT_ACCESS_KEY
+    ports:
+      - $DESTINATION_DB_LOCAL_PORT:$DESTINATION_DB_LOCAL_PORT
+    volumes:
+      - destinationdb:/data/db
+    deploy:
+      resources:
+        limits:
+          cpus: "0.40"
+          memory: 0.3G
+        
+  user-db-adapter:
+    depends_on:
+      - user-db
+    build: ./adapter_services/user_db_adapter
+    image: daytripacr.azurecr.io/user_db_adapter:latest
+    #restart: on-failure
+    env_file: ./.env
+    ports:
+      - $USER_DB_ADAPTER_LOCAL_PORT:$USER_DB_ADAPTER_LOCAL_PORT
+    environment:
+      - DB_HOST=user_db
+      - DB_USER=$USER_DB_USER
+      - DB_PASSWORD=$USER_DB_PASSWORD
+      - DB_NAME=$USER_DB_DATABASE
+      - DB_PORT=$USER_DB_LOCAL_PORT
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 0.4G
+
+  destination-db-adapter:
+    depends_on:
+      - destination-db
+    build: ./adapter_services/destination_db_adapter
+    image: daytripacr.azurecr.io/destination_db_adapter:latest
+    #restart: on-failure
+    env_file: ./.env
+    ports:
+      - $DESTINATION_DB_ADAPTER_LOCAL_PORT:$DESTINATION_DB_ADAPTER_LOCAL_PORT
+    environment:
+      - DB_HOST=destination_db
+      - DB_USER=$DESTINATION_DB_USER
+      - DB_PASSWORD=$DESTINATION_DB_PASSWORD
+      - DB_NAME=$DESTINATION_DB_DATABASE
+      - DB_PORT=$DESTINATION_DB_LOCAL_PORT
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 0.4G
+
+  forecast-api-adapter:
+    build: ./adapter_services/forecast_api_adapter
+    image: daytripacr.azurecr.io/forecast_api_adapter:latest
+    #restart: on-failure
+    env_file: ./.env
+    environment:
+      - API_KEY=$FORECAST_API_KEY
+      - NODE_ENV=production
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 0.3G
+  
+  geocoding-api-adapter:
+    build: ./adapter_services/geocoding_api_adapter
+    image: daytripacr.azurecr.io/geocoding_api_adapter:latest
+    #restart: on-failure
+    env_file: ./.env
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 0.1G
+
+  crowd-api-adapter:
+    build: ./adapter_services/crowd_api_adapter
+    image: daytripacr.azurecr.io/crowd_api_adapter:latest
+    #restart: on-failure
+    env_file: ./.env
+    environment:
+      - API_KEY=$TOMTOM_API_KEY
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 0.3G
+  
+  range-api-adapter:
+    build: ./adapter_services/range_api_adapter
+    image: daytripacr.azurecr.io/range_api_adapter
+    #restart: on-failure
+    env_file: ./.env
+    environment:
+      - API_KEY=$TOMTOM_API_KEY
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 0.2G
+
+  emailcheck-api-adapter:
+    build: ./adapter_services/emailcheck_api_adapter
+    image: daytripacr.azurecr.io/emailcheck_api_adapter:latest
+    #restart: on-failure
+    env_file: ./.env
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 0.1G
+  
+  ip-api-adapter:
+    build: ./adapter_services/ip_api_adapter
+    image: daytripacr.azurecr.io/ip_api_adapter:latest
+    #restart: on-failure
+    env_file: ./.env
+    ports:
+      - $IP_API_ADAPTER_LOCAL_PORT:$IP_API_ADAPTER_LOCAL_PORT
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 0.1G
+
+  air-pollution-api-adapter:
+    build: ./adapter_services/air_pollution_api_adapter
+    image: daytripacr.azurecr.io/air_pollution_api_adapter:latest
+    #restart: on-failure
+    env_file: ./.env
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 0.1G
+
+  coordinates-service:
+    build: ./business_logic_services/coordinates_service
+    image: daytripacr.azurecr.io/coordinates_service:latest
+    #restart: on-failure
+    env_file: ./.env
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 0.1G
+
+  reachable-destinations-service:
+    build: ./business_logic_services/reachable_destinations_service
+    image: daytripacr.azurecr.io/reachable_destinations_service:latest
+    #restart: on-failure
+    env_file: ./.env
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.3"
+          memory: 0.1G
+
+  coordinates-rating-service:
+    build: ./business_logic_services/coordinates_rating_service
+    image: daytripacr.azurecr.io/coordinates_rating_service:latest
+    #restart: on-failure
+    env_file: ./.env
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.3"
+          memory: 0.3G
+
+  best-destinations-service:
+    build: ./process_centric_services/best_destinations_service
+    image: daytripacr.azurecr.io/best_destinations_service:latest
+    #restart: on-failure
+    env_file: ./.env
+    ports:
+      - $BEST_DESTINATIONS_SERVICE_LOCAL_PORT:$BEST_DESTINATIONS_SERVICE_LOCAL_PORT
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.3"
+          memory: 0.2G
+  
+  user-login-service:
+    build: ./process_centric_services/user_login_service
+    image: daytripacr.azurecr.io/user_login_service:latest
+    #restart: on-failure
+    env_file: ./.env
+    ports:
+      - $USER_LOGIN_LOCAL_PORT:$USER_LOGIN_LOCAL_PORT
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 0.1G
+
+  user-registration-service:
+    build: ./process_centric_services/user_registration_service
+    image: daytripacr.azurecr.io/user_registration_service:latest
+    #restart: on-failure
+    env_file: ./.env
+    ports:
+      - $USER_REGISTRATION_LOCAL_PORT:$USER_REGISTRATION_LOCAL_PORT
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 0.1G
+      #timeout: 100s
+
+  valid-email-service:
+    build: ./business_logic_services/valid_email_service
+    image: daytripacr.azurecr.io/valid_email_service
+    #restart: on-failure
+    env_file: ./.env
+    ports:
+      - $VALID_EMAIL_SERVICE_LOCAL_PORT:$VALID_EMAIL_SERVICE_LOCAL_PORT
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.15"
+          memory: 0.2G
+  
+  frontend:
+    build: ./frontend
+    image: daytripacr.azurecr.io/frontend
+    #restart: on-failure
+    env_file: ./.env
+    ports:
+      - $FRONTEND_LOCAL_PORT:$FRONTEND_LOCAL_PORT
+    #stdin_open: true
+    #tty: true
+    deploy:
+      resources:
+        limits:
+          cpus: "0.3"
+          memory: 0.2G
+    domainname: "daytrip"
+
+    
+volumes:
+  userdb:
+    driver: azure_file
+    driver_opts:
+      share_name: $USER_DB_SHARE_NAME
+      storage_account_name: $STORAGE_ACCOUNT_NAME
+      storage_account_key: $STORAGE_ACCOUNT_ACCESS_KEY
+  destinationdb:
+    driver: azure_file
+    driver_opts:
+      share_name: $DESTINATION_DB_SHARE_NAME
+      storage_account_name: $STORAGE_ACCOUNT_NAME
+      storage_account_key: $STORAGE_ACCOUNT_ACCESS_KEY
+
+
+

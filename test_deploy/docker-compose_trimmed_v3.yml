@@ -20,24 +20,28 @@ services:
       -  ${WEBAPP_STORAGE_HOME}/destinationdb:/data/db
   destination_db_adapter:
     image: leovice/destination_db_adapter
+    depends_on:
+      - destination_db
     ports:
       - 6869:8080
     environment:
-      - DB_HOST=${DDD}
+      - DB_HOST=destination_db
       - DB_USER=${DDU}
       - DB_PASSWORD=${DDP}
       - DB_NAME=${DDD}
-      - DB_PORT=${DDDP}
+      - DB_PORT=${DDLP}
   user_db_adapter:
     image: leovice/user_db_adapter
+    depends_on:
+      - user_db
     ports:
       - 6868:8080
     environment:
-      - DB_HOST=${UDD}
+      - DB_HOST=user_db
       - DB_USER=${UDU}
       - DB_PASSWORD=${UDP}
       - DB_NAME=${UDD}
-      - DB_PORT=${UDDP}
+      - DB_PORT=${UDLP}
   forecast_api_adapter:
     image: leovice/forecast_api_adapter
     ports:
