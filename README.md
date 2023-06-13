@@ -1,7 +1,6 @@
 # Daytrip
 ## A service-oriented web application for inspiring daytrips in Italy
 
-
 This project aims to create a web application that suggests daytrip destinations in Italy based on weather conditions, travel time, and other indicators. A service-oriented architecture was used to build decoupled services that can be expanded and modified independently.
 
 ## Endpoints documentation
@@ -11,7 +10,6 @@ Documentation of the endpoints can be found on Apiary at the following link: htt
 ## Architecture Diagram
 
 <img src="chart/daytrip_400.png" alt="architecture"/>
-
 
 ## How to run
 
@@ -62,8 +60,6 @@ Value: Bearer <token>
 4. For instance, to load all the destinations use the following: 
 POST http://localhost:6869/api/v1/destinations/bulk, making sure to have the Authorization header set as described above.
 
-
-
 ## Features
 
 + Suggests ranked list of daytrip destinations based on weather, travel time, crowdedness, and other indicators
@@ -82,7 +78,7 @@ The architecture is divided into 4 layers:
 3. **Business logic layer** - Calculates ratings and performs business logic
 4. **Process centric layer** - Provides high level functionality to end users
 
-In total, 25 services were built across the 4 layers. Docker Compose is used to define and deploy the multi-container application.
+In total, **25 services** were built across the 4 layers. Docker Compose is used to define and deploy the multi-container application.
 
 ## Technologies
 
@@ -99,21 +95,19 @@ In total, 25 services were built across the 4 layers. Docker Compose is used to 
 
 ![AWS](https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
 
-
-
 ## External sources
 
 The project leverages a number of external data sources to provide recommendations:
 
-+ TomTom APIs - Used to calculate reachable ranges based on travel time and vehicle, and to determine crowdedness based on traffic flow data. 
++ **TomTom APIs** - Used to calculate reachable ranges based on travel time and vehicle, and to determine crowdedness based on traffic flow data. 
 
-+ Weather APIs - Weather API and OpenWeatherMap API are used to gather data on temperature, precipitation, wind, and air quality. This provides important indicators for recommending daytrip destinations.
++ **Weather APIs** - Weather API and OpenWeatherMap API are used to gather data on temperature, precipitation, wind, and air quality. This provides important indicators for recommending daytrip destinations.
 
-+ Geocoding APIs - OpenStreetMap, and Google Maps APIs are used to convert between addresses and geographic coordinates, which is necessary to determine distances and travel times.
++ **Geocoding APIs** - OpenStreetMap, and Google Maps APIs are used to convert between addresses and geographic coordinates, which is necessary to determine distances and travel times.
 
-+ IP geocoding APIs - ip-api and ipify APIs are used to determine the user's origin location based on their IP address. This is used as the starting point for destination recommendations.
++ **IP geocoding APIs** - ip-api and ipify APIs are used to determine the user's origin location based on their IP address. This is used as the starting point for destination recommendations.
 
-+ Email validation API - EVA API is used to validate user emails during registration to ensure they are real email addresses.
++ **Email validation API** - EVA API is used to validate user emails during registration to ensure they are real email addresses.
 
 ## Response structure
 
@@ -128,7 +122,7 @@ JSON specification used: JSend specification (https://github.com/omniti-labs/jse
     "user": {
       "id": "60f9b9b0e3c6b8a2b4b1f1f1",
       "name": "John Doe",
-      "email": "" 
+      "email": "john.doe@mail.com" 
     }
   }
 }
@@ -143,12 +137,12 @@ JSON specification used: JSend specification (https://github.com/omniti-labs/jse
       {
         "id": "60f9b9b0b9b9b9b9b9b9b9b9",
         "name": "John Doe",
-        "email": ""
+        "email": "john.doe@mail.com"
       },
       {
         "id": "456w232323",
         "name": "Jane Smith",
-        "email": ""
+        "email": "jane.smith@mail.com" 
       }
     ]
   }
@@ -172,7 +166,7 @@ When an API call fails due to an error on the server. For example:
 {
   "status": "error",
   "code": 500,
-  "message": "Unable to communicate with database"
+  "message": "Unable to communicate with destinations database"
 }
 ```
 
