@@ -4,6 +4,8 @@
 
 This project aims to create a web application that suggests daytrip destinations in Italy based on weather conditions, travel time, and other indicators. A service-oriented architecture was used to build decoupled services that can be expanded and modified independently.
 
+## Endpoints documentation
+
 Documentation of the endpoints can be found on Apiary at the following link: https://daytrip1.docs.apiary.io/
 
 ## Architecture Diagram
