@@ -179,12 +179,13 @@ exports.findOne = async (req, res) => {
     currentSpeed = data["currentSpeed"]
     freeFlowSpeed = data["freeFlowSpeed"]
 
+    crowd_rating = 1-((freeFlowSpeed-currentSpeed)/freeFlowSpeed)
+
     if(crowd_rating>=0.9) crowd_description="Not crowded"
     if(crowd_rating<0.9 && crowd_rating>=0.8) crowd_description="Slightly crowded"
     if(crowd_rating<0.80 && crowd_rating>=0.7) crowd_description="Crowded"
     if(crowd_rating<0.7) crowd_description="Very crowded"
-
-    crowd_rating = 1-((freeFlowSpeed-currentSpeed)/freeFlowSpeed)
+    
   }
 
   //AIR_POLLUTION_RATING

@@ -4,6 +4,63 @@
 
 This project aims to create a web application that suggests daytrip destinations in Italy based on weather conditions, travel time, and other indicators. A service-oriented architecture was used to build decoupled services that can be expanded and modified independently.
 
+Documentation of the endpoints can be found on Apiary at the following link: https://daytrip1.docs.apiary.io/
+
+## Architecture Diagram
+
+<img src="chart/daytrip_400.png" alt="architecture"/>
+
+
+## How to run
+
+To run the application, you need to have Docker and Docker Compose installed. 
+
+For newer versions of Docker, on MacOS, you need to run, otherwise the docker-compose command will fail:
+```bash
+sudo chown -R $(whoami) ~/.docker
+```
+
+ Then, run the following command in the root directory of the project:
+
+```bash
+docker-compose up --build
+```
+
+## How to test protected routes
+
+1. Create ADMIN user using the POST /users endpoint (http://localhost:6868/api/v1/users/) and not on the /users/signup with a body of the following shape:
+```json
+{
+  "name": "Leonardo",
+  "surname": "Vicentini",
+  "email": "vicentini.leonardo99@gmail.com",
+  "password": "123",
+  "status": "ADMIN",
+  "origin_name": "Povo (TN)",
+  "origin_coordinates": {
+      "lat": 46.06,
+      "lon": 11.15
+  }
+}
+```
+
+2. Login with the ADMIN user using the POST /users/sessions endpoint (http://localhost:6882/api/v1/sessions) with a body of the following shape:
+```json
+{
+    "email": "vicentini.leonardo99@gmail.com",
+    "password": "123"
+}
+```
+
+3. Copy the token from the response and paste it in the **Authorization header** of the protected routes, using the Bearer schema. 
+Like:
+Key: Authorization
+Value: Bearer <token>
+
+4. For instance, to load all the destinations use the following: 
+POST http://localhost:6869/api/v1/destinations/bulk, making sure to have the Authorization header set as described above.
+
+
 
 ## Features
 
@@ -111,7 +168,7 @@ When an API call fails due to an error on the server. For example:
 
 # Future improvements
 
-+ API caching: https://www.npmjs.com/package/apicache middleware (da solo o con redis)
++ API caching: https://www.npmjs.com/package/apicache middleware (on its own or with Redis)
 
 + Service Registry and Discovery in a more structured way
 

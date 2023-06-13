@@ -58,7 +58,7 @@ exports.login = async (req, res) => {
           origin_name: data["data"]["users"][0]["origin_name"]
         };
       
-        const token = "Bearer " + jwt.sign({ user }, SECRET_KEY, { expiresIn: '180s' });
+        const token = "Bearer " + jwt.sign({ user }, SECRET_KEY, { expiresIn: '1000s' });
       
         return res.status(201).send({
           "status": "success",
@@ -108,7 +108,7 @@ exports.updateToken = async (req, res) => {
     origin_name: decoded_token["origin_name"]
   };
 
-  const new_token = "Bearer " + jwt.sign({ user }, SECRET_KEY, { expiresIn: '180s' });
+  const new_token = "Bearer " + jwt.sign({ user }, SECRET_KEY, { expiresIn: '1000s' });
 
   return res.status(200).send({
     "status": "success",

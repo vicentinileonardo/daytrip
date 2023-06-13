@@ -68,7 +68,7 @@ exports.findOne = async (req, res) => {
     return res.status(500).send(response);
   }
 
-  if (data["error"] || data["httpStatusCode"] != 200 || data == undefined || data == null) {
+  if (data["error"] || data["httpStatusCode"] == 400 || data == undefined || data == null) {
     response = {
       "status": "error",
       "code": 500,

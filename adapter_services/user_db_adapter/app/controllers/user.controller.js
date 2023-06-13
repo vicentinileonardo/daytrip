@@ -103,6 +103,8 @@ exports.create = (req, res) => {
   const saltRounds = 10;
   let password = String(req.body.password);
 
+  console.log(req.body.status)
+
   bcrypt.hash(password, saltRounds, function(err, hash) {
     
     // Create a User
