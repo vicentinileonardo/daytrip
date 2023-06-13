@@ -186,6 +186,6 @@ When an API call fails due to an error on the server. For example:
 
 + GeoCoding (Nominatim): © OpenStreetMap
 
-+ Nominatim self-hosted as a docker container (Discarded idea, oot used, too slow startup for the demo test of the project): https://github.com/mediagis/nominatim-docker
++ Nominatim self-hosted as a docker container (Discarded idea, not used, too slow startup for the demo test of the project): https://github.com/mediagis/nominatim-docker
 
 + Layers for AWS Lambda function: https://github.com/keithrozario/Klayers
