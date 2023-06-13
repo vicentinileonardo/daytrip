@@ -5,17 +5,18 @@ This project aims to create a web application that suggests daytrip destinations
 
 ## Endpoints documentation
 
-Documentation of the endpoints can be found on Apiary at the following link: https://daytrip1.docs.apiary.io/
+Documentation of the endpoints can be found on Apiary at the following link: https://daytrip1.docs.apiary.io/.
 
-## Architecture Diagram
+## Architecture diagram
 
 <img src="chart/daytrip_400.png" alt="architecture"/>
 
 ## How to run
 
-To run the application, you need to have Docker and Docker Compose installed. 
+To run the application, you need to have **Docker** and **Docker Compose** installed. 
 
-For newer versions of Docker, on MacOS, you need to run the following, otherwise the docker-compose command could fail:
+For newer versions of Docker, you need to run the following, otherwise the docker-compose command could fail with a permission error (on UNIX systems, tested on 2 different MacOS):
+
 ```bash
 sudo chown -R $(whoami) ~/.docker
 ```
@@ -26,9 +27,12 @@ Then, run the following command in the root directory of the project:
 docker-compose up --build
 ```
 
+The application will be available at http://localhost (on port 80).
+
 ## How to test protected routes
 
-1. Create ADMIN user using the POST /users endpoint (http://localhost:6868/api/v1/users/) and not on the /users/signup with a body of the following shape:
+1. Create an ADMIN user using the POST /users endpoint (http://localhost:6868/api/v1/users/) and not on the /users/signup with a body of the following shape:
+
 ```json
 {
   "name": "Leonardo",
@@ -45,6 +49,7 @@ docker-compose up --build
 ```
 
 2. Login with the ADMIN user using the POST /users/sessions endpoint (http://localhost:6882/api/v1/sessions) with a body of the following shape:
+
 ```json
 {
     "email": "vicentini.leonardo99@gmail.com",
@@ -111,7 +116,7 @@ The project leverages a number of external data sources to provide recommendatio
 
 ## Response structure
 
-JSON specification used: JSend specification (https://github.com/omniti-labs/jsend)
+JSON specification used: **JSend** specification (https://github.com/omniti-labs/jsend)
 
 ```json
 {
