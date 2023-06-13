@@ -15,12 +15,12 @@ Documentation of the endpoints can be found on Apiary at the following link: htt
 
 To run the application, you need to have Docker and Docker Compose installed. 
 
-For newer versions of Docker, on MacOS, you need to run, otherwise the docker-compose command will fail:
+For newer versions of Docker, on MacOS, you need to run the following, otherwise the docker-compose command could fail:
 ```bash
 sudo chown -R $(whoami) ~/.docker
 ```
 
- Then, run the following command in the root directory of the project:
+Then, run the following command in the root directory of the project:
 
 ```bash
 docker-compose up --build
@@ -53,8 +53,8 @@ docker-compose up --build
 ```
 
 3. Copy the token from the response and paste it in the **Authorization header** of the protected routes, using the Bearer schema. 
-Like:
-Key: Authorization
+Like: <br>
+Key: Authorization <br>
 Value: Bearer <token>
 
 4. For instance, to load all the destinations use the following: 
@@ -172,10 +172,11 @@ When an API call fails due to an error on the server. For example:
 
 ## Future improvements
 
++ Deployment of the entire application
+  - Tried with **Azure Container Instances**, but the free tier is not enough for the project
+  - Tried with **Azure App Service**, further specific configuration and troubleshooting is needed
+
 + API caching: https://www.npmjs.com/package/apicache middleware (on its own or with Redis)
-
-+ Service Registry and Discovery in a more structured way
-
 
 ## Acknowledgements
 
