@@ -181,7 +181,7 @@ When an API call fails due to an error on the server. For example:
   - Tried with **Azure Container Instances**, but the free tier is not enough for the project
   - Tried with **Azure App Service**, further specific configuration and troubleshooting is needed
 
-+ API caching: https://www.npmjs.com/package/apicache middleware (on its own or with Redis)
++ Better session/token management leveraging sessions
 
 ## Acknowledgements
 
