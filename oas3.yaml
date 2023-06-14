@@ -669,8 +669,8 @@ paths:
   /forecast_api_adapter/api/v1/forecasts: 
     get:
       description: >-
-        Get forecast information about a given area, such the min and max temperature, data about humidity, the wind and the chances of rain and snow.
-      summary: Gets forecast information about a given area
+        Gets forecast information about a given area, such the min and max temperature, data about humidity, the wind and the chances of rain and snow.
+      summary: Get forecast information about a given area
       parameters:
         - name: lat
           in: query
@@ -764,8 +764,8 @@ paths:
   /geocoding_api_adapter/api/v1/geocodes: 
     get:
       description: >-
-        Get the conversion between the name of an area and its coordinates. Together with the conversion is also sent the complete name of the place considered.
-      summary: Gets the conversion between an address and its coordinates
+        Gets the conversion between the name of an area and its coordinates. Together with the conversion is also sent the complete name of the place considered.
+      summary: Get the conversion between an address and its coordinates
       parameters:
         - name: address
           in: query
@@ -1646,7 +1646,7 @@ paths:
   /valid_email_service/api/v1/email_checks/valid: 
      get:
       description: >-
-        Check if mail is existing and if it's not categorized as spam.
+        Checks if mail is existing and if it's not categorized as spam.
       summary: Get mail informations
       parameters:
         - name: email
@@ -1889,7 +1889,7 @@ paths:
                     default: 'Error'
     put:
       description: >-
-        Update a session, updating the expiration date to 1000s to the current date (You need to provide a valid jwt in order to access to this method).
+        Updatess a session, updating the expiration date to 1000s to the current date (You need to provide a valid jwt in order to access to this method).
       summary: Update a session
 
       responses:
@@ -1949,7 +1949,7 @@ paths:
   /user_registration_service/api/v1/signup: 
     post:
       description: >-
-        Register a new user.
+        Registers a new user.
       summary: Register a user
       requestBody:
         content:
