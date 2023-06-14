@@ -4,13 +4,13 @@ info:
   title: "Daytrip API collection"
   description: Daytrip API collection. For each endpoint there is the prefix of the relative service
   license:
-    name: TO BE DECIDED
+    name: GPL v3
 
 paths:
   /air_pollution_api_adapter/api/v1/air_pollution_info: 
     get:
       description: >-
-        Gets air pollution info
+        Gets air pollution info of a certain location
       summary: Get air pollution
       parameters:
         - name: lat
@@ -218,6 +218,22 @@ paths:
                       lon: 
                         type: string
                         default: 'lon must have a valid value (between -180 and 180)'
+        '401':
+          description: 'Error creating a destination, you are not authenticated as an admin'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  code:
+                    type: integer
+                    default: 401
+                  message:
+                    type: string
+                    default: 'You need to be an ADMIN in order to access this method'
         '500':
           description: 'Server Error'
           content:
@@ -236,7 +252,7 @@ paths:
                     default: 'Error'
     get:
       description: >-
-        Gets all the destinations
+        Gets all the destinations stored.
       summary: Get destinations
       parameters:
         - name: page
@@ -287,7 +303,7 @@ paths:
 
     delete:
       description: >-
-        Deletes all the destinations.
+        Deletes all the destinations stored (You need to be an authenticated ADMIN to access this endpoint).
       summary: Delete all the destination
       responses:
         '200':
@@ -305,6 +321,23 @@ paths:
                     default: 'Destinations deleted successfully'
                   data:
                     default: null
+        '401':
+          description: 'Error deleting the destinations, you are not authenticated as an admin'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  code:
+                    type: integer
+                    default: 401
+                  message:
+                    type: string
+                    default: 'You need to be an ADMIN in order to access this method'
+
         '500':
           description: 'Server Error'
           content:
@@ -387,7 +420,7 @@ paths:
     put:
       description: >-
         Updates a specific destination, changing properties like its name, the description, the image_url
-        and the coordinates object. In the request, must be sent all the fields, even the unchanged ones.
+        and the coordinates object. In the request, must be sent all the fields, even the unchanged ones (You need to be an authenticated ADMIN to access this endpoint).
       summary: Update destination
       requestBody:
         content:
@@ -448,6 +481,22 @@ paths:
                       lon: 
                         type: string
                         default: 'lon must have a valid value (between -180 and 180)'
+        '401':
+          description: 'Error updating a destination, you are not authenticated as an admin'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  code:
+                    type: integer
+                    default: 401
+                  message:
+                    type: string
+                    default: 'You need to be an ADMIN in order to access this method'
         '500':
           description: 'Server Error'
           content:
@@ -483,7 +532,7 @@ paths:
 
     delete:
       description: >-
-        Deletes a destination.
+        Deletes a destination (You need to be an authenticated ADMIN to access this endpoint).
       summary: Delete a destination
       parameters:
         - name: id
@@ -506,6 +555,22 @@ paths:
                     default: 'Destination deleted successfully'
                   data:
                     default: null
+        '401':
+          description: 'Error deleting a destination, you are not authenticated as an admin'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  code:
+                    type: integer
+                    default: 401
+                  message:
+                    type: string
+                    default: 'You need to be an ADMIN in order to access this method'
         '404':
           description: 'Cannot delete Destination with id={id}. Maybe Destination was not found'
           content:
@@ -543,7 +608,7 @@ paths:
   /emailcheck_api_adapter/api/v1/email_checks: 
     get:
       description: >-
-        Gets information about a given email address
+        Gets information about a given email address, such if it's deleverable, disposable of if it has a valid sintax.
       summary: Get information about a given email address
       parameters:
         - name: email
@@ -604,8 +669,8 @@ paths:
   /forecast_api_adapter/api/v1/forecasts: 
     get:
       description: >-
-        Gets forecast information about a given area
-      summary: Get forecast information about a given area
+        Get forecast information about a given area, such the min and max temperature, data about humidity, the wind and the chances of rain and snow.
+      summary: Gets forecast information about a given area
       parameters:
         - name: lat
           in: query
@@ -699,8 +764,8 @@ paths:
   /geocoding_api_adapter/api/v1/geocodes: 
     get:
       description: >-
-        Gets the conversion between the name of an area and its coordinates
-      summary: Get the conversion between the name of an area and its coordinates
+        Get the conversion between the name of an area and its coordinates. Together with the conversion is also sent the complete name of the place considered.
+      summary: Gets the conversion between an address and its coordinates
       parameters:
         - name: address
           in: query
@@ -761,7 +826,7 @@ paths:
   /ip_api_adapter/api/v1/ip_info: 
     get:
       description: >-
-        Gets the conversion between an IP address and its location
+        Gets the conversion between an IP address and its location, that will be expressed both in terms of coordinates, both in term of it's city and country.
       summary: Get the conversion between an IP address and its location
       parameters:
         - name: ip_address
@@ -839,8 +904,8 @@ paths:
   /range_api_adapter/api/v1/ranges: 
     get:
       description: >-
-        Gets the polygon that limits the area that can be traveled in a given time starting from a given location
-      summary: Get the polygon that limits the area that can be traveled in a given time starting from a given location
+        Gets the polygon that limits the area that can be traveled in a given time starting from a given location. This boundary is expressed with an array of <lat,lon> couples.
+      summary: Get the range reachable from a given location in a certain amount of time
       parameters:
         - name: lat
           in: query
@@ -928,7 +993,7 @@ paths:
     post:
       description: >-
         Creates a new user in the system.
-      summary: Create a new user in the system.
+      summary: Create a new user.
       requestBody:
         content:
           application/json:
@@ -1004,7 +1069,7 @@ paths:
                     default: 'Error'
     get:
       description: >-
-        Gets all users
+        Gets all users stored.
       summary: Get all users
       parameters:
         - name: page
@@ -1257,7 +1322,7 @@ paths:
 
     delete:
       description: >-
-        Deletes a user.
+        Deletes the user with the specified id.
       summary: Delete a user
       parameters:
         - name: id
@@ -1316,7 +1381,7 @@ paths:
   /coordinates_rating_service/api/v1/ratings: 
      get:
       description: >-
-        Gets a rating associated on how much a place could be enjoyable taking into account the weather info, the traffic and the air quality
+        Gets a rating associated on how much a place could be enjoyable taking into account the weather, the traffic and the air quality informations.
       summary: Get rating
       parameters:
         - name: lat
@@ -1494,7 +1559,7 @@ paths:
     get:
       description: >-
         Gets destinations reachable from a starting point in a certain amount of time
-      summary: Get destinations reachable from a starting point in a certain amount of time
+      summary: Get destinations reachable from a location in a certain amount of time
       parameters:
         - name: lat
           in: query
@@ -1581,7 +1646,7 @@ paths:
   /valid_email_service/api/v1/email_checks/valid: 
      get:
       description: >-
-        Check if mail is existing and if it's not categorized as spam,
+        Check if mail is existing and if it's not categorized as spam.
       summary: Get mail informations
       parameters:
         - name: email
@@ -1651,8 +1716,8 @@ paths:
   /best_destinations_service/api/v1/destinations/best: 
     get:
       description: >-
-        Gets all the destinations reachable from an address in a certain amount of time ranked
-      summary: Get all the destinations reachable from an address in a certain amount of time ranked
+        Gets all the destinations reachable from a location in a certain amount of time in a ranked way. The ranking of the single location is given taking into account the weather, the traffic and the air quality informations.
+      summary: Get all the destinations reachable from a location in a certain amount of time in a ranked way
       parameters:
         - name: address
           in: query
@@ -1739,7 +1804,7 @@ paths:
   /user_login_service/api/v1/sessions: 
     post:
       description: >-
-        Creates a new session and return the jwt generated.
+        Creates a new session and return the jwt generated. The jwt will expire after 1000s from its creation.
       summary: Create a session
       requestBody:
         content:
@@ -1824,7 +1889,7 @@ paths:
                     default: 'Error'
     put:
       description: >-
-        Update a session, updating the expiration date to 180s to the current date.
+        Update a session, updating the expiration date to 1000s to the current date (You need to provide a valid jwt in order to access to this method).
       summary: Update a session
 
       responses:
@@ -1847,11 +1912,45 @@ paths:
                       token:
                         type: string
                         default: 'aa.bc.cd'
+        '401':
+          description: 'You need to be authenticated in order to access this method'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'fail'
+                  code:
+                    type: integer
+                    default: 401
+                  message:
+                    type: string
+                    default: "You need to be authenticated in order to access this method"
+
+        '500':
+          description: 'Server Error'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: 'error'
+                  code:
+                    type: integer
+                    default: 500
+                  message:
+                    type: string
+                    default: 'Error'
+
   /user_registration_service/api/v1/signup: 
     post:
       description: >-
-        Creates a new user.
-      summary: Create a user
+        Register a new user.
+      summary: Register a user
       requestBody:
         content:
           application/json:
